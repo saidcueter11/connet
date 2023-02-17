@@ -1,32 +1,15 @@
-import { logoutWithEmail } from '@firebase/client'
-import { CloseIcon } from 'components/Icons/CloseIcon'
+import { HeaderMobile } from 'components/HeaderMobile'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { PostCard } from 'components/PostCard'
+import { SideBarProfile } from 'components/SideBarProfile'
 import { useAuth } from 'context/authUserContext'
-import { Avatar } from 'flowbite-react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export default function Home () {
   const auth = useAuth()
   const router = useRouter()
-  const [toggleSideBar, setToggleSideBar] = useState(false)
-  const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0')
-
-  const handleLogout = () => {
-    logoutWithEmail()
-    router.push('/login')
-  }
-
-  const handleSideBarToggle = () => {
-    setToggleSideBar(prev => {
-      console.log({ prev })
-      return !prev
-    })
-    if (toggleSideBar) setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform')
-    if (!toggleSideBar) setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0')
-  }
 
   useEffect(() => {
     if (!auth.authUser) router.push('/login')
@@ -40,28 +23,10 @@ export default function Home () {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <aside id="sidebar-multi-level-sidebar" className={toggleSideBarClass} aria-label="Sidebar">
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <div onClick={handleSideBarToggle}>
-            <CloseIcon fill='none' stroke='#EB6440' width={24} height={24}/>
-            <p className='font-concert-one text-action-red' onClick={handleLogout}>Logout</p>
-          </div>
-
-        </div>
-      </aside>
+      <SideBarProfile />
 
       <main className='w-full h-screen'>
-        <header className='relative mb-5'>
-          <div className='absolute'>
-            <Avatar rounded={true} onClick={handleSideBarToggle}/>
-          </div>
-
-          <div className='flex gap-5 flex-col w-4/5 items-center m-auto'>
-            <h1 className='font-concert-one text-3xl text-center'>Connet</h1>
-            <input className='rounded-3xl w-full shadow px-3 py-1 font-karla'/>
-          </div>
-        </header>
+        <HeaderMobile/>
 
         <div className='flex flex-col gap-4 h-screen overflow-scroll no-scrollbar'>
           <PostCard/>

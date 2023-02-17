@@ -21,7 +21,7 @@ export const loginWithEmail = (email: string, password: string) => {
 }
 
 export const logoutWithEmail = () => {
-  signOut(auth)
+  return signOut(auth)
 }
 
 // export const getTest = () => {
