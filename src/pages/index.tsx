@@ -1,10 +1,24 @@
-import { auth, logoutWithEmail } from '@firebase/client'
+import { logoutWithEmail } from '@firebase/client'
+import { PostCard } from 'components/PostCard'
+import { useAuth } from 'context/authUserContext'
 import { Card } from 'flowbite-react'
 import Head from 'next/head'
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export default function Home () {
-  const [user, loading, error] = useAuthState(auth)
+  const auth = useAuth()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    logoutWithEmail()
+    router.push('/login')
+  }
+
+  useEffect(() => {
+    if (!auth.authUser) router.push('/login')
+  }, [])
+
   return (
     <>
       <Head>
@@ -14,9 +28,13 @@ export default function Home () {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className='w-full h-screen'>
-        <Card href='#'>
+        <PostCard/>
+        <PostCard/>
+        <PostCard/>
+
+        <Card>
           <h1>Hola</h1>
-          <button onClick={logoutWithEmail}>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
         </Card>
       </main>
     </>

@@ -1,11 +1,14 @@
-import '@/styles/globals.css'
+import '../../dist/output.css'
 import type { AppProps } from 'next/app'
 import { AppLayout } from 'components/AppLayout'
+import { AuthUserProvider } from 'context/authUserContext'
 
 export default function App ({ Component, pageProps }: AppProps) {
   return (
     <AppLayout>
-      <Component {...pageProps} />
+      <AuthUserProvider>
+        <Component {...pageProps}/>
+      </AuthUserProvider>
     </AppLayout>
   )
 }

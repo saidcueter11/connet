@@ -17,7 +17,7 @@ export const auth = getAuth(app)
 export const db = getFirestore(app)
 
 export const loginWithEmail = (email: string, password: string) => {
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
 }
 
 export const logoutWithEmail = () => {

@@ -5,25 +5,29 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 export const LoginForm = () => {
+  const [error, setError] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
 
   const handleLogin = () => {
     loginWithEmail(email, password)
-    router.replace('/')
+      .then(() => router.replace('/'))
+      .catch(error => {
+        setError(error)
+      })
   }
 
   return (
-    <form className='flex flex-col gap-4 items-center'>
-      <div>
+    <form className='flex flex-col gap-4 items-center w-52'>
+      <div className='w-full'>
         <div className="mb-2 block">
           <Label htmlFor="email" value="Email"/>
         </div>
-        <TextInput id='email' value={email} onChange={e => setEmail(e.target.value)} type='email' placeholder='example@email.com' required={true}/>
+        <TextInput id='email' value={email} onChange={e => setEmail(e.target.value)} type='email' placeholder='example@email.com' required={true} />
       </div>
 
-      <div>
+      <div className='w-full'>
         <div className="mb-2 block">
           <Label htmlFor="password" value="Password"/>
         </div>
@@ -31,6 +35,14 @@ export const LoginForm = () => {
       </div>
 
       <Button onClick={handleLogin} className='bg-black w-full'>Submit</Button>
+
+      {
+        error &&
+        <div className='text-center'>
+          <p className='text-sm text-red-500 font-semibold'>Your email/password are incorrect. Try again</p>
+        </div>
+      }
+
       <p className='text-sm'>You do not have an account?</p>
       <Link href='/signup' >
         <Button>Register</Button>
