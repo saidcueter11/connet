@@ -1,8 +1,8 @@
 import { loginWithEmail } from '@firebase/client'
-import { Button, TextInput, Label } from 'flowbite-react'
+import { TextInput, Label } from 'flowbite-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 
 export const LoginForm = () => {
   const [error, setError] = useState('')
@@ -10,7 +10,8 @@ export const LoginForm = () => {
   const [password, setPassword] = useState('')
   const router = useRouter()
 
-  const handleLogin = () => {
+  const handleLogin = (e:SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault()
     loginWithEmail(email, password)
       .then(() => router.replace('/'))
       .catch(error => {
@@ -19,7 +20,7 @@ export const LoginForm = () => {
   }
 
   return (
-    <form className='flex flex-col gap-4 items-center w-52'>
+    <form className='flex flex-col gap-4 items-center w-52' onSubmit={(e) => handleLogin(e)}>
       <div className='w-full'>
         <div className="mb-2 block">
           <Label htmlFor="email" value="Email"/>
@@ -34,18 +35,18 @@ export const LoginForm = () => {
         <TextInput id='password' value={password} onChange={e => setPassword(e.target.value)} type='password' required={true}/>
       </div>
 
-      <Button onClick={handleLogin} className='bg-black w-full'>Submit</Button>
+      <button className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center p-2 text-center font-semibold font-karla rounded-lg w-full'>Sign In</button>
 
       {
         error &&
         <div className='text-center'>
-          <p className='text-sm text-red-500 font-semibold'>Your email/password are incorrect. Try again</p>
+          <p className='text-sm text-action-red font-semibold font-karla'>Your email/password are incorrect. Try again</p>
         </div>
       }
 
-      <p className='text-sm'>You do not have an account?</p>
+      <p className='text-sm font-karla text-center'>You do not have an account?</p>
       <Link href='/signup' >
-        <Button>Register</Button>
+        <button className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center px-4 font-karla py-2 text-center font-semibold rounded-lg w-full'>Register</button>
       </Link>
     </form>
   )

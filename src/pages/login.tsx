@@ -8,6 +8,8 @@ export default function Login () {
 
   if (auth.authUser) router.push('/')
 
+  console.log({ auth })
+
   return (
     <>
       <section className="w-full h-full grid place-content-center">

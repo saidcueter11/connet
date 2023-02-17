@@ -1,22 +1,34 @@
-import { Avatar, Card } from 'flowbite-react'
-
+import { Avatar } from 'flowbite-react'
+import Like from 'components/Icons/Like'
+import { CommentIcon } from 'components/Icons/Comment'
+import { Dot } from './Icons/Dot'
 export const PostCard = () => {
   return (
     <>
-      <Card color='#000'>
+      <div className='flex rounded-2xl shadow flex-col p-6 gap-4 bg-light-green shadow-black/25'>
         <div className='flex gap-2 '>
           <Avatar rounded={true}>
-            <p>Said Cueter</p>
-            <small>@username</small>
+            <div className='flex items-end'>
+              <p className='font-concert-one'>Said Cueter</p>
+              <Dot width={20} height={14} fill='#EB6440'/>
+              <time className='text-xs text-action-red font-karla'>hace 2 horas</time>
+            </div>
+            <small className='font-karla text-action-red'>@username</small>
           </Avatar>
-          <time className='text-xs mt-1'>hace 2 horas</time>
         </div>
-        <p>Dummy text for this example so people thing is a post</p>
-        <div className='flex justify-end gap-2'>
-          <p>Like</p>
-          <p>Comments</p>
+        <p className='font-karla px-5'>Dummy text for this example so people thing is a post</p>
+
+        <div className='flex justify-end gap-3'>
+          <div className='flex justify-start gap-2'>
+            <Like fill='none' stroke='#EB6440' width={24} height={24}/>
+            <p className='font-concert-one'>12</p>
+          </div>
+          <div className='flex gap-2'>
+            <CommentIcon fill='none' stroke='#EB6440' width={24} height={24}/>
+            <p className='font-concert-one'>17</p>
+          </div>
         </div>
-      </Card>
+      </div>
     </>
   )
 }
