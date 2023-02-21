@@ -8,12 +8,12 @@ interface SideBarNotificationsPros {
 }
 
 export const SideBarNotifications = ({ toggle, onToggle, isProfileOpen }: SideBarNotificationsPros) => {
-  const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-full sm:translate-x-0')
+  const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-full ')
 
   useEffect(() => {
     if (!isProfileOpen) {
       if (toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-64 h-screen transition-transform')
-      if (!toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-full sm:translate-x-0')
+      if (!toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-full ')
     }
   }, [toggle])
 

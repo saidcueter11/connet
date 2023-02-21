@@ -14,7 +14,7 @@ interface SideBarProfileProps {
 
 export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProps) => {
   const [toggleSideBar, setToggleSideBar] = useState(true)
-  const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0')
+  const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full')
   const { authUser } = useAuth()
 
   const router = useRouter()
@@ -32,7 +32,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
       setToggleSideBar(prev => !prev)
       isOpen(toggleSideBar)
       if (toggleSideBar) setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform')
-      if (!toggleSideBar) setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0')
+      if (!toggleSideBar) setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full')
     }
   }
 
