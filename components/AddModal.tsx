@@ -1,17 +1,29 @@
-import { Modal, Avatar, Textarea } from 'flowbite-react'
+import { Modal, Avatar } from 'flowbite-react'
 import { CloseIcon } from './Icons/CloseIcon'
 import { UploadImgIcon } from './Icons/UploadImgIcon'
 import { useAuth } from 'context/authUserContext'
-import { SyntheticEvent, useState } from 'react'
-import { addPost } from '@firebase/client'
+import React, { FormEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { addPost, uploadImage } from '@firebase/client'
+import { UploadTask, getDownloadURL } from 'firebase/storage'
 
 interface AddModalProps {
   showModal: boolean
   setShowModal: (modal: boolean) => void
 }
 
+const DRAG_IMAGE_STATES = {
+  ERROR: -1,
+  NONE: 0,
+  DRAG_OVER: 1,
+  UPLOADING: 2,
+  COMPLETE: 3
+}
+
 export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
   const auth = useAuth()
+  const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
+  const [task, setTask] = useState<UploadTask>()
+  const [imgUrl, setImgUrl] = useState('')
   const [content, setContent] = useState('')
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
@@ -25,15 +37,53 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
         username: auth.authUser?.displayName?.split('|')[1] ?? ''
       },
       commentsCount: 0,
-      likesCount: 0
+      likesCount: 0,
+      img: imgUrl
     }).then(() => setShowModal(false))
   }
 
-  return (
+  useEffect(() => {
+    if (task) {
+      const onProgress = () => {}
+      const onError = () => {}
+      const onComplete = () => {
+        getDownloadURL(task.snapshot.ref).then(setImgUrl)
+      }
+      task.on('state_changed',
+        onProgress,
+        onError,
+        onComplete
+      )
+    }
+  }, [task])
+
+  const handleDragEnter = (e: FormEvent<HTMLTextAreaElement>) => {
+    e.preventDefault()
+    setDrag(DRAG_IMAGE_STATES.DRAG_OVER)
+  }
+
+  const handleDragLeave = (e: FormEvent<HTMLTextAreaElement>) => {
+    e.preventDefault()
+    setDrag(DRAG_IMAGE_STATES.NONE)
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault()
+    const file = e.dataTransfer?.files[0]
+    setDrag(DRAG_IMAGE_STATES.NONE)
+
+    if (file) {
+      const task = uploadImage(file)
+      setTask(task)
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    return (
     <Modal show={showModal} className='h-screen' position='center' size='lg'>
 
       <Modal.Body className='bg-dark-green rounded p-3'>
-        <div className='w-full h-72 relative grid place-content-center'>
+        <div className='w-full min-h-[400px] relative grid place-content-center'>
           <div className='absolute w-full' onClick={() => setShowModal(false)}>
             <CloseIcon width={30} height={30} fill='none' stroke='#EB6440'/>
           </div>
@@ -45,17 +95,32 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
               </Avatar>
             </div>
 
-            <form className='relative h-36 w-60 font-karla sm:w-80' onSubmit={handleSubmit}>
-              <Textarea placeholder="What's popping?" className='outline-none bg-light-green h-full' onChange={(e) => setContent(e.target.value)}/>
+            <form className='grid min-h-[144px] w-60 font-karla sm:w-80 bg-light-green rounded-lg p-3 gap-2' onSubmit={handleSubmit}>
 
-              <div className='absolute bottom-2 left-2'>
+              <textarea placeholder="What's popping?" className={`w-full h-32 rounded-lg bg-light-green text-lg outline-none resize-none border-2 transition-colors ${drag === DRAG_IMAGE_STATES.DRAG_OVER ? 'border-action-red' : 'border-transparent'}`}
+                onChange={(e) => setContent(e.target.value)}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                value={content}
+              />
+
+              {
+                imgUrl &&
+                    <div className='relative'>
+                      <button className='absolute right-3 top-3 rounded-full bg-black/80 text-slate-50 w-6 h-6' onClick={() => setImgUrl('')}>X</button>
+                      <img src={imgUrl} className='rounded h-auto w-full mb-3'/>
+                    </div>
+              }
+
+              <div className='flex justify-between max-h-8 self-end'>
                 <label htmlFor='file-input'>
                   <UploadImgIcon width={30} height={30} fill='none' stroke='#EB6440'/>
                 </label>
                 <input type='file' className='hidden' id='file-input'/>
+                <button className='bg-dark-green rounded-full px-5 text-ligth-text-green font-concert-one flex items-center pb-2'>Post</button>
               </div>
 
-              <button className='absolute bottom-2 right-2 bg-dark-green rounded-full px-5 text-ligth-text-green font-concert-one flex items-center pb-2'>Post</button>
             </form>
           </div>
 
@@ -63,5 +128,8 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
       </Modal.Body>
 
     </Modal>
-  )
+    )
+  }
+
+  return <></>
 }

@@ -33,7 +33,9 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
       </div>
     </nav>
 
-    <AddModal showModal={showModal} setShowModal={setShowModal}/>
+    {
+      typeof window !== 'undefined' && <AddModal showModal={showModal} setShowModal={setShowModal}/>
+    }
    </>
   )
 }

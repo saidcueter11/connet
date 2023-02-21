@@ -18,5 +18,6 @@ export interface PostCollection {
   normalizedDate?: number
   user?: UserCollection
   likesCount?: number
-  commentsCount?: number
+  commentsCount?: number,
+  img?: string
 }

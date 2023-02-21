@@ -2,6 +2,7 @@ import { getApp, getApps, initializeApp } from 'firebase/app'
 import { Timestamp, addDoc, collection, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { PostCollection, UserCollection } from 'types/databaseTypes'
+import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDOwobqj3rYHJdldK7jN3dKqaOy4AbiA7o',
@@ -37,7 +38,7 @@ export const addUser = async ({ avatar, email, firstName, lastName, username }: 
   })
 }
 
-export const addPost = async ({ content, userId, user, commentsCount, likesCount }: PostCollection) => {
+export const addPost = async ({ content, userId, user, commentsCount, likesCount, img }: PostCollection) => {
   const collecitonDb = collection(db, 'posts')
 
   return await addDoc(collecitonDb, {
@@ -46,7 +47,8 @@ export const addPost = async ({ content, userId, user, commentsCount, likesCount
     userId,
     user,
     likesCount,
-    commentsCount
+    commentsCount,
+    img
   })
 }
 
@@ -66,4 +68,10 @@ export const getLastestPosts = (cb: (post: PostCollection[]) => void) => {
 
     cb(newPost)
   })
+}
+
+export const uploadImage = (file: File) => {
+  const storage = getStorage()
+  const reference = ref(storage, `images/${file.name}`)
+  return uploadBytesResumable(reference, file)
 }

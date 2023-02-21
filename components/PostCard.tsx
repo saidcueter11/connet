@@ -26,6 +26,10 @@ export const PostCard = ({ post }:PostCardProps) => {
         </div>
         <p className='font-karla px-5'>{post.content}</p>
 
+        {
+          post.img && <img className='rounded' src={post.img}/>
+        }
+
         <div className='flex justify-end gap-3'>
           <div className='flex justify-start gap-2'>
             <Like fill='none' stroke='#EB6440' width={24} height={24}/>
