@@ -3,7 +3,7 @@ import { User } from 'firebase/auth'
 import React, { createContext, useContext } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
-interface ContextType {
+export interface ContextType {
   authUser: User | undefined| null
   loading: boolean
   error: Error | undefined

@@ -12,6 +12,7 @@ export const LoginForm = () => {
 
   const handleLogin = (e:SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
+    console.log({ password })
     loginWithEmail(email, password)
       .then(() => router.replace('/'))
       .catch(error => {

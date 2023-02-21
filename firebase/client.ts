@@ -1,6 +1,7 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
-import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
+import { Timestamp, addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { UserCollection } from 'types/databaseTypes'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDOwobqj3rYHJdldK7jN3dKqaOy4AbiA7o',
@@ -22,6 +23,18 @@ export const loginWithEmail = (email: string, password: string) => {
 
 export const logoutWithEmail = () => {
   return signOut(auth)
+}
+
+export const addUser = async ({ avatar, email, firstName, lastName, username }: UserCollection) => {
+  const collectionDb = collection(db, 'users')
+  return await addDoc(collectionDb, {
+    avatar,
+    email,
+    firstName,
+    lastName,
+    username,
+    registeredAt: Timestamp.now()
+  })
 }
 
 // export const getTest = () => {

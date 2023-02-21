@@ -1,13 +1,17 @@
 import { HeaderMobile } from 'components/HeaderMobile'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { PostCard } from 'components/PostCard'
+import { SideBarNotifications } from 'components/SideBarNotifications'
 import { SideBarProfile } from 'components/SideBarProfile'
 import { useAuth } from 'context/authUserContext'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Home () {
+  const [toggleSideBarNotifications, setToggleSideBarNotifications] = useState(false)
+  const [toggleSideBarProfile, setToggleSideBarProfile] = useState(false)
+
   const auth = useAuth()
   const router = useRouter()
 
@@ -15,6 +19,7 @@ export default function Home () {
     if (!auth.authUser) router.push('/login')
   }, [])
 
+  console.log(auth)
   return (
     <>
       <Head>
@@ -23,8 +28,8 @@ export default function Home () {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SideBarProfile />
-
+      <SideBarProfile isNotificationOpen={toggleSideBarNotifications} isOpen={setToggleSideBarProfile}/>
+      <SideBarNotifications isProfileOpen={toggleSideBarProfile} toggle={toggleSideBarNotifications} onToggle={setToggleSideBarNotifications}/>
       <main className='w-full h-screen'>
         <HeaderMobile/>
 
@@ -42,7 +47,7 @@ export default function Home () {
 
       </main>
 
-      <NavBarMobile/>
+      <NavBarMobile onNotificationClick={setToggleSideBarNotifications} isProfileOpen={toggleSideBarProfile}/>
     </>
   )
 }
