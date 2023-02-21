@@ -13,6 +13,7 @@ import { PostCollection } from 'types/databaseTypes'
 export default function Home () {
   const [toggleSideBarNotifications, setToggleSideBarNotifications] = useState(false)
   const [toggleSideBarProfile, setToggleSideBarProfile] = useState(false)
+  const [search, setSearch] = useState('')
   const [posts, setPosts] = useState<PostCollection[]>([])
 
   const auth = useAuth()
@@ -38,16 +39,19 @@ export default function Home () {
       <SideBarProfile isNotificationOpen={toggleSideBarNotifications} isOpen={setToggleSideBarProfile}/>
       <SideBarNotifications isProfileOpen={toggleSideBarProfile} toggle={toggleSideBarNotifications} onToggle={setToggleSideBarNotifications}/>
       <main className='w-full h-screen'>
-        <HeaderMobile/>
+        <HeaderMobile search={search} setSearch={setSearch}/>
 
         <div className='flex flex-col gap-4 h-screen overflow-scroll no-scrollbar'>
           {
-            posts && posts.map(post => (
-              <PostCard
-                post={post}
-                key={post.id}
-              />
-            ))
+            posts && posts.map(post => {
+              if (post.content?.toLowerCase().includes(search)) {
+                return <PostCard
+                  post={post}
+                  key={post.id}
+                />
+              }
+              return undefined
+            })
           }
 
           <div className='p-6 h-32'></div>
