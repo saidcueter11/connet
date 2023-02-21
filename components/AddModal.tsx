@@ -25,6 +25,7 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
   const [task, setTask] = useState<UploadTask>()
   const [imgUrl, setImgUrl] = useState('')
   const [content, setContent] = useState('')
+  const [isHydrated, setIsHydratated] = useState(false)
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -57,6 +58,8 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
     }
   }, [task])
 
+  useEffect(() => setIsHydratated(true), [])
+
   const handleDragEnter = (e: FormEvent<HTMLTextAreaElement>) => {
     e.preventDefault()
     setDrag(DRAG_IMAGE_STATES.DRAG_OVER)
@@ -78,7 +81,7 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
     }
   }
 
-  if (typeof window !== 'undefined') {
+  if (isHydrated) {
     return (
     <Modal show={showModal} className='h-screen' position='center' size='lg'>
 
