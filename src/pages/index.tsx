@@ -1,3 +1,4 @@
+import { getLastestPosts } from '@firebase/client'
 import { HeaderMobile } from 'components/HeaderMobile'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { PostCard } from 'components/PostCard'
@@ -7,19 +8,25 @@ import { useAuth } from 'context/authUserContext'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { PostCollection } from 'types/databaseTypes'
 
 export default function Home () {
   const [toggleSideBarNotifications, setToggleSideBarNotifications] = useState(false)
   const [toggleSideBarProfile, setToggleSideBarProfile] = useState(false)
+  const [posts, setPosts] = useState<PostCollection[]>([])
 
   const auth = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     if (!auth.authUser) router.push('/login')
-  }, [])
 
-  console.log(auth)
+    if (auth.authUser) {
+      const unsub = getLastestPosts(setPosts)
+      return () => unsub && unsub()
+    }
+  }, [auth.authUser])
+
   return (
     <>
       <Head>
@@ -34,12 +41,15 @@ export default function Home () {
         <HeaderMobile/>
 
         <div className='flex flex-col gap-4 h-screen overflow-scroll no-scrollbar'>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
-          <PostCard/>
+          {
+            posts && posts.map(post => (
+              <PostCard
+                post={post}
+                key={post.id}
+              />
+            ))
+          }
+
           <div className='p-6 h-32'></div>
           <div className='p-6 h-32'></div>
           <div className='p-6 h-32'></div>

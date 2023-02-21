@@ -53,7 +53,7 @@ export const SignupForm = () => {
   }
 
   if (user?.user) {
-    updateProfile(user.user, { displayName: `${firstName} ${lastName}` })
+    updateProfile(user.user, { displayName: `${firstName} ${lastName}|${username}` })
     router.replace('/')
   }
 

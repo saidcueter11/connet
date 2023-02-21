@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
-import { Timestamp, addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
+import { Timestamp, addDoc, collection, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { UserCollection } from 'types/databaseTypes'
+import { PostCollection, UserCollection } from 'types/databaseTypes'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDOwobqj3rYHJdldK7jN3dKqaOy4AbiA7o',
@@ -37,18 +37,33 @@ export const addUser = async ({ avatar, email, firstName, lastName, username }: 
   })
 }
 
-// export const getTest = () => {
-//   const userId = 'hiF1QwPqWmbSH1kzhzud' // replace with the actual user ID
-//   const postsRef = query(collection(db, 'posts'), where('userId', '==', userId))
+export const addPost = async ({ content, userId, user, commentsCount, likesCount }: PostCollection) => {
+  const collecitonDb = collection(db, 'posts')
 
-//   // const userRef = collection(db, 'users')
+  return await addDoc(collecitonDb, {
+    content,
+    createdAt: Timestamp.now(),
+    userId,
+    user,
+    likesCount,
+    commentsCount
+  })
+}
 
-//   return getDocs(postsRef).then(snap => {
-//     const { docs } = snap
-//     docs.map(doc => {
-//       const data = doc.data()
-//       console.log({ data })
-//     })
-//     return snap.docs
-//   })
-// }
+export const getLastestPosts = (cb: (post: PostCollection[]) => void) => {
+  const collectionDb = collection(db, 'posts')
+  const sortedCollection = query(collectionDb, orderBy('createdAt', 'desc'))
+
+  return onSnapshot(sortedCollection, ({ docs }) => {
+    const newPost = docs.map(docu => {
+      const data:PostCollection = docu.data()
+      const { createdAt } = data
+      const normalizedDate = createdAt ? +createdAt?.toDate() : 0
+      const { id } = docu
+
+      return { ...data, normalizedDate, id }
+    })
+
+    cb(newPost)
+  })
+}

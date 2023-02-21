@@ -6,5 +6,17 @@ export interface UserCollection {
   lastName?: string,
   registeredAt?: Timestamp,
   username?: string,
-  avatar?: string
+  avatar?: string,
+  displayName?: string
+}
+
+export interface PostCollection {
+  content?: string,
+  userId?: string,
+  createdAt?: Timestamp
+  id?: string
+  normalizedDate?: number
+  user?: UserCollection
+  likesCount?: number
+  commentsCount?: number
 }

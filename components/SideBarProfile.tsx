@@ -36,6 +36,8 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
     }
   }
 
+  const fullName = authUser?.displayName?.split('|')[0] ?? ''
+
   return (
     <div className='relative'>
       <aside id="sidebar-multi-level-sidebar" className={toggleSideBarClass} aria-label="Sidebar">
@@ -52,7 +54,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
             <div className='flex flex-col items-start pt-2'>
               <Avatar rounded={true} />
               <div className='flex flex-col items-center justify-center gap-1'>
-                <h3 className='font-concert-one text-ligth-text-green text-xl'>{authUser?.displayName}</h3>
+                <h3 className='font-concert-one text-ligth-text-green text-xl'>{fullName}</h3>
                 <span className='font-karla text-ligth-text-green text-sm'>View profile</span>
               </div>
             </div>
