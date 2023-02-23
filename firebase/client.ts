@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
-import { Timestamp, addDoc, collection, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { Timestamp, addDoc, collection, getDocs, getFirestore, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { PostCollection, UserCollection } from 'types/databaseTypes'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
@@ -67,6 +67,19 @@ export const getLastestPosts = (cb: (post: PostCollection[]) => void) => {
     })
 
     cb(newPost)
+  })
+}
+
+export const getPostsByUserId = (id: string) => {
+  const collectionDb = collection(db, 'posts')
+  const q = query(collectionDb, where('userId', '==', id))
+  const docRef = getDocs(q)
+
+  return docRef.then(res => {
+    return res.docs.map(data => {
+      const res: PostCollection = data.data()
+      return res
+    })
   })
 }
 

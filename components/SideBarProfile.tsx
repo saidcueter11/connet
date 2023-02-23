@@ -6,6 +6,7 @@ import { Avatar } from 'flowbite-react'
 import { SettingsIcon } from './Icons/SettingsIcon'
 import { LogoutIcon } from './Icons/LogoutIcon'
 import { useAuth } from 'context/authUserContext'
+import Link from 'next/link'
 
 interface SideBarProfileProps {
   isNotificationOpen: boolean
@@ -55,7 +56,9 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
               <Avatar rounded={true} />
               <div className='flex flex-col items-center justify-center gap-1'>
                 <h3 className='font-concert-one text-ligth-text-green text-xl'>{fullName}</h3>
-                <span className='font-karla text-ligth-text-green text-sm'>View profile</span>
+                <Link href={'/profile'} className='font-karla text-ligth-text-green text-sm'>
+                  View profile
+                </Link>
               </div>
             </div>
 

@@ -23,13 +23,13 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
   return (
    <>
     <nav className="fixed bottom-5 bg-dark-green z-10 w-4/5 h-14 rounded-xl left-1/2 transform -translate-x-1/2 flex items-center justify-evenly">
-      <HomeIcon width={30} height={30} fill='none' stroke='#EB6440'/>
-      <MessagesIcon width={30} height={30} fill='none' stroke='#EB6440'/>
+      <HomeIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
+      <MessagesIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
       <div onClick={handleClick}>
-        <NotificationIcon width={30} height={30} fill='none' stroke='#EB6440'/>
+        <NotificationIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
       </div>
       <div onClick={handleClickAdd}>
-        <CreateIcon width={30} height={30} fill='none' stroke='#EB6440' />
+        <CreateIcon width={30} height={30} fill='none' stroke='#FD8C77' />
       </div>
     </nav>
 
