@@ -56,7 +56,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
               <Avatar rounded={true} />
               <div className='flex flex-col items-center justify-center gap-1'>
                 <h3 className='font-concert-one text-ligth-text-green text-xl'>{fullName}</h3>
-                <Link href={'/profile'} className='font-karla text-ligth-text-green text-sm'>
+                <Link href={`/profile/${authUser?.uid}`} className='font-karla text-ligth-text-green text-sm'>
                   View profile
                 </Link>
               </div>

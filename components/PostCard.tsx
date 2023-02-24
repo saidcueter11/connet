@@ -23,7 +23,7 @@ export const PostCard = ({ post }:PostCardProps) => {
   const isPostLiked = auth.authUser?.uid ? post.likes?.includes(auth.authUser?.uid) : false
 
   const handleClick = (e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
-    if (post.id)router.push(`/post/${post.id}`)
+    if (post.id) router.push(`/post/${post.id}`)
   }
 
   const handleLikes = () => {
