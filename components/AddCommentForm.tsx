@@ -29,7 +29,7 @@ export const AddCommentForm = ({ postId, loading }:AddCommentFormProps) => {
 
   return (
     <>
-      <form className='relative bg-light-green min-h-[80px] w-11/12 m-auto rounded-xl shadow' onSubmit={handleSubmit}>
+      <form className='relative bg-light-green min-h-[80px] w-11/12 mx-auto rounded-xl shadow' onSubmit={handleSubmit}>
         <div className='absolute top-2 left-2'>
           <Avatar size={'sm'} rounded={true}/>
         </div>

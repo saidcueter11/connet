@@ -29,7 +29,7 @@ export const SideBarNotifications = ({ toggle, onToggle, isProfileOpen }: SideBa
 
             <div className='grid w-full h-8 grid-rows-1'>
               <div onClick={handleSideBarToggle} className='justify-self-start pt-2'>
-                <CloseIcon fill='none' stroke='#EB6440' width={26} height={26}/>
+                <CloseIcon fill='none' stroke='#FD8C77' width={26} height={26}/>
               </div>
               <h2 className='justify-self-center font-concert-one text-xl text-ligth-text-green'>Notifications</h2>
             </div>

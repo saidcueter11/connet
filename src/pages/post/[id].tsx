@@ -31,13 +31,13 @@ export default function Profile () {
     <>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
 
-      <div className='grid justify-center w-full gap-7 h-screen overflow-scroll no-scrollbar pb-20'>
+      <div className='grid justify-center gap-3 w-full h-screen overflow-scroll no-scrollbar pb-20'>
 
         <div className='grid justify-items-center grid-rows-2 grid-cols-3 items-center'>
           <button className='rounded-full bg-dark-green h-12 w-12 row-start-1 row-end-1 self-end justify-self-end'>
             <GroupIcon width={28} height={28} fill='#FD8C77'/>
           </button>
-          <div className='row-start-2 row-end-2 col-span-3'>
+          <div className='row-start-2 row-end-2 col-span-3 self-start'>
             <Avatar size={'lg'} rounded={true}/>
             <h1 className='justify-self-center font-concert-one text-xl text-text-dark-green'>{props.user?.displayName}</h1>
           </div>
@@ -53,9 +53,9 @@ export default function Profile () {
           <PostCard post={props}/>
         </div>
 
-        <div className='grid gap-2'>
+        <div className='flex flex-col gap-2'>
           <h3 className='font-concert-one text-lg text-text-dark-green'>Comments</h3>
-          <AddCommentForm postId={id as string} loading={loading} commentsCount={props.commentsCount ?? 0}/>
+          <AddCommentForm postId={id as string} loading={loading} />
 
           {
             props.comments && props.comments.map(comment => <CommentCard comment={comment} key={comment.normalizedDate}/>)

@@ -48,7 +48,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
             <div className='grid w-full h-8 grid-rows-1'>
               <h2 className='justify-self-center self-start font-concert-one text-xl text-ligth-text-green'>Profile</h2>
               <div onClick={handleSideBarToggle} className='justify-self-end'>
-                <CloseIcon fill='none' stroke='#EB6440' width={26} height={26}/>
+                <CloseIcon fill='none' stroke='#FD8C77' width={26} height={26}/>
               </div>
             </div>
 
@@ -70,12 +70,12 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
             <div className='h-full pb-5 flex flex-col gap-2'>
 
               <div className='h-full flex items-end gap-2'>
-                <SettingsIcon width={24} height={24} fill='none' stroke='#EB6440'/>
+                <SettingsIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
                 <p className='text-ligth-text-green font-karla'>Settings</p>
               </div>
 
               <div className='flex items-end gap-2 pl-1 w-fit' onClick={handleLogout}>
-                <LogoutIcon width={24} height={24} fill='none' stroke='#EB6440'/>
+                <LogoutIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
                 <p className='text-ligth-text-green font-karla'>Logout</p>
               </div>
 
