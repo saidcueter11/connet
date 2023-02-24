@@ -10,6 +10,15 @@ export interface UserCollection {
   displayName?: string
 }
 
+export interface CommentCollection {
+  user?: UserCollection,
+  content?: string,
+  createdAt?: Timestamp,
+  normalizedDate?: number,
+  postId?: string,
+  userId?: string,
+}
+
 export interface PostCollection {
   content?: string,
   userId?: string,
@@ -19,5 +28,7 @@ export interface PostCollection {
   user?: UserCollection
   likesCount?: number
   commentsCount?: number,
-  img?: string
+  img?: string,
+  comments?: CommentCollection[],
+  likes?: string[]
 }

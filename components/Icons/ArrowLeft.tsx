@@ -6,7 +6,7 @@ export default function ArrowLeft ({ width, height, fill, stroke }: IconsProps) 
 
   const goBack = () => router.back()
   return (
-    <svg onClick={goBack} width={width} height={height} viewBox="0 0 21 21" fill={fill} stroke={stroke}>
+    <svg className='inline' onClick={goBack} width={width} height={height} viewBox="0 0 21 21" fill={fill} stroke={stroke}>
       <g
         fill="none"
         fillRule="evenodd"

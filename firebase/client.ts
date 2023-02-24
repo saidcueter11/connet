@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
-import { Timestamp, addDoc, collection, getDocs, getFirestore, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { PostCollection, UserCollection } from 'types/databaseTypes'
+import { CommentCollection, PostCollection, UserCollection } from 'types/databaseTypes'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 
 const firebaseConfig = {
@@ -49,6 +49,38 @@ export const addPost = async ({ content, userId, user, commentsCount, likesCount
     likesCount,
     commentsCount,
     img
+  })
+}
+
+export const addComment = async ({ content, user, postId, userId }:CommentCollection) => {
+  const collectionDb = collection(db, 'posts')
+
+  return await updateDoc(doc(collectionDb, postId), {
+    commentsCount: increment(1),
+    comments: arrayUnion({
+      user,
+      content,
+      createdAt: Timestamp.now(),
+      userId
+    })
+  })
+}
+
+export const incrementLikes = async ({ id, userId }:PostCollection) => {
+  const collectionDb = collection(db, 'posts')
+
+  return await updateDoc(doc(collectionDb, id), {
+    likesCount: increment(1),
+    likes: arrayUnion(userId)
+  })
+}
+
+export const decrementLikes = async ({ id, userId }:PostCollection) => {
+  const collectionDb = collection(db, 'posts')
+
+  return await updateDoc(doc(collectionDb, id), {
+    likesCount: increment(-1),
+    likes: arrayRemove(userId)
   })
 }
 
