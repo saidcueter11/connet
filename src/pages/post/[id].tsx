@@ -9,6 +9,9 @@ import { doc } from 'firebase/firestore'
 import { ProfileHeader } from 'components/ProfileHeader'
 import { GetServerSidePropsContext } from 'next'
 import { Spinner } from 'flowbite-react'
+import { NavBarMobile } from 'components/NavBarMobile'
+import { useState } from 'react'
+import { SideBarNotifications } from 'components/SideBarNotifications'
 
 interface PostProps {
   id: string
@@ -17,6 +20,7 @@ interface PostProps {
 
 export default function Post ({ id, post }: PostProps) {
   const [value, loading, error] = useDocument(doc(db, 'posts', id as string))
+  const [toggleSideBarNotifications, setToggleSideBarNotifications] = useState(false)
 
   if (loading) {
     return (
@@ -26,18 +30,21 @@ export default function Post ({ id, post }: PostProps) {
     )
   }
 
-  const props = post ?? value?.data()
+  const props: PostCollection = value?.data() ?? post
+
+  props.comments?.reverse()
 
   if (error) return <p>There was an error...</p>
 
   if (props !== undefined) {
     return (
     <>
+      <SideBarNotifications toggle={toggleSideBarNotifications} onToggle={setToggleSideBarNotifications}/>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
 
-      <div className='grid justify-center gap-3 w-full h-screen overflow-scroll no-scrollbar pb-20'>
+      <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-24 no-scrollbar'>
 
-        <ProfileHeader displayName={props.user?.displayName ?? ''}/>
+        <ProfileHeader displayName={props.user?.displayName ?? ''} userId={post.userId}/>
 
         <div className='w-full m-auto'>
           <PostCard post={props}/>
@@ -52,6 +59,7 @@ export default function Post ({ id, post }: PostProps) {
           }
         </div>
 
+        <NavBarMobile onNotificationClick={setToggleSideBarNotifications}/>
       </div>
     </>
     )

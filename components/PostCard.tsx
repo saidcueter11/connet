@@ -14,13 +14,12 @@ interface PostCardProps {
 }
 
 export const PostCard = ({ post }:PostCardProps) => {
+  const auth = useAuth()
+  const isPostLiked = auth.authUser?.uid ? post.likes?.includes(auth.authUser?.uid) : false
   const normalizeDate = post.createdAt ? post.normalizedDate ?? +post.createdAt?.toDate() : 0
   const timeAgo = useTimeAgo(post.normalizedDate ?? normalizeDate)
   const router = useRouter()
   const { id } = router.query
-  const auth = useAuth()
-
-  const isPostLiked = auth.authUser?.uid ? post.likes?.includes(auth.authUser?.uid) : false
 
   const handleClick = (e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
     if (post.id) router.push(`/post/${post.id}`)

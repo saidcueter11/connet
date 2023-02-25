@@ -54,9 +54,6 @@ export default function Home () {
             })
           }
 
-          <div className='p-6 h-32'></div>
-          <div className='p-6 h-32'></div>
-          <div className='p-6 h-32'></div>
         </div>
 
       </main>

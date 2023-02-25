@@ -7,7 +7,7 @@ import { AddModal } from './AddModal'
 
 interface NavBarMobileProps {
   onNotificationClick: (isOpen: boolean) => void
-  isProfileOpen: boolean
+  isProfileOpen?: boolean
 }
 
 export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobileProps) => {
