@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
-import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
+import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { CommentCollection, PostCollection, UserCollection } from 'types/databaseTypes'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
@@ -48,6 +48,15 @@ export const addPost = async ({ content, userId, user, commentsCount, likesCount
     user,
     likesCount,
     commentsCount,
+    img
+  })
+}
+
+export const modifyPost = async ({ id, content, img }:PostCollection) => {
+  const docRef = doc(db, 'posts', id ?? '')
+
+  return updateDoc(docRef, {
+    content,
     img
   })
 }
@@ -119,4 +128,8 @@ export const uploadImage = (file: File) => {
   const storage = getStorage()
   const reference = ref(storage, `images/${file.name}`)
   return uploadBytesResumable(reference, file)
+}
+
+export const deletePost = (id: string) => {
+  return deleteDoc(doc(db, 'posts', id))
 }

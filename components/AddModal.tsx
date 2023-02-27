@@ -3,12 +3,15 @@ import { CloseIcon } from './Icons/CloseIcon'
 import { UploadImgIcon } from './Icons/UploadImgIcon'
 import { useAuth } from 'context/authUserContext'
 import React, { FormEvent, SyntheticEvent, useEffect, useState } from 'react'
-import { addPost, uploadImage } from '@firebase/client'
+import { addPost, modifyPost, uploadImage } from '@firebase/client'
 import { UploadTask, getDownloadURL } from 'firebase/storage'
 
 interface AddModalProps {
   showModal: boolean
   setShowModal: (modal: boolean) => void
+  initialContent?: string
+  initialImageUrl?: string
+  postId?: string
 }
 
 const DRAG_IMAGE_STATES = {
@@ -19,28 +22,45 @@ const DRAG_IMAGE_STATES = {
   COMPLETE: 3
 }
 
-export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
+export const AddModal = ({ showModal, setShowModal, initialContent = '', initialImageUrl = '', postId }: AddModalProps) => {
   const auth = useAuth()
   const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
   const [task, setTask] = useState<UploadTask>()
-  const [imgUrl, setImgUrl] = useState('')
-  const [content, setContent] = useState('')
+  const [imgUrl, setImgUrl] = useState(initialImageUrl)
+  const [content, setContent] = useState(initialContent)
   const [isHydrated, setIsHydratated] = useState(false)
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    addPost({
-      content,
-      userId: auth.authUser?.uid,
-      user: {
-        avatar: auth.authUser?.photoURL ?? '',
-        displayName: auth.authUser?.displayName?.split('|')[0],
-        username: auth.authUser?.displayName?.split('|')[1] ?? ''
-      },
-      commentsCount: 0,
-      likesCount: 0,
-      img: imgUrl
-    }).then(() => setShowModal(false))
+
+    if (initialContent.length === 0) {
+      addPost({
+        content,
+        userId: auth.authUser?.uid,
+        user: {
+          avatar: auth.authUser?.photoURL ?? '',
+          displayName: auth.authUser?.displayName?.split('|')[0],
+          username: auth.authUser?.displayName?.split('|')[1] ?? ''
+        },
+        commentsCount: 0,
+        likesCount: 0,
+        img: imgUrl
+      }).then(() => {
+        setContent('')
+        setShowModal(false)
+      })
+    }
+
+    if (initialContent.length > 0) {
+      modifyPost({
+        id: postId,
+        content,
+        img: imgUrl
+      }).then(() => {
+        setContent('')
+        setShowModal(false)
+      })
+    }
   }
 
   useEffect(() => {
@@ -81,6 +101,16 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
     }
   }
 
+  const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const file = e.target.files ? e.target.files[0] : undefined
+
+    if (file) {
+      const task = uploadImage(file)
+      setTask(task)
+    }
+  }
+
   if (isHydrated) {
     return (
     <Modal show={showModal} className='h-screen' position='center' size='lg'>
@@ -106,10 +136,11 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 value={content}
+                required={true}
               />
 
               {
-                imgUrl &&
+                imgUrl.length > 0 &&
                     <div className='relative'>
                       <button className='absolute right-3 top-3 rounded-full bg-black/80 text-slate-50 w-6 h-6' onClick={() => setImgUrl('')}>X</button>
                       <img src={imgUrl} className='rounded h-auto w-full mb-3'/>
@@ -120,8 +151,10 @@ export const AddModal = ({ showModal, setShowModal }: AddModalProps) => {
                 <label htmlFor='file-input'>
                   <UploadImgIcon width={30} height={30} fill='none' stroke='#EB6440'/>
                 </label>
-                <input type='file' className='hidden' id='file-input'/>
-                <button className='bg-dark-green rounded-full px-5 text-ligth-text-green font-concert-one flex items-center pb-2'>Post</button>
+                <input type='file' className='hidden' onChange={handleImgChange} accept=".jpg, .jpeg, .png" id='file-input'/>
+                <button className='bg-dark-green rounded-full px-5 text-ligth-text-green font-concert-one flex items-center pb-2'>{
+                  initialContent.length === 0 ? 'Post' : 'Save'
+                }</button>
               </div>
 
             </form>

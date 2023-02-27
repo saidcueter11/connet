@@ -1105,6 +1105,10 @@ input:checked + .toggle-bg{
   top: 0.75rem;
 }
 
+.right-2{
+  right: 0.5rem;
+}
+
 .z-10{
   z-index: 10;
 }
@@ -2770,8 +2774,8 @@ input:checked + .toggle-bg{
   padding-bottom: 5rem;
 }
 
-.pb-28{
-  padding-bottom: 7rem;
+.pb-24{
+  padding-bottom: 6rem;
 }
 
 .pb-5{
@@ -2830,12 +2834,8 @@ input:checked + .toggle-bg{
   padding-top: 1rem;
 }
 
-.pb-32{
-  padding-bottom: 8rem;
-}
-
-.pb-24{
-  padding-bottom: 6rem;
+.pb-1{
+  padding-bottom: 0.25rem;
 }
 
 .text-left{
