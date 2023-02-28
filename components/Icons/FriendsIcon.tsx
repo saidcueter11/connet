@@ -1,16 +1,18 @@
 
+import { useRouter } from 'next/router'
 import { IconsProps } from 'types/iconTypes'
 
 export function FriendsIcon ({ width, height, fill, stroke }: IconsProps) {
+  const router = useRouter()
+
+  const goToFriends = () => router.push('/friends')
+
   return (
-    <svg width={width} height={height} viewBox="0 0 18 14" stroke={stroke} fill={fill} xmlns="http://www.w3.org/2000/svg" className='inline'>
-    <g clipPath="url(#clip0_84_4072)">
-    <path d="M9.9 3.5C9.9 5.4332 8.28844 7 6.3 7C4.31156 7 2.7 5.4332 2.7 3.5C2.7 1.5668 4.31156 0 6.3 0C8.28844 0 9.9 1.5668 9.9 3.5ZM0 13.1879C0 10.4945 2.24437 8.3125 5.01469 8.3125H7.58531C10.3556 8.3125 12.6 10.4945 12.6 13.1879C12.6 13.6363 12.2259 14 11.7647 14H0.835312C0.374063 14 0 13.6363 0 13.1879ZM17.1366 14H13.2581C13.41 13.743 13.5 13.4449 13.5 13.125V12.9062C13.5 11.2465 12.7378 9.75625 11.5369 8.75547C11.6044 8.75274 11.6691 8.75 11.7366 8.75H13.4634C15.9694 8.75 18 10.7242 18 13.1605C18 13.6254 17.6119 14 17.1366 14ZM12.15 7C11.2781 7 10.4906 6.65547 9.91969 6.10039C10.4738 5.37305 10.8 4.47344 10.8 3.5C10.8 2.76719 10.6144 2.07539 10.2853 1.46836C10.8084 1.09648 11.4525 0.875 12.15 0.875C13.8909 0.875 15.3 2.24492 15.3 3.9375C15.3 5.63008 13.8909 7 12.15 7Z" fill={fill}/>
-    </g>
-    <defs>
-    <clipPath id="clip0_84_4072">
-    <rect width="18" height="14" fill="white"/>
-    </clipPath>
-    </defs>
+    <svg onClick={goToFriends} xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-users inline" width={width} height={height} viewBox="0 0 24 24" strokeWidth="2" stroke={stroke} fill={fill} strokeLinecap="round" strokeLinejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="9" cy="7" r="4" />
+      <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/>
     </svg>)
 }

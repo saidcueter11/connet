@@ -22,12 +22,15 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
   const router = useRouter()
   const userId = id ?? router.query.id
   const qPosts = query(collection(db, 'posts'), where('userId', '==', userId as string))
-  const qUser = doc(db, 'users', userId)
-  const [valueUser, loadingUser, errorUser] = useDocument(qUser)
+  const collectionUser = collection(db, 'users')
+  const docUser = doc(collectionUser, userId)
+  const [valueUser, loadingUser, errorUser] = useDocument(docUser)
   const [value, loading, error] = useCollection<PostCollection>(qPosts)
   const [toggleSideBarNotifications, setToggleSideBarNotifications] = useState(false)
 
   if (error || errorUser) return <p>There was an error...</p>
+
+  if (loading || loadingUser) return <Spinner/>
 
   const snap = value?.docs.map(post => {
     const data = post.data()

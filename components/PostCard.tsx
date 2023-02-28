@@ -87,11 +87,11 @@ export const PostCard = ({ post }:PostCardProps) => {
         {
           post.userId === auth.authUser?.uid &&
             <div className='absolute right-3 top-3'>
-              <Dropdown placement='left' label={<DotsVerticalIcon width={20} height={20} fill='#8D4B3F'/>} size={'sm'} color={'transparent'} outline={false} arrowIcon={false} inline={true}>
-                <Dropdown.Item onClick={handleModify}>
+              <Dropdown placement='left' label={<DotsVerticalIcon width={20} height={20} fill='#8D4B3F'/>} size={'sm'} color={'transparent'} outline={false} arrowIcon={false} inline={true} >
+                <Dropdown.Item onClick={handleModify} className='font-concert-one'>
                   Modify
                 </Dropdown.Item>
-                <Dropdown.Item onClick={handleDelete}>
+                <Dropdown.Item onClick={handleDelete} className='font-concert-one'>
                   Delete
                 </Dropdown.Item>
               </Dropdown>
