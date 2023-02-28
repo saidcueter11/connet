@@ -53,7 +53,8 @@ export const addPost = async ({ content, userId, user, commentsCount, likesCount
 }
 
 export const modifyPost = async ({ id, content, img }:PostCollection) => {
-  const docRef = doc(db, 'posts', id ?? '')
+  const collectionDb = collection(db, 'posts')
+  const docRef = doc(collectionDb, id)
 
   return updateDoc(docRef, {
     content,
@@ -77,6 +78,11 @@ export const addComment = async ({ content, user, postId, userId }:CommentCollec
 
 export const incrementLikes = async ({ id, userId }:PostCollection) => {
   const collectionDb = collection(db, 'posts')
+  const userDb = collection(db, 'users')
+
+  updateDoc(doc(userDb, userId), {
+    likesCount: increment(1)
+  })
 
   return await updateDoc(doc(collectionDb, id), {
     likesCount: increment(1),
@@ -86,10 +92,25 @@ export const incrementLikes = async ({ id, userId }:PostCollection) => {
 
 export const decrementLikes = async ({ id, userId }:PostCollection) => {
   const collectionDb = collection(db, 'posts')
+  const userDb = collection(db, 'users')
+
+  updateDoc(doc(userDb, userId), {
+    likesCount: increment(-1)
+  })
 
   return await updateDoc(doc(collectionDb, id), {
     likesCount: increment(-1),
     likes: arrayRemove(userId)
+  })
+}
+
+export const addFriend = async ({ id, friendId }: UserCollection) => {
+  const collectionDb = collection(db, 'users')
+  const docRef = doc(collectionDb, id)
+
+  return updateDoc(docRef, {
+    friends: arrayUnion(friendId),
+    friendsCount: increment(1)
   })
 }
 
@@ -130,6 +151,6 @@ export const uploadImage = (file: File) => {
   return uploadBytesResumable(reference, file)
 }
 
-export const deletePost = (id: string) => {
-  return deleteDoc(doc(db, 'posts', id))
+export const deletePost = async (id: string) => {
+  return await deleteDoc(doc(db, 'posts', id))
 }

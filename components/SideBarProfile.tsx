@@ -9,8 +9,8 @@ import { useAuth } from 'context/authUserContext'
 import Link from 'next/link'
 
 interface SideBarProfileProps {
-  isNotificationOpen: boolean
-  isOpen: (isOpen: boolean) => void
+  isNotificationOpen?: boolean
+  isOpen?: (isOpen: boolean) => void
 }
 
 export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProps) => {
@@ -31,7 +31,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
   const handleSideBarToggle = () => {
     if (!isNotificationOpen) {
       setToggleSideBar(prev => !prev)
-      isOpen(toggleSideBar)
+      isOpen ? isOpen(toggleSideBar) : console.log('')
       if (toggleSideBar) setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform')
       if (!toggleSideBar) setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full')
     }

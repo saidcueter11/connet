@@ -8,6 +8,11 @@ export interface UserCollection {
   username?: string,
   avatar?: string,
   displayName?: string
+  id?: string
+  friendId?: string
+  friends?: UserCollection[]
+  likesCount?: number
+  friendsCount?: number
 }
 
 export interface CommentCollection {
