@@ -1,9 +1,8 @@
 import { Avatar } from 'flowbite-react'
-import { FriendsIcon } from './Icons/FriendsIcon'
-import Like from './Icons/Like'
 import { addFriend, removeFriend } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
+import { SlideCardIcons } from './SlideCardIcons'
 interface FriendCardProps {
   displayName: string,
   likesCount: number,
@@ -40,21 +39,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
         </div>
 
         <div className='flex gap-2'>
-
-          <div >
-            <div className='rounded-full bg-light-green p-2'>
-              <FriendsIcon width={30} height={30} stroke='#FD8C77' fill='none'/>
-            </div>
-            <p className='text-center font-concert-one text-ligth-text-green'>{friendsCount}</p>
-          </div>
-
-          <div>
-            <div className='rounded-full bg-light-green p-2'>
-              <Like width={30} height={30} stroke='#FD8C77' fill='none'/>
-            </div>
-            <p className='text-center font-concert-one text-ligth-text-green'>{likesCount}</p>
-          </div>
-
+          <SlideCardIcons friendsCount={friendsCount} likesCount={likesCount}/>
         </div>
 
         {

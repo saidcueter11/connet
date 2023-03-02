@@ -1,10 +1,12 @@
 import { db } from '@firebase/client'
+import { CarosuelContainer } from 'components/CaroselContainer'
 import { FriendCard } from 'components/FriendCard'
+import ArrowLeft from 'components/Icons/ArrowLeft'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { SideBarProfile } from 'components/SideBarProfile'
 import { useAuth } from 'context/authUserContext'
 import { collection } from 'firebase/firestore'
-import { Carousel, Spinner, Tabs } from 'flowbite-react'
+import { Spinner, Tabs } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useCollection } from 'react-firebase-hooks/firestore'
@@ -40,19 +42,24 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 
   return (
     <>
-      <SideBarProfile/>
-      <section className='h-full grid justify-center w-full grid-rows-10'>
-      <h1 className='text-3xl font-concert-one text-center h-0 row-span-1'>Friends</h1>
 
-      <div className='row-span-3 font-concert-one'>
-        <Tabs.Group style='underline' className='justify-center'>
-          <Tabs.Item active={true} title={firstTabTitle}>
-            <div className='h-72 w-80 bg-dark-green rounded-lg'>
-              <Carousel slide={false} indicators={false}>
-                {
-                  currentUser?.friends?.length === 0
-                    ? <p>You do not have any friends</p>
-                    : users.filter(user => currentUserFriendsList?.includes(user.id as string)).map(user => (
+      {
+        loggedUser?.id === currentUser?.id
+          ? <SideBarProfile/>
+          : <ArrowLeft width={24} height={24} stroke={'black'}/>
+      }
+      <section className='h-full grid justify-center w-full grid-rows-10'>
+        <h1 className='text-3xl text-text-dark-green font-concert-one text-center h-0 row-span-1'>Friends</h1>
+
+        <div className='row-span-3 font-concert-one'>
+          <Tabs.Group style='underline' className='justify-center'>
+            <Tabs.Item active={true} title={firstTabTitle}>
+            {
+              currentUser?.friends?.length === 0
+                ? <p>You do not have any friends</p>
+                : <CarosuelContainer>
+                    {
+                      users.filter(user => currentUserFriendsList?.includes(user.id as string)).map(user => (
                         <FriendCard
                           key={user.id}
                           displayName={`${user.firstName} ${user.lastName}`}
@@ -61,17 +68,18 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
                           likesCount={user.likesCount ?? 0}
                           areWeFriends={true}
                         />))
-                }
-              </Carousel>
-            </div>
-          </Tabs.Item>
+                    }
+                  </CarosuelContainer>
+            }
+            </Tabs.Item>
 
-          <Tabs.Item title='Discover'>
-            <div className='h-72 w-80 bg-dark-green rounded-lg'>
-              <Carousel slide={false} indicators={false}>
-                {
-                  loggedUserFriendsList?.length !== users.length - 1
-                    ? users.filter(user => user.id !== id && !currentUserFriendsList?.includes(user.id as string) && user.id !== authUser?.uid).map(user => (
+            <Tabs.Item title='Discover'>
+            {
+              loggedUserFriendsList?.length === users.length - 1
+                ? <p>Congrats! You are friends with all the users in the app</p>
+                : <CarosuelContainer>
+                    {
+                      users.filter(user => user.id !== id && !currentUserFriendsList?.includes(user.id as string) && user.id !== authUser?.uid).map(user => (
                         <FriendCard
                           key={user.id}
                           displayName={`${user.firstName} ${user.lastName}`}
@@ -80,13 +88,12 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
                           likesCount={user.likesCount ?? 0}
                           areWeFriends={loggedUserFriendsList?.includes(user.id as string)}
                         />))
-                    : <p>Congrats! You are friends with all the users in the app</p>
-                }
-              </Carousel>
-            </div>
-          </Tabs.Item>
-        </Tabs.Group>
-      </div>
+                    }
+                  </CarosuelContainer>
+              }
+            </Tabs.Item>
+          </Tabs.Group>
+        </div>
 
       </section>
 

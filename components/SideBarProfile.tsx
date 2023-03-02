@@ -63,8 +63,8 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
             </div>
 
             <div className='h-44 gap-2 flex flex-col justify-center'>
-              <p className='font-karla text-ligth-text-green'>Friends</p>
-              <p className='font-karla text-ligth-text-green'>Groups</p>
+              <Link href={`/friends/${authUser?.uid}`} className='font-karla text-ligth-text-green'>Friends</Link>
+              <Link href={`/groups/${authUser?.uid}`} className='font-karla text-ligth-text-green'>Groups</Link>
             </div>
 
             <div className='h-full pb-5 flex flex-col gap-2'>

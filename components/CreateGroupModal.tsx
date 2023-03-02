@@ -1,0 +1,34 @@
+import { Modal } from 'flowbite-react'
+import { CloseIcon } from './Icons/CloseIcon'
+
+interface CreateGroupModalProps {
+  showModal: boolean
+  setShowModal: (isOpen: boolean) => void
+}
+
+export const CreateGroupModal = ({ showModal, setShowModal }: CreateGroupModalProps) => {
+  return (
+    <Modal show={showModal} className='h-screen' position='center' size='lg'>
+
+      <Modal.Body className='bg-dark-green rounded p-3'>
+        <div className='w-full min-h-[400px] relative grid '>
+          <div className='absolute w-full' onClick={() => setShowModal(false)}>
+            <CloseIcon width={30} height={30} fill='none' stroke='#EB6440'/>
+          </div>
+
+          <p className='self-start justify-self-center font-concert-one text-ligth-text-green text-xl'>Create Group</p>
+
+          <form>
+            <label>Group name</label>
+            <input></input>
+
+            <label>Group description</label>
+            <input></input>
+
+          </form>
+        </div>
+      </Modal.Body>
+
+    </Modal>
+  )
+}
