@@ -39,7 +39,7 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
   })
 
   const props = snap ?? posts ?? []
-  const currentUser = valueUser?.data() ?? user
+  const currentUser: UserCollection = valueUser?.data() ?? user
   const fullName = `${currentUser.firstName} ${currentUser.lastName}` ?? ''
 
   return (
@@ -48,7 +48,7 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
       <ArrowLeft width={24} height={24} stroke={'black'}/>
       <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-20 no-scrollbar'>
 
-        <ProfileHeader displayName={fullName} loading={loadingUser ?? loading}/>
+        <ProfileHeader displayName={fullName} loading={loadingUser ?? loading} userId={userId}/>
 
         {
           loading || loadingUser

@@ -6,6 +6,7 @@ import { useAuth } from 'context/authUserContext'
 import { collection } from 'firebase/firestore'
 import { Carousel, Spinner, Tabs } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
+import { useRouter } from 'next/router'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { UserCollection } from 'types/databaseTypes'
 
@@ -15,6 +16,8 @@ interface FriendsPageProp {
 
 export default function FriendsPage ({ userList }: FriendsPageProp) {
   const { authUser } = useAuth()
+  const router = useRouter()
+  const { id } = router.query
   const collectionUser = collection(db, 'users')
   const [value, loading, error] = useCollection<UserCollection>(collectionUser)
 
@@ -29,7 +32,8 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
   })
 
   const users = snap ?? userList ?? []
-  const currentUser = users.find(user => user.id === authUser?.uid)
+  const currentUser = users.find(user => user.id === id)
+  const loggedUser = users.find(user => user.id === authUser?.uid)
   const currentUserFriendsList = currentUser?.friends
 
   return (
@@ -40,7 +44,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 
       <div className='row-span-3 font-concert-one'>
         <Tabs.Group style='underline' className='justify-center'>
-          <Tabs.Item active={true} title='My friends'>
+          <Tabs.Item active={true} title={authUser?.uid === id ? 'My Friends' : `${currentUser?.firstName}'s Friends`}>
             <div className='h-72 w-80 bg-dark-green rounded-lg'>
               <Carousel slide={false} indicators={false}>
                 {
@@ -65,14 +69,15 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
               <Carousel slide={false} indicators={false}>
                 {
                   currentUser?.friends?.length !== users.length - 1
-                    ? users.filter(user => user.id !== authUser?.uid && !currentUserFriendsList?.includes(user.id as string)).map(user => (
-                    <FriendCard
-                      key={user.id}
-                      displayName={`${user.firstName} ${user.lastName}`}
-                      friendsCount={user.friendsCount ?? 0}
-                      userId={user.id}
-                      likesCount={user.likesCount ?? 0}
-                    />))
+                    ? users.filter(user => user.id !== id && !currentUserFriendsList?.includes(user.id as string) && user.id !== authUser?.uid).map(user => (
+                        <FriendCard
+                          key={user.id}
+                          displayName={`${user.firstName} ${user.lastName}`}
+                          friendsCount={user.friendsCount ?? 0}
+                          userId={user.id}
+                          likesCount={user.likesCount ?? 0}
+                          areWeFriends={loggedUser?.friends?.includes(user.id as string)}
+                        />))
                     : <p>Congrats! You are friends with all the users in the app</p>
                 }
               </Carousel>

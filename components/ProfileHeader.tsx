@@ -26,7 +26,7 @@ export const ProfileHeader = ({ displayName, userId, loading }: ProfileHeaderPro
             }
           </Link>
           <button className='rounded-full bg-dark-green h-12 w-12 col-start-2 col-end-2'>
-            <FriendsIcon width={26} height={26} stroke='#FD8C77' fill='none'/>
+            <FriendsIcon width={26} height={26} stroke='#FD8C77' fill='none' id={userId}/>
           </button>
           <button className='rounded-full bg-dark-green h-12 w-12 row-start-1 row-end-1 col-start-3 col-end-3 self-end justify-self-start'>
             <SendIcon width={28} height={28} stroke='#FD8C77' fill='none' />
