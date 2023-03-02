@@ -2,15 +2,18 @@ import { firestore } from '@firebase/admin'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  const { query: { id } } = req
-
   firestore
     .collection('users')
     .get()
     .then(doc => {
-      const users = doc.docs.map(docu => docu.data())
+      const users = doc.docs.map(docu => {
+        const data = docu.data()
+        const id = docu.id
 
-      res.json({ users, id })
+        return { ...data, id }
+      })
+
+      res.json({ users })
     })
 
     .catch(e => {

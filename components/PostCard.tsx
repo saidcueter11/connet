@@ -32,14 +32,16 @@ export const PostCard = ({ post }:PostCardProps) => {
     if (!isPostLiked) {
       incrementLikes({
         id: post.id ? post.id : id as string,
-        userId: auth.authUser?.uid
+        currentUserId: auth.authUser?.uid,
+        userId: post.userId
       })
     }
 
     if (isPostLiked) {
       decrementLikes({
         id: post.id ? post.id : id as string,
-        userId: auth.authUser?.uid
+        currentUserId: auth.authUser?.uid,
+        userId: post.userId
       })
     }
   }

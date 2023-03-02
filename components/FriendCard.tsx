@@ -1,8 +1,9 @@
 import { Avatar } from 'flowbite-react'
 import { FriendsIcon } from './Icons/FriendsIcon'
 import Like from './Icons/Like'
-import { addFriend } from '@firebase/client'
+import { addFriend, removeFriend } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
+import { useRouter } from 'next/router'
 interface FriendCardProps {
   displayName: string,
   likesCount: number,
@@ -14,17 +15,29 @@ interface FriendCardProps {
 
 export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areWeFriends }: FriendCardProps) => {
   const auth = useAuth()
+  const router = useRouter()
+
   const handleAddFriend = () => {
-    addFriend({
+    !areWeFriends && addFriend({
+      id: auth.authUser?.uid,
+      friendId: userId
+    })
+
+    areWeFriends && removeFriend({
       id: auth.authUser?.uid,
       friendId: userId
     })
   }
+
+  const goToProfile = () => router.push(`/profile/${userId}`)
+
   return (
     <>
       <div className='flex flex-col h-full items-center justify-center gap-2 p-6'>
-        <Avatar rounded={true} size={'lg'}/>
-        <h2 className='font-concert-one text-xl text-ligth-text-green'>{displayName}</h2>
+        <div onClick={goToProfile}>
+          <Avatar rounded={true} size={'lg'}/>
+          <h2 className='font-concert-one text-xl text-ligth-text-green'>{displayName}</h2>
+        </div>
 
         <div className='flex gap-2'>
 
@@ -45,7 +58,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
         </div>
 
         <div className='flex gap-4'>
-          <button onClick={handleAddFriend} className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one'>{areWeFriends ? 'Remove from friend' : 'Add friend'}</button>
+          <button onClick={handleAddFriend} className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one min-h-[48px] min-w-[125px]'>{areWeFriends ? 'Remove from friend' : 'Add friend'}</button>
           <button className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one'>Send direct message</button>
         </div>
       </div>

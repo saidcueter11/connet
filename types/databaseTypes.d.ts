@@ -10,7 +10,7 @@ export interface UserCollection {
   displayName?: string
   id?: string
   friendId?: string
-  friends?: UserCollection[]
+  friends?: string[]
   likesCount?: number
   friendsCount?: number
 }

@@ -76,7 +76,13 @@ export const addComment = async ({ content, user, postId, userId }:CommentCollec
   })
 }
 
-export const incrementLikes = async ({ id, userId }:PostCollection) => {
+interface likesType {
+  id?: string,
+  currentUserId?: string,
+  userId?: string
+}
+
+export const incrementLikes = async ({ id, currentUserId, userId }:likesType) => {
   const collectionDb = collection(db, 'posts')
   const userDb = collection(db, 'users')
 
@@ -86,11 +92,11 @@ export const incrementLikes = async ({ id, userId }:PostCollection) => {
 
   return await updateDoc(doc(collectionDb, id), {
     likesCount: increment(1),
-    likes: arrayUnion(userId)
+    likes: arrayUnion(currentUserId)
   })
 }
 
-export const decrementLikes = async ({ id, userId }:PostCollection) => {
+export const decrementLikes = async ({ id, currentUserId, userId }:likesType) => {
   const collectionDb = collection(db, 'posts')
   const userDb = collection(db, 'users')
 
@@ -100,17 +106,39 @@ export const decrementLikes = async ({ id, userId }:PostCollection) => {
 
   return await updateDoc(doc(collectionDb, id), {
     likesCount: increment(-1),
-    likes: arrayRemove(userId)
+    likes: arrayRemove(currentUserId)
   })
 }
 
 export const addFriend = async ({ id, friendId }: UserCollection) => {
   const collectionDb = collection(db, 'users')
   const docRef = doc(collectionDb, id)
+  const docRefFriend = doc(collectionDb, friendId)
+
+  updateDoc(docRefFriend, {
+    friends: arrayUnion(id),
+    friendsCount: increment(1)
+  })
 
   return updateDoc(docRef, {
     friends: arrayUnion(friendId),
     friendsCount: increment(1)
+  })
+}
+
+export const removeFriend = async ({ id, friendId }:UserCollection) => {
+  const collectionDb = collection(db, 'users')
+  const docRef = doc(collectionDb, id)
+  const docRefFriend = doc(collectionDb, friendId)
+
+  updateDoc(docRefFriend, {
+    friends: arrayRemove(id),
+    friendsCount: increment(-1)
+  })
+
+  return updateDoc(docRef, {
+    friends: arrayRemove(friendId),
+    friendsCount: increment(-1)
   })
 }
 
