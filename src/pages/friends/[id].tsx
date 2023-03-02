@@ -35,6 +35,8 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
   const currentUser = users.find(user => user.id === id)
   const loggedUser = users.find(user => user.id === authUser?.uid)
   const currentUserFriendsList = currentUser?.friends
+  const loggedUserFriendsList = loggedUser?.friends
+  const firstTabTitle = authUser?.uid === id ? 'My Friends' : `${currentUser?.firstName}'s Friends`
 
   return (
     <>
@@ -44,7 +46,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 
       <div className='row-span-3 font-concert-one'>
         <Tabs.Group style='underline' className='justify-center'>
-          <Tabs.Item active={true} title={authUser?.uid === id ? 'My Friends' : `${currentUser?.firstName}'s Friends`}>
+          <Tabs.Item active={true} title={firstTabTitle}>
             <div className='h-72 w-80 bg-dark-green rounded-lg'>
               <Carousel slide={false} indicators={false}>
                 {
@@ -68,7 +70,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
             <div className='h-72 w-80 bg-dark-green rounded-lg'>
               <Carousel slide={false} indicators={false}>
                 {
-                  currentUser?.friends?.length !== users.length - 1
+                  loggedUserFriendsList?.length !== users.length - 1
                     ? users.filter(user => user.id !== id && !currentUserFriendsList?.includes(user.id as string) && user.id !== authUser?.uid).map(user => (
                         <FriendCard
                           key={user.id}
@@ -76,7 +78,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
                           friendsCount={user.friendsCount ?? 0}
                           userId={user.id}
                           likesCount={user.likesCount ?? 0}
-                          areWeFriends={loggedUser?.friends?.includes(user.id as string)}
+                          areWeFriends={loggedUserFriendsList?.includes(user.id as string)}
                         />))
                     : <p>Congrats! You are friends with all the users in the app</p>
                 }

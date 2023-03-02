@@ -1589,12 +1589,12 @@ input:checked + .toggle-bg{
   width: 100vw;
 }
 
-.min-w-\[327px\]{
-  min-width: 327px;
-}
-
 .min-w-\[125px\]{
   min-width: 125px;
+}
+
+.min-w-\[327px\]{
+  min-width: 327px;
 }
 
 .max-w-2xl{
