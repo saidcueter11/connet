@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
 import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { CommentCollection, PostCollection, UserCollection } from 'types/databaseTypes'
+import { CommentCollection, GroupCollecion, PostCollection, UserCollection } from 'types/databaseTypes'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 
 const firebaseConfig = {
@@ -181,4 +181,17 @@ export const uploadImage = (file: File) => {
 
 export const deletePost = async (id: string) => {
   return await deleteDoc(doc(db, 'posts', id))
+}
+
+export const createGroup = async ({ adminId, groupName, description, privacy, groupAvatar }: GroupCollecion) => {
+  const collectionDb = collection(db, 'groups')
+
+  return await addDoc(collectionDb, {
+    adminId,
+    groupName,
+    description,
+    privacy,
+    groupMembers: arrayUnion(adminId),
+    groupAvatar
+  })
 }

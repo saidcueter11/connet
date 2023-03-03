@@ -37,3 +37,12 @@ export interface PostCollection {
   comments?: CommentCollection[],
   likes?: string[]
 }
+
+export interface GroupCollecion {
+  adminId?: string,
+  groupName?: string,
+  description?: string,
+  privacy?: string,
+  groupAvatar?: string,
+  groupMembers?: string[]
+}
