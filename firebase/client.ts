@@ -192,6 +192,25 @@ export const createGroup = async ({ adminId, groupName, description, privacy, gr
     description,
     privacy,
     groupMembers: arrayUnion(adminId),
-    groupAvatar
+    groupAvatar,
+    membersCount: increment(1)
+  })
+}
+
+export const joinGroup = async (id: string, userId: string) => {
+  const collectionDb = collection(db, 'groups')
+
+  return await updateDoc(doc(collectionDb, id), {
+    groupMembers: arrayUnion(userId),
+    membersCount: increment(1)
+  })
+}
+
+export const leaveGroup = async (id: string, userId: string) => {
+  const collectionDb = collection(db, 'groups')
+
+  return await updateDoc(doc(collectionDb, id), {
+    groupMembers: arrayRemove(userId),
+    membersCount: increment(-1)
   })
 }

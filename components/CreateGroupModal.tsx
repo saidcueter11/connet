@@ -1,6 +1,7 @@
 import { Modal } from 'flowbite-react'
 import { CloseIcon } from './Icons/CloseIcon'
 import { CreateGroupForm } from './CreateGroupForm'
+import { useEffect, useState } from 'react'
 
 interface CreateGroupModalProps {
   showModal: boolean
@@ -8,7 +9,12 @@ interface CreateGroupModalProps {
 }
 
 export const CreateGroupModal = ({ showModal, setShowModal }: CreateGroupModalProps) => {
-  return (
+  const [isHydratated, setIsHydratated] = useState(false)
+
+  useEffect(() => setIsHydratated(true), [])
+
+  if (isHydratated) {
+    return (
     <Modal show={showModal} className='h-screen' position='center' size='lg'>
 
       <Modal.Body className='bg-dark-green rounded p-3'>
@@ -19,10 +25,13 @@ export const CreateGroupModal = ({ showModal, setShowModal }: CreateGroupModalPr
 
           <p className='self-start justify-self-center font-concert-one text-ligth-text-green text-xl'>Create Group</p>
 
-          <CreateGroupForm/>
+          <CreateGroupForm setShowModal={setShowModal}/>
         </div>
       </Modal.Body>
 
     </Modal>
-  )
+    )
+  }
+
+  return <></>
 }

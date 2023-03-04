@@ -1,4 +1,5 @@
 import { createGroup } from '@firebase/client'
+import { useAuth } from 'context/authUserContext'
 import { ChangeEvent, SyntheticEvent, useState } from 'react'
 
 // eslint-disable-next-line no-unused-vars
@@ -9,16 +10,28 @@ enum GroupPrivacy {
   private = 'Private'
 }
 
-export const CreateGroupForm = () => {
+interface CreateGroupFormProps {
+  setShowModal: (isOpen: boolean) => void
+}
+
+export const CreateGroupForm = ({ setShowModal }:CreateGroupFormProps) => {
+  const { authUser } = useAuth()
   const [description, setDescription] = useState('')
   const [groupName, setGroupName] = useState('')
   const [privacy, setPrivacy] = useState(GroupPrivacy.public)
 
   const handleSubmit = (e:SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     createGroup({
-
+      adminId: authUser?.uid,
+      description,
+      groupName,
+      groupAvatar: '',
+      privacy
+    }).then(() => {
+      setDescription('')
+      setGroupName('')
+      setShowModal(false)
     })
   }
 
@@ -31,12 +44,12 @@ export const CreateGroupForm = () => {
       <form className='row-span-4 flex flex-col gap-2 p-3' onSubmit={handleSubmit}>
             <div className='flex flex-col'>
               <label className='font-concert-one text-lg pb-2 text-ligth-text-green'>Group name</label>
-              <input className='bg-light-green rounded p-1'></input>
+              <input className='bg-light-green rounded p-1' value={groupName} onChange={e => setGroupName(e.target.value)}></input>
             </div>
 
             <div className='flex flex-col'>
               <label className='font-concert-one text-lg pb-2 text-ligth-text-green'>Group description</label>
-              <textarea className='resize-none bg-light-green rounded'/>
+              <textarea className='resize-none bg-light-green rounded' onChange={e => setDescription(e.target.value)} value={description}/>
             </div>
 
             <fieldset

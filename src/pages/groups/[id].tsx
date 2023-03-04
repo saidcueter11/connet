@@ -1,14 +1,45 @@
+import { db } from '@firebase/client'
 import { CarosuelContainer } from 'components/CaroselContainer'
 import { CreateGroupModal } from 'components/CreateGroupModal'
+import { GroupCard } from 'components/GroupCard'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { SideBarProfile } from 'components/SideBarProfile'
-import { SlideCardIcons } from 'components/SlideCardIcons'
-import { Avatar, Tabs } from 'flowbite-react'
+import { useAuth } from 'context/authUserContext'
+import { collection } from 'firebase/firestore'
+import { Spinner, Tabs } from 'flowbite-react'
+import { GetServerSidePropsContext } from 'next'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useCollection } from 'react-firebase-hooks/firestore'
+import { GroupCollecion } from 'types/databaseTypes'
 
-export default function GroupsPage () {
+interface GroupsPageProps {
+  groupsList: GroupCollecion[]
+}
+
+export default function GroupsPage ({ groupsList }: GroupsPageProps) {
   const [showModal, setShowModal] = useState(false)
+  const collectionGroups = collection(db, 'groups')
+  const [value, loading, error] = useCollection<GroupCollecion>(collectionGroups)
+  const { authUser } = useAuth()
+  const router = useRouter()
+  const { id } = router.query
 
+  if (error) return <p>There was an error...</p>
+
+  if (loading) return <Spinner/>
+
+  const snap = value?.docs.map(doc => {
+    const data = doc.data()
+    const { id } = doc
+    return { ...data, id }
+  })
+
+  const groups = snap ?? groupsList ?? []
+  const loggedUserGroups = groups.filter(group => !group.groupMembers?.includes(authUser?.uid as string))
+  const currentUserGroups = groups.filter(group => group.groupMembers?.includes(id as string))
+
+  console.log({ groupsList })
   return (
     <>
       <SideBarProfile/>
@@ -19,25 +50,36 @@ export default function GroupsPage () {
           <Tabs.Group style='underline' className='justify-center'>
             <Tabs.Item active={true} title='My groups'>
               <CarosuelContainer>
-                <div className='flex flex-col h-full items-center justify-center gap-2 p-6'>
-                  <div>
-                    <Avatar rounded={true} size={'lg'}/>
-                    <h2 className='font-concert-one text-xl text-ligth-text-green'>Group name</h2>
-                  </div>
-
-                  <div className='flex gap-2'>
-                    <SlideCardIcons friendsCount={0} likesCount={0}/>
-                  </div>
-
-                  <button className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one h-9 w-28'>Join Group</button>
-                </div>
+                {
+                  currentUserGroups.map(group => (
+                    <GroupCard
+                      key={group.id}
+                      groupId={group.id ?? ''}
+                      adminId={group.adminId ?? ''}
+                      groupName={group.groupName ?? ''}
+                      likesCount={group.likesCount ?? 0}
+                      membersCount={group.membersCount ?? 0}
+                      groupMembers={group.groupMembers ?? []}
+                    />))
+                }
               </CarosuelContainer>
 
             </Tabs.Item>
 
             <Tabs.Item title='Discover'>
               <CarosuelContainer>
-                <p>sas</p>
+                {
+                  loggedUserGroups.map(group => (
+                    <GroupCard
+                      key={group.id}
+                      groupId={group.id ?? ''}
+                      adminId={group.adminId ?? ''}
+                      groupName={group.groupName ?? ''}
+                      likesCount={group.likesCount ?? 0}
+                      membersCount={group.membersCount ?? 0}
+                      groupMembers={group.groupMembers ?? []}
+                    />))
+                }
               </CarosuelContainer>
             </Tabs.Item>
           </Tabs.Group>
@@ -51,4 +93,18 @@ export default function GroupsPage () {
       <NavBarMobile/>
     </>
   )
+}
+
+export async function getServerSideProps (context: GetServerSidePropsContext) {
+  const apiRes = await fetch('http://localhost:3000/api/groups')
+  if (apiRes.ok) {
+    const props = await apiRes.json()
+    const { groups } = props
+    const [groupsList] = await Promise.all([groups])
+    return {
+      props: {
+        groupsList
+      }
+    }
+  }
 }

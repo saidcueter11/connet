@@ -44,5 +44,8 @@ export interface GroupCollecion {
   description?: string,
   privacy?: string,
   groupAvatar?: string,
-  groupMembers?: string[]
+  groupMembers?: string[],
+  membersCount?: number,
+  likesCount?: number,
+  id?: string
 }
