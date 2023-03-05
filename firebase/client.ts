@@ -218,3 +218,29 @@ export const leaveGroup = async (id: string, userId: string) => {
     membersCount: increment(-1)
   })
 }
+
+export const joinRequestGroup = async (id:string, userId:string) => {
+  const collectionDb = collection(db, 'groups')
+
+  return await updateDoc(doc(collectionDb, id), {
+    joinRequests: arrayUnion(userId)
+  })
+}
+
+export const cancelJoinRequest = async (id:string, userId:string) => {
+  const collectionDb = collection(db, 'groups')
+
+  return await updateDoc(doc(collectionDb, id), {
+    joinRequests: arrayRemove(userId)
+  })
+}
+
+export const acceptJoinRequestGroup = async (id:string, userId:string) => {
+  const collectionDb = collection(db, 'groups')
+
+  return await updateDoc(doc(collectionDb, id), {
+    joinRequests: arrayRemove(userId),
+    groupMembers: arrayUnion(userId),
+    membersCount: increment(1)
+  })
+}

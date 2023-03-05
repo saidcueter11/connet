@@ -5,29 +5,31 @@ import { GroupCard } from 'components/GroupCard'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { SideBarProfile } from 'components/SideBarProfile'
 import { useAuth } from 'context/authUserContext'
-import { collection } from 'firebase/firestore'
+import { collection, doc } from 'firebase/firestore'
 import { Spinner, Tabs } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useCollection } from 'react-firebase-hooks/firestore'
-import { GroupCollecion } from 'types/databaseTypes'
+import { useCollection, useDocument } from 'react-firebase-hooks/firestore'
+import { GroupCollecion, UserCollection } from 'types/databaseTypes'
 
 interface GroupsPageProps {
   groupsList: GroupCollecion[]
 }
 
 export default function GroupsPage ({ groupsList }: GroupsPageProps) {
-  const [showModal, setShowModal] = useState(false)
-  const collectionGroups = collection(db, 'groups')
-  const [value, loading, error] = useCollection<GroupCollecion>(collectionGroups)
   const { authUser } = useAuth()
   const router = useRouter()
   const { id } = router.query
+  const [showModal, setShowModal] = useState(false)
+  const collectionGroups = collection(db, 'groups')
+  const docRef = doc(db, 'users', id as string)
+  const [value, loading, error] = useCollection<GroupCollecion>(collectionGroups)
+  const [valueCurrentUser, loadingCurrentUser, errorCurrentUser] = useDocument<UserCollection>(docRef)
 
-  if (error) return <p>There was an error...</p>
+  if (error || errorCurrentUser) return <p>There was an error...</p>
 
-  if (loading) return <Spinner/>
+  if (loading || loadingCurrentUser) return <Spinner/>
 
   const snap = value?.docs.map(doc => {
     const data = doc.data()
@@ -35,9 +37,12 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
     return { ...data, id }
   })
 
+  const userSnap = valueCurrentUser?.data()
+
   const groups = snap ?? groupsList ?? []
   const loggedUserGroups = groups.filter(group => !group.groupMembers?.includes(authUser?.uid as string))
   const currentUserGroups = groups.filter(group => group.groupMembers?.includes(id as string))
+  const firstTabTitle = authUser?.uid === id ? 'My groups' : `${userSnap?.firstName}'s groups`
 
   console.log({ groupsList })
   return (
@@ -48,7 +53,7 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
 
         <div className='row-span-3 flex flex-col items-center font-concert-one'>
           <Tabs.Group style='underline' className='justify-center'>
-            <Tabs.Item active={true} title='My groups'>
+            <Tabs.Item active={true} title={firstTabTitle}>
               <CarosuelContainer>
                 {
                   currentUserGroups.map(group => (
@@ -60,6 +65,8 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
                       likesCount={group.likesCount ?? 0}
                       membersCount={group.membersCount ?? 0}
                       groupMembers={group.groupMembers ?? []}
+                      privacy={group.privacy ?? ''}
+                      joinRequests={group.joinRequests || []}
                     />))
                 }
               </CarosuelContainer>
@@ -78,6 +85,8 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
                       likesCount={group.likesCount ?? 0}
                       membersCount={group.membersCount ?? 0}
                       groupMembers={group.groupMembers ?? []}
+                      privacy={group.privacy ?? ''}
+                      joinRequests={group.joinRequests || []}
                     />))
                 }
               </CarosuelContainer>

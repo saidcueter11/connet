@@ -47,5 +47,6 @@ export interface GroupCollecion {
   groupMembers?: string[],
   membersCount?: number,
   likesCount?: number,
-  id?: string
+  id?: string,
+  joinRequests?: string[]
 }

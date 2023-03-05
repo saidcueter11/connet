@@ -1,9 +1,18 @@
 
+import { useRouter } from 'next/router'
 import { IconsProps } from 'types/iconTypes'
 
-export function GroupIcon ({ width, height, fill, stroke }: IconsProps) {
+interface GroupIconProps extends IconsProps {
+  id?: string
+}
+
+export function GroupIcon ({ width, height, fill, stroke, id }: GroupIconProps) {
+  const router = useRouter()
+
+  const goToGroups = () => router.push(`/groups/${id}`)
+
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-users inline" width={width} height={height} viewBox="-3 0 25 25" strokeWidth="2" stroke={stroke} fill={fill} strokeLinecap="round" strokeLinejoin="round">
+    <svg onClick={goToGroups} xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-users inline" width={width} height={height} viewBox="-3 0 25 25" strokeWidth="2" stroke={stroke} fill={fill} strokeLinecap="round" strokeLinejoin="round">
 
     <path stroke="none" d="M0 0h30v30H0z" fill="none"/>
     <circle cx="9" cy="7" r="4" />
