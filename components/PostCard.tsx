@@ -1,4 +1,4 @@
-import { Avatar, Dropdown } from 'flowbite-react'
+import { Avatar, Dropdown, Modal } from 'flowbite-react'
 import Like from 'components/Icons/Like'
 import { CommentIcon } from 'components/Icons/Comment'
 import { Dot } from './Icons/Dot'
@@ -23,6 +23,7 @@ export const PostCard = ({ post }:PostCardProps) => {
   const router = useRouter()
   const { id } = router.query
   const [showModal, setShowModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const handleClick = (e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
     if (post.id) router.push(`/post/${post.id}`)
@@ -47,7 +48,7 @@ export const PostCard = ({ post }:PostCardProps) => {
   }
 
   const handleDelete = () => {
-    deletePost(post.id ?? '')
+    deletePost(post.id as string)
   }
 
   const handleModify = () => {
@@ -93,7 +94,7 @@ export const PostCard = ({ post }:PostCardProps) => {
                 <Dropdown.Item onClick={handleModify} className='font-concert-one'>
                   Modify
                 </Dropdown.Item>
-                <Dropdown.Item onClick={handleDelete} className='font-concert-one'>
+                <Dropdown.Item onClick={() => setShowDeleteModal(true)} className='font-concert-one'>
                   Delete
                 </Dropdown.Item>
               </Dropdown>
@@ -104,6 +105,33 @@ export const PostCard = ({ post }:PostCardProps) => {
 
       {
         typeof window !== 'undefined' && <AddModal postId={post.id} showModal={showModal} setShowModal={setShowModal} initialContent={post.content ?? ''} initialImageUrl={post.img ?? ''}/>
+      }
+
+      {
+        typeof window !== 'undefined' &&
+        <Modal show={showDeleteModal}>
+          <Modal.Body>
+            <div className="text-center">
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete this post?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <button
+                color="failure"
+                onClick={handleDelete}
+              >
+                Yes, I am sure
+              </button>
+              <button
+                color="gray"
+                onClick={() => setShowDeleteModal(false)}
+              >
+                No, cancel
+              </button>
+            </div>
+          </div>
+          </Modal.Body>
+        </Modal>
       }
     </>
   )

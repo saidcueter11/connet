@@ -197,6 +197,10 @@ export const createGroup = async ({ adminId, groupName, description, privacy, gr
   })
 }
 
+export const deleteGroup = async (id: string) => {
+  return await deleteDoc(doc(db, 'groups', id))
+}
+
 export const joinGroup = async (id: string, userId: string) => {
   const collectionDb = collection(db, 'groups')
 

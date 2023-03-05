@@ -51,7 +51,6 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
         }
 
       </div>
-
     </>
   )
 }
