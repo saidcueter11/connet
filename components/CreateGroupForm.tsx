@@ -3,7 +3,7 @@ import { useAuth } from 'context/authUserContext'
 import { ChangeEvent, SyntheticEvent, useState } from 'react'
 
 // eslint-disable-next-line no-unused-vars
-enum GroupPrivacy {
+export enum GroupPrivacy {
   // eslint-disable-next-line no-unused-vars
   public = 'Public',
   // eslint-disable-next-line no-unused-vars

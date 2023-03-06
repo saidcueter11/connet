@@ -44,7 +44,6 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
   const currentUserGroups = groups.filter(group => group.groupMembers?.includes(id as string))
   const firstTabTitle = authUser?.uid === id ? 'My groups' : `${userSnap?.firstName}'s groups`
 
-  console.log({ groupsList })
   return (
     <>
       <SideBarProfile/>

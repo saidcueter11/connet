@@ -38,6 +38,10 @@ export interface PostCollection {
   likes?: string[]
 }
 
+export interface GroupPostCollection extends PostCollection {
+  groupId?: string
+}
+
 export interface GroupCollecion {
   adminId?: string,
   groupName?: string,

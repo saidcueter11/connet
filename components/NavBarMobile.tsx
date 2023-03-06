@@ -2,7 +2,7 @@ import { CreateIcon } from './Icons/CreateIcon'
 import { HomeIcon } from './Icons/HomeIcon'
 import { MessagesIcon } from './Icons/MessagesIcon'
 import { useState } from 'react'
-import { AddModal } from './AddModal'
+import { PostsModal } from './PostsModal'
 import { FriendsIcon } from './Icons/FriendsIcon'
 import { useAuth } from 'context/authUserContext'
 
@@ -31,7 +31,7 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
     </nav>
 
     {
-      typeof window !== 'undefined' && <AddModal showModal={showModal} setShowModal={setShowModal}/>
+      typeof window !== 'undefined' && <PostsModal showModal={showModal} setShowModal={setShowModal}/>
     }
    </>
   )

@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import { decrementLikes, deletePost, incrementLikes } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { DotsVerticalIcon } from './Icons/DotsVerticalIcon'
-import { AddModal } from './AddModal'
+import { PostsModal } from './PostsModal'
 
 interface PostCardProps {
   post: PostCollection
@@ -104,7 +104,7 @@ export const PostCard = ({ post }:PostCardProps) => {
       </div>
 
       {
-        typeof window !== 'undefined' && <AddModal postId={post.id} showModal={showModal} setShowModal={setShowModal} initialContent={post.content ?? ''} initialImageUrl={post.img ?? ''}/>
+        typeof window !== 'undefined' && <PostsModal postId={post.id} showModal={showModal} setShowModal={setShowModal} initialContent={post.content ?? ''} initialImageUrl={post.img ?? ''}/>
       }
 
       {

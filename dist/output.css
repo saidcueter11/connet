@@ -1488,6 +1488,10 @@ input:checked + .toggle-bg{
   min-height: 80px;
 }
 
+.min-h-screen{
+  min-height: 100vh;
+}
+
 .w-10{
   width: 2.5rem;
 }
@@ -2864,6 +2868,26 @@ input:checked + .toggle-bg{
 
 .pt-4{
   padding-top: 1rem;
+}
+
+.pt-6{
+  padding-top: 1.5rem;
+}
+
+.pt-10{
+  padding-top: 2.5rem;
+}
+
+.pb-28{
+  padding-bottom: 7rem;
+}
+
+.pb-40{
+  padding-bottom: 10rem;
+}
+
+.pb-36{
+  padding-bottom: 9rem;
 }
 
 .text-left{

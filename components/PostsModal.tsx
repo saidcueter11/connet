@@ -3,15 +3,16 @@ import { CloseIcon } from './Icons/CloseIcon'
 import { UploadImgIcon } from './Icons/UploadImgIcon'
 import { useAuth } from 'context/authUserContext'
 import React, { FormEvent, SyntheticEvent, useEffect, useState } from 'react'
-import { addPost, modifyPost, uploadImage } from '@firebase/client'
+import { addGroupPost, addPost, modifyPost, uploadImage } from '@firebase/client'
 import { UploadTask, getDownloadURL } from 'firebase/storage'
 
-interface AddModalProps {
+interface PostsModalProps {
   showModal: boolean
   setShowModal: (modal: boolean) => void
   initialContent?: string
   initialImageUrl?: string
   postId?: string
+  groupId?: string
 }
 
 const DRAG_IMAGE_STATES = {
@@ -22,7 +23,7 @@ const DRAG_IMAGE_STATES = {
   COMPLETE: 3
 }
 
-export const AddModal = ({ showModal, setShowModal, initialContent = '', initialImageUrl = '', postId }: AddModalProps) => {
+export const PostsModal = ({ showModal, setShowModal, initialContent = '', initialImageUrl = '', postId, groupId }: PostsModalProps) => {
   const auth = useAuth()
   const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
   const [task, setTask] = useState<UploadTask>()
@@ -33,7 +34,7 @@ export const AddModal = ({ showModal, setShowModal, initialContent = '', initial
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (initialContent.length === 0) {
+    if (initialContent.length === 0 && !groupId) {
       addPost({
         content,
         userId: auth.authUser?.uid,
@@ -51,11 +52,30 @@ export const AddModal = ({ showModal, setShowModal, initialContent = '', initial
       })
     }
 
-    if (initialContent.length > 0) {
+    if (initialContent.length > 0 && !groupId) {
       modifyPost({
         id: postId,
         content,
         img: imgUrl
+      }).then(() => {
+        setContent('')
+        setShowModal(false)
+      })
+    }
+
+    if (initialContent.length === 0 && groupId) {
+      addGroupPost({
+        content,
+        userId: auth.authUser?.uid,
+        user: {
+          avatar: auth.authUser?.photoURL ?? '',
+          displayName: auth.authUser?.displayName?.split('|')[0],
+          username: auth.authUser?.displayName?.split('|')[1] ?? ''
+        },
+        commentsCount: 0,
+        likesCount: 0,
+        img: imgUrl,
+        groupId
       }).then(() => {
         setContent('')
         setShowModal(false)

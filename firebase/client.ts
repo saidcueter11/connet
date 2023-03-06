@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
 import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { CommentCollection, GroupCollecion, PostCollection, UserCollection } from 'types/databaseTypes'
+import { CommentCollection, GroupCollecion, GroupPostCollection, PostCollection, UserCollection } from 'types/databaseTypes'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 
 const firebaseConfig = {
@@ -242,5 +242,38 @@ export const acceptJoinRequestGroup = async (id:string, userId:string) => {
     joinRequests: arrayRemove(userId),
     groupMembers: arrayUnion(userId),
     membersCount: increment(1)
+  })
+}
+
+export const addGroupPost = async ({ content, userId, user, commentsCount, likesCount, img, groupId }: GroupPostCollection) => {
+  const collecitonDb = collection(db, 'groupPosts')
+
+  return await addDoc(collecitonDb, {
+    content,
+    createdAt: Timestamp.now(),
+    userId,
+    user,
+    likesCount,
+    commentsCount,
+    img,
+    groupId
+  })
+}
+
+export const getLastestGroupPosts = (cb: (post: GroupPostCollection[]) => void, groupId: string) => {
+  const collectionDb = collection(db, 'groupPosts')
+  const sortedCollection = query(collectionDb, where('groupId', '==', groupId))
+
+  return onSnapshot(sortedCollection, ({ docs }) => {
+    const newPost = docs.map(docu => {
+      const data:PostCollection = docu.data()
+      const { createdAt } = data
+      const normalizedDate = createdAt ? +createdAt?.toDate() : 0
+      const { id } = docu
+
+      return { ...data, normalizedDate, id }
+    })
+
+    cb(newPost)
   })
 }

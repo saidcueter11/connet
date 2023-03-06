@@ -3,6 +3,7 @@ import { SlideCardIcons } from './SlideCardIcons'
 import { useAuth } from 'context/authUserContext'
 import { cancelJoinRequest, deleteGroup, joinGroup, joinRequestGroup, leaveGroup } from '@firebase/client'
 import { useState } from 'react'
+import Link from 'next/link'
 
 interface GroupCardProps {
   groupName: string
@@ -22,7 +23,6 @@ export const GroupCard = ({ groupName, membersCount, likesCount, adminId, groupI
   const [showModal, setShowModal] = useState(false)
   const isPrivate = privacy === 'Private'
   const isRequestSent = joinRequests ? joinRequests.includes(authUser?.uid as string) : false
-  console.log({ joinRequests })
 
   const handleJoinGroup = () => {
     joinGroup(groupId, authUser?.uid as string)
@@ -47,10 +47,10 @@ export const GroupCard = ({ groupName, membersCount, likesCount, adminId, groupI
   return (
     <>
       <div className='flex flex-col h-full items-center justify-center gap-2 p-6'>
-        <div>
+        <Link href={`/group/${groupId}`}>
           <Avatar rounded={true} size={'lg'}/>
           <h2 className='font-concert-one text-xl text-ligth-text-green'>{groupName}</h2>
-        </div>
+        </Link>
 
         <div className='flex gap-2'>
           <SlideCardIcons friendsCount={membersCount} likesCount={likesCount}/>
