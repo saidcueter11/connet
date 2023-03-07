@@ -1,7 +1,8 @@
 
 import admin from 'firebase-admin'
+import { firebaseCredentials } from './credentials'
 
-const serviceAccount = require('./conet-5404a-firebase-adminsdk-kd4ev-3fad3af0f2.json')
+const serviceAccount = firebaseCredentials
 
 !admin.apps.length && admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
