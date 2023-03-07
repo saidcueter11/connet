@@ -4,6 +4,7 @@ import ArrowLeft from 'components/Icons/ArrowLeft'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { PostCard } from 'components/PostCard'
 import { useAuth } from 'context/authUserContext'
+import { Spinner } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useEffect, useState } from 'react'
 import { GroupCollecion, GroupPostCollection } from 'types/databaseTypes'
@@ -17,10 +18,12 @@ interface GroupPageProps {
 export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
   const auth = useAuth()
   const [posts, setPosts] = useState<GroupPostCollection[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (auth.authUser) {
       const unsub = getLastestGroupPosts(setPosts, id)
+      setLoading(false)
       return () => unsub && unsub()
     }
   }, [auth.authUser])
@@ -34,13 +37,20 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
     <>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
       <section className='h-screen overflow-y-scroll no-scrollbar pb-36'>
-        <GroupHeader groupName={group.groupName as string} groupId={id} groupDescription={group.description} groupMembers={group.groupMembers}/>
+        {
+          !loading
+            ? <>
+                <GroupHeader groupName={group.groupName} groupId={id} groupDescription={group.description} groupMembers={group.groupMembers} joinRequest={group.joinRequests} adminId={group.adminId}/>
 
-        <div className='flex flex-col gap-4 pt-10'>
-          {
-            sortedPosts.map(post => <PostCard post={post} key={post.id}/>)
-          }
-        </div>
+                <div className='flex flex-col gap-4 pt-10'>
+                  {
+                    sortedPosts.map(post => <PostCard post={post} key={post.id}/>)
+                  }
+                </div>
+              </>
+            : <Spinner/>
+
+        }
       </section>
       <NavBarMobile/>
     </>
