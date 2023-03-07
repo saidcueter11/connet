@@ -43,7 +43,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
     <div className='relative'>
       <aside id="sidebar-multi-level-sidebar" className={toggleSideBarClass} aria-label="Sidebar">
         <div className="h-full px-5 py-4 overflow-y-hidden bg-dark-green dark:bg-gray-800">
-          <div className='flex flex-col w-full h-full'>
+          <div className='flex flex-col w-full h-full relative'>
 
             <div className='grid w-full h-8 grid-rows-1'>
               <h2 className='justify-self-center self-start font-concert-one text-xl text-ligth-text-green'>Profile</h2>
@@ -67,7 +67,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
               <Link href={`/groups/${authUser?.uid}`} className='font-karla text-ligth-text-green'>Groups</Link>
             </div>
 
-            <div className='h-full pb-5 flex flex-col gap-2'>
+            <div className='h-full pb-5 flex flex-col gap-2 absolute bottom-1'>
 
               <div className='h-full flex items-end gap-2'>
                 <SettingsIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
