@@ -1,4 +1,4 @@
-import { firestore } from '@firebase/admin'
+import { firestore } from '../../../firebase/admin'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default (req: NextApiRequest, res: NextApiResponse) => {

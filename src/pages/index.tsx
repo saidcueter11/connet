@@ -1,4 +1,4 @@
-import { getLastestPosts } from '@firebase/client'
+import { getLastestPosts } from '../../firebase/client'
 import { HeaderMobile } from 'components/HeaderMobile'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { PostCard } from 'components/PostCard'

@@ -1,4 +1,4 @@
-import { db } from '@firebase/client'
+import { db } from '../../../../firebase/client'
 import { CarosuelContainer } from 'components/CaroselContainer'
 import ArrowLeft from 'components/Icons/ArrowLeft'
 import { MembersCard } from 'components/MembersCard'

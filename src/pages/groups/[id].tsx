@@ -1,4 +1,4 @@
-import { db } from '@firebase/client'
+import { db } from '../../../firebase/client'
 import { CarosuelContainer } from 'components/CaroselContainer'
 import { CreateGroupModal } from 'components/CreateGroupModal'
 import { GroupCard } from 'components/GroupCard'

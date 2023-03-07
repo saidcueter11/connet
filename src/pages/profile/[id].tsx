@@ -1,4 +1,4 @@
-import { db } from '@firebase/client'
+import { db } from '../../../firebase/client'
 import ArrowLeft from 'components/Icons/ArrowLeft'
 import { NavBarMobile } from 'components/NavBarMobile'
 import { PostCard } from 'components/PostCard'
