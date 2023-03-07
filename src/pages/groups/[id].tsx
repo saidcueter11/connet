@@ -29,7 +29,16 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
 
   if (error || errorCurrentUser) return <p>There was an error...</p>
 
-  if (loading || loadingCurrentUser) return <Spinner/>
+  if (loading || loadingCurrentUser) {
+    return (
+    <>
+      <SideBarProfile/>
+      <h1 className='font-concert-one text-3xl text-center row-span-1 text-text-dark-green'>Groups</h1>
+      <Spinner/>
+      <NavBarMobile/>
+    </>
+    )
+  }
 
   const snap = value?.docs.map(doc => {
     const data = doc.data()

@@ -25,7 +25,17 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 
   if (error) return <p>There was an error...</p>
 
-  if (loading) return <Spinner/>
+  if (loading) {
+    return (
+    <>
+      <SideBarProfile/>
+      <h1 className='text-3xl text-text-dark-green font-concert-one text-center h-0 row-span-1'>Friends</h1>
+
+      <Spinner/>
+      <NavBarMobile/>
+    </>
+    )
+  }
 
   const snap = value?.docs.map(post => {
     const data = post.data()

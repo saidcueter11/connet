@@ -18,9 +18,9 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
   const path = router.route.split('/')[1]
-  const atHome = path === ''
   const atFriends = path === 'friends'
-  const atChats = path === 'chats'
+  const atMessaging = path === 'messaging'
+  const atHome = path !== 'friends' && 'messaging'
 
   const handleClickAdd = () => {
     setShowModal(true)
@@ -28,10 +28,27 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
 
   return (
    <>
-    <nav className="fixed bottom-5 bg-dark-green z-10 w-4/5 h-14 rounded-xl left-1/2 transform -translate-x-1/2 flex items-center justify-evenly">
-      <HomeIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
-      <MessagesIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
-      <div className='relative'>
+    <nav className="fixed py-8 bottom-5 bg-dark-green z-10 w-4/5 h-14 rounded-xl left-1/2 transform -translate-x-1/2 flex items-center justify-evenly">
+      <div className={`relative ${atHome ? 'scale-110' : ''}`}>
+        <HomeIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
+        {
+          atHome &&
+            <div className='absolute -bottom-4 left-1/2 transform -translate-x-1/2'>
+              <Dot width={20} height={20} fill='#FD8C77' />
+            </div>
+        }
+      </div>
+
+      <div className={`relative ${atHome ? 'scale-110' : ''}`}>
+        <MessagesIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
+        {
+          atMessaging &&
+            <div className='absolute -bottom-4 left-1/2 transform -translate-x-1/2'>
+              <Dot width={20} height={20} fill='#FD8C77' />
+            </div>
+        }
+      </div>
+      <div className={`relative ${atFriends ? 'scale-110' : ''}`}>
         <FriendsIcon width={30} height={30} fill='none' stroke='#FD8C77' id={authUser?.uid}/>
         {
           atFriends &&
