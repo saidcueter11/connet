@@ -35,6 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-firebase/admin.ts
 firebase/conet-5404a-firebase-adminsdk-kd4ev-3fad3af0f2.json
 
