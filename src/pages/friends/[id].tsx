@@ -37,6 +37,8 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
     )
   }
 
+  console.log(process.env.NEXT_PUBLIC_API_URL)
+
   const snap = value?.docs.map(post => {
     const data = post.data()
     const { id } = post
@@ -113,6 +115,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 }
 
 export async function getServerSideProps (context: GetServerSidePropsContext) {
+  console.log(process.env.NEXT_PUBLIC_API_URL)
   const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`)
   if (apiRes.ok) {
     const props = await apiRes.json()
