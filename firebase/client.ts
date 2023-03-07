@@ -245,6 +245,23 @@ export const acceptJoinRequestGroup = async (id:string, userId:string) => {
   })
 }
 
+export const declineJoinRequestGroup = async (id: string, userId: string) => {
+  const collectionDb = collection(db, 'groups')
+
+  return await updateDoc(doc(collectionDb, id), {
+    joinRequests: arrayRemove(userId)
+  })
+}
+
+export const removeGroupMember = async (id: string, userId: string) => {
+  const collectionDb = collection(db, 'groups')
+
+  return await updateDoc(doc(collectionDb, id), {
+    groupMembers: arrayRemove(userId),
+    membersCount: increment(-1)
+  })
+}
+
 export const addGroupPost = async ({ content, userId, user, commentsCount, likesCount, img, groupId }: GroupPostCollection) => {
   const collecitonDb = collection(db, 'groupPosts')
 

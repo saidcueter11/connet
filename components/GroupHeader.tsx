@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { useAuth } from 'context/authUserContext'
 import { LeaveGroupIcon } from './Icons/LeaveGroupIcon'
 import { joinGroup, leaveGroup } from '@firebase/client'
+import { useRouter } from 'next/router'
 
 interface GroupHeaderProps {
   groupName?: string
@@ -19,6 +20,7 @@ interface GroupHeaderProps {
 
 export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers, joinRequest, adminId }: GroupHeaderProps) => {
   const auth = useAuth()
+  const router = useRouter()
   const isAdmin = adminId === auth.authUser?.uid
   const isUserMember = groupMembers?.includes(auth.authUser?.uid as string)
   const [showModal, setShowModal] = useState(false)
@@ -45,6 +47,11 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
     }
   }
 
+  const goToMembers = () => {
+    const { asPath } = router
+    router.push(`${asPath}/members`)
+  }
+
   return (
     <>
       <div className={`absolute rounded-lg p-4 bg-dark-green w-3/5 z-10 text-center font-karla text-ligth-text-green left-1/2 transform -translate-x-1/2 ${!failPostPopout ? '-translate-y-32' : ''} transition-transform`}>
@@ -62,7 +69,7 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
           <h1 className='justify-self-center font-concert-one text-xl text-text-dark-green text-center'>{groupName}</h1>
         </div>
         <div className='col-start-2 col-end-2 flex flex-col items-center justify-center'>
-          <button className='rounded-full bg-dark-green h-12 w-12 col-start-2 col-end-2 relative'>
+          <button className='rounded-full bg-dark-green h-12 w-12 col-start-2 col-end-2 relative' onClick={goToMembers}>
             <MembersIcon width={26} height={26} stroke='#FD8C77' fill='none' id={groupId}/>
             {
               joinRequest && joinRequest?.length > 0 && isAdmin &&
