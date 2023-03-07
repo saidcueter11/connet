@@ -5,11 +5,7 @@ import { firebaseCredentials } from './credentials'
 const serviceAccount = firebaseCredentials
 
 !admin.apps.length && admin.initializeApp({
-  credential: admin.credential.cert({
-    clientEmail: process.env.NEXT_PUBLIC_CLIENT_EMAIL,
-    privateKey: process.env.NEXT_PUBLIC_PRIVATE_KEY,
-    projectId: process.env.NEXT_PUBLIC_PROJECT_ID
-  })
+  credential: admin.credential.cert(serviceAccount)
 })
 
 export const firestore = admin.firestore()
