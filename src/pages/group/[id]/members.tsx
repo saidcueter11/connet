@@ -114,8 +114,8 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
 export async function getServerSideProps (context: GetServerSidePropsContext) {
   const { id } = context.query
   const [apiUsers, apiGroup] = await Promise.all([
-    fetch('http://localhost:3000/api/users'),
-    fetch(`http://localhost:3000/api/group/${id}`)
+    fetch(`${process.env.API_URL}/api/users`),
+    fetch(`${process.env.API_URL}/api/group/${id}`)
   ])
   if (apiUsers.ok && apiGroup.ok) {
     const [propsUsers, propsGroup] = await Promise.all([

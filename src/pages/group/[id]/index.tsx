@@ -59,7 +59,7 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
 
 export async function getServerSideProps (context: GetServerSidePropsContext) {
   const { id } = context.query
-  const apiRes = await fetch(`http://localhost:3000/api/group/${id}`)
+  const apiRes = await fetch(`${process.env.API_URL}/api/group/${id}`)
   if (apiRes.ok) {
     const res = await apiRes.json()
     const { group, data } = res
