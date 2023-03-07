@@ -113,7 +113,7 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
 }
 
 export async function getServerSideProps (context: GetServerSidePropsContext) {
-  const apiRes = await fetch(`${process.env.API_URL}/api/groups`)
+  const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/groups`)
   if (apiRes.ok) {
     const props = await apiRes.json()
     const { groups } = props

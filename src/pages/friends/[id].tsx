@@ -113,7 +113,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 }
 
 export async function getServerSideProps (context: GetServerSidePropsContext) {
-  const apiRes = await fetch(`${process.env.API_URL}/api/users`)
+  const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`)
   if (apiRes.ok) {
     const props = await apiRes.json()
     const { users } = props

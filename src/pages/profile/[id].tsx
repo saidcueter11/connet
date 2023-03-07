@@ -68,7 +68,7 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
 
 export async function getServerSideProps (context: GetServerSidePropsContext) {
   const { id } = context.query
-  const apiRes = await fetch(`${process.env.API_URL}/api/profile/${id}`)
+  const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/profile/${id}`)
   if (apiRes.ok) {
     const res = await apiRes.json()
     const { user, data } = res
