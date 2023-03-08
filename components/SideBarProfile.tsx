@@ -67,7 +67,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
               <Link href={`/groups/${authUser?.uid}`} className='font-karla text-ligth-text-green'>Groups</Link>
             </div>
 
-            <div className='h-full pb-5 flex flex-col gap-2 absolute bottom-1'>
+            <div className='pb-5 flex flex-col gap-2 absolute bottom-1'>
 
               <div className='h-full flex items-end gap-2'>
                 <SettingsIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
