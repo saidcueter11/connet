@@ -362,7 +362,7 @@ interface SendMessageType {
 export const sendMessage = async ({ firstUserName, secondUserName, content, userId, senderName }: SendMessageType) => {
   const collectionDb = collection(db, 'messages')
 
-  return addDoc(collectionDb, {
+  return await addDoc(collectionDb, {
     firstUserName,
     secondUserName,
     messages: arrayUnion({

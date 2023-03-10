@@ -4,11 +4,12 @@ import { SendIcon } from 'components/Icons/SendIcon'
 import { UploadImgIcon } from 'components/Icons/UploadImgIcon'
 import { MessagesContainerMobile } from 'components/MessagesContainerMobile'
 import { useAuth } from 'context/authUserContext'
-import { SyntheticEvent, useState } from 'react'
+import { FormEvent, SyntheticEvent, useState } from 'react'
 
 export default function ChatPage () {
   const [content, setContent] = useState('')
   const { authUser } = useAuth()
+
   const handleSubmit = (e:SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     sendMessage({
@@ -18,6 +19,20 @@ export default function ChatPage () {
       secondUserName: 'Valeria',
       senderName: authUser?.displayName as string
     }).then(() => setContent(''))
+  }
+
+  function handleInput (event: FormEvent<HTMLTextAreaElement>) {
+    const newValue = event.currentTarget.value
+    setContent(newValue)
+    adjustHeight(event.currentTarget)
+  }
+
+  function adjustHeight (textarea: HTMLTextAreaElement) {
+    const { style } = textarea
+    style.height = 'auto'
+    style.height = `${textarea.scrollHeight}px`
+    style.overflowY = 'hidden'
+    style.resize = 'none'
   }
 
   return (
@@ -47,8 +62,15 @@ export default function ChatPage () {
             <UploadImgIcon width={30} height={30} fill='none' stroke='#EB6440'/>
           </label>
           <input type='file' className='hidden' accept=".jpg, .jpeg, .png" id='file-input'/>
-          <div className='w-full'>
-            <div role='textbox' contentEditable={true} className='w-3/4 m-auto pt-2 min-h-[40px] rounded-xl border-transparent focus:outline-none focus:ring-0 focus:border-action-red-ligth bg-light-green font-karla text-text-dark-green' onInput={(e) => setContent(e.currentTarget.textContent as string)}/>
+
+          <div className='bg-light-green rounded-xl flex flex-col justify-center gap-2'>
+            <textarea
+              className="w-3/4 m-auto pt-2 min-h-[40px] rounded-xl border-transparent focus:outline-none focus:ring-0 focus:border-action-red-ligth bg-light-green font-karla text-text-dark-green"
+              value={content}
+              onInput={handleInput}
+              rows={1}
+            />
+
             <img className='w-3/4 m-auto rounded-lg' src='https://randomwordgenerator.com/img/picture-generator/57e0d1424e50ac14f1dc8460962e33791c3ad6e04e507441722872d79644c7_640.jpg'/>
           </div>
 
