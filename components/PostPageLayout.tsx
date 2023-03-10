@@ -11,11 +11,12 @@ interface PostPageLayoutProps {
   toggleSideBarNotifications: boolean,
   setToggleSideBarNotifications: (isOpen: boolean) => void,
   props: PostCollection,
-  id?: string,
-  loading: boolean
+  postId?: string,
+  loading: boolean,
+  postGroupId?: string
 }
 
-export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNotifications, props, id, loading }: PostPageLayoutProps) => {
+export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNotifications, props, postId, loading, postGroupId }: PostPageLayoutProps) => {
   return (
     <>
       <SideBarNotifications toggle={toggleSideBarNotifications} onToggle={setToggleSideBarNotifications}/>
@@ -31,7 +32,7 @@ export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNot
 
         <div className='flex flex-col gap-2'>
           <h3 className='font-concert-one text-lg text-text-dark-green'>Comments</h3>
-          <AddCommentForm postId={id as string} loading={loading} />
+          <AddCommentForm postId={postId as string} loading={loading} postGroupId={postGroupId} />
 
           {
             props.comments && props.comments.map(comment => <CommentCard comment={comment} key={comment.normalizedDate}/>)

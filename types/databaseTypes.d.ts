@@ -22,6 +22,7 @@ export interface CommentCollection {
   normalizedDate?: number,
   postId?: string,
   userId?: string,
+  postGroupId?: string
 }
 
 export interface PostCollection {

@@ -1,21 +1,23 @@
 import { Avatar, Spinner } from 'flowbite-react'
 import { SendIcon } from './Icons/SendIcon'
 import { SyntheticEvent, useState } from 'react'
-import { addComment } from '@firebase/client'
+import { addComment, addCommentPostGroup } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 
 interface AddCommentFormProps {
   postId: string
   loading: boolean
+  postGroupId?: string
 }
 
-export const AddCommentForm = ({ postId, loading }:AddCommentFormProps) => {
+export const AddCommentForm = ({ postId, loading, postGroupId }:AddCommentFormProps) => {
+  console.log({ postGroupId })
   const [content, setContent] = useState('')
   const auth = useAuth()
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    addComment({
+    !postGroupId && addComment({
       content,
       userId: auth.authUser?.uid,
       user: {
@@ -24,6 +26,17 @@ export const AddCommentForm = ({ postId, loading }:AddCommentFormProps) => {
         username: auth.authUser?.displayName?.split('|')[1] ?? ''
       },
       postId
+    }).then(() => setContent(''))
+
+    postGroupId && addCommentPostGroup({
+      content,
+      userId: auth.authUser?.uid,
+      user: {
+        avatar: auth.authUser?.photoURL ?? '',
+        displayName: auth.authUser?.displayName?.split('|')[0],
+        username: auth.authUser?.displayName?.split('|')[1] ?? ''
+      },
+      postGroupId
     }).then(() => setContent(''))
   }
 

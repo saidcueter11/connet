@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
-import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
+import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where, writeBatch } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { CommentCollection, GroupCollecion, GroupPostCollection, PostCollection, UserCollection } from 'types/databaseTypes'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
@@ -198,6 +198,14 @@ export const createGroup = async ({ adminId, groupName, description, privacy, gr
 }
 
 export const deleteGroup = async (id: string) => {
+  const collectionGroupPosts = collection(db, 'groupPosts')
+  const q = query(collectionGroupPosts, where('groupId', '==', id))
+  const docRef = await getDocs(q)
+  const batchDelete = writeBatch(db)
+  docRef.forEach(doc => batchDelete.delete(doc.ref))
+
+  await batchDelete.commit()
+
   return await deleteDoc(doc(db, 'groups', id))
 }
 
@@ -326,5 +334,19 @@ export const decrementLikesGroupPost = async ({ id, currentUserId, groupId }:lik
   return await updateDoc(doc(collectionDb, id), {
     likesCount: increment(-1),
     likes: arrayRemove(currentUserId)
+  })
+}
+
+export const addCommentPostGroup = async ({ content, user, postGroupId, userId }:CommentCollection) => {
+  const collectionDb = collection(db, 'groupPosts')
+
+  return await updateDoc(doc(collectionDb, postGroupId), {
+    commentsCount: increment(1),
+    comments: arrayUnion({
+      user,
+      content,
+      createdAt: Timestamp.now(),
+      userId
+    })
   })
 }
