@@ -19,8 +19,8 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
   const [showModal, setShowModal] = useState(false)
   const path = router.route.split('/')[1]
   const atFriends = path === 'friends'
-  const atMessaging = path === 'messaging'
-  const atHome = path !== 'friends' && 'messaging'
+  const atMessages = path === 'messages'
+  const atHome = path !== 'friends' && path !== 'messages'
 
   const handleClickAdd = () => {
     setShowModal(true)
@@ -39,10 +39,10 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
         }
       </div>
 
-      <div className={`relative ${atHome ? 'scale-110' : ''}`}>
-        <MessagesIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
+      <div className={`relative ${atMessages ? 'scale-110' : ''}`}>
+        <MessagesIcon width={30} height={30} fill='none' stroke='#FD8C77' id={authUser?.uid as string}/>
         {
-          atMessaging &&
+          atMessages &&
             <div className='absolute -bottom-4 left-1/2 transform -translate-x-1/2'>
               <Dot width={20} height={20} fill='#FD8C77' />
             </div>

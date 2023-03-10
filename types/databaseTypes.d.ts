@@ -56,3 +56,13 @@ export interface GroupCollecion {
   id?: string,
   joinRequests?: string[]
 }
+
+export interface MessageCollection {
+  firstUser: string
+  secondUser: string
+  messages: [
+    content: string,
+    createdAt: Timestamp,
+    userId: string
+  ]
+}

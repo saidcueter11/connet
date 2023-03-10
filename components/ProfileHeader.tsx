@@ -3,6 +3,8 @@ import { FriendsIcon } from './Icons/FriendsIcon'
 import { GroupIcon } from './Icons/GroupsIcon'
 import { SendIcon } from './Icons/SendIcon'
 import Link from 'next/link'
+import { useAuth } from 'context/authUserContext'
+import { EditIcon } from './Icons/EditIcon'
 
 interface ProfileHeaderProps {
   displayName: string
@@ -11,6 +13,7 @@ interface ProfileHeaderProps {
 }
 
 export const ProfileHeader = ({ displayName, userId, loading }: ProfileHeaderProps) => {
+  const { authUser } = useAuth()
   return (
     <>
       <div className='grid justify-items-center grid-rows-2 grid-cols-3 items-center'>
@@ -36,9 +39,19 @@ export const ProfileHeader = ({ displayName, userId, loading }: ProfileHeaderPro
         </div>
         <div className='flex flex-col items-center row-start-1 row-end-1 col-start-3 col-end-3 self-end justify-self-start'>
           <button className='rounded-full bg-dark-green h-12 w-12'>
-            <SendIcon width={28} height={28} stroke='#FD8C77' fill='none' />
+            {
+              authUser?.uid === userId
+                ? <EditIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
+                : <Link href={`/messages/${authUser?.uid}/chat/${userId}`}><SendIcon width={28} height={28} stroke='#FD8C77' fill='none' /></Link>
+            }
           </button>
-          <p className='font-concert-one text-text-dark-green text-center'>Message</p>
+          <p className='font-concert-one text-text-dark-green text-center'>
+            {
+              authUser?.uid === userId
+                ? 'Edit'
+                : 'Message'
+            }
+          </p>
         </div>
       </div>
     </>

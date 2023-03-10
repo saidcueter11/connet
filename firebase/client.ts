@@ -350,3 +350,26 @@ export const addCommentPostGroup = async ({ content, user, postGroupId, userId }
     })
   })
 }
+
+interface SendMessageType {
+  firstUserName: string,
+  secondUserName: string,
+  content: string,
+  userId: string,
+  senderName: string
+}
+
+export const sendMessage = async ({ firstUserName, secondUserName, content, userId, senderName }: SendMessageType) => {
+  const collectionDb = collection(db, 'messages')
+
+  return addDoc(collectionDb, {
+    firstUserName,
+    secondUserName,
+    messages: arrayUnion({
+      content,
+      userId,
+      createdAt: Timestamp.now(),
+      senderName
+    })
+  })
+}
