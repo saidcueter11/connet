@@ -42,7 +42,7 @@ export default function Post ({ id, post }: PostProps) {
       <SideBarNotifications toggle={toggleSideBarNotifications} onToggle={setToggleSideBarNotifications}/>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
 
-      <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-24 no-scrollbar'>
+      <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-28 no-scrollbar'>
 
         <ProfileHeader displayName={props.user?.displayName ?? ''} userId={post.userId}/>
 

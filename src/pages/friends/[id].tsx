@@ -1,5 +1,5 @@
 import { db } from '../../../firebase/client'
-import { CarosuelContainer } from 'components/CaroselContainer'
+import { ListCardsContainer } from 'components/ListCardsContainer'
 import { FriendCard } from 'components/FriendCard'
 import ArrowLeft from 'components/Icons/ArrowLeft'
 import { NavBarMobile } from 'components/NavBarMobile'
@@ -49,6 +49,10 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
   const currentUserFriendsList = currentUser?.friends
   const loggedUserFriendsList = loggedUser?.friends
   const firstTabTitle = authUser?.uid === id ? 'My Friends' : `${currentUser?.firstName}'s Friends`
+  const loggedUserUserListFriends = users.filter(user => currentUserFriendsList?.includes(user.id as string))
+  const dicoverNewUsersList = users.filter(user => user.id !== id && !currentUserFriendsList?.includes(user.id as string) && user.id !== authUser?.uid)
+
+  const areWeFriends = (userId: string) => loggedUserFriendsList?.includes(userId)
 
   return (
     <>
@@ -59,27 +63,27 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
           : <ArrowLeft width={24} height={24} stroke={'black'}/>
       }
       <section className='h-full grid justify-center w-full grid-rows-10'>
-        <h1 className='text-3xl text-text-dark-green font-concert-one text-center h-0 row-span-1'>Friends</h1>
+        <h1 className='text-3xl text-text-dark-green font-concert-one text-center h-0 row-span-1 w-full'>Friends</h1>
 
-        <div className='row-span-3 font-concert-one'>
+        <div className='row-span-3 font-concert-one w-full'>
           <Tabs.Group style='underline' className='justify-center'>
-            <Tabs.Item active={true} title={firstTabTitle}>
+            <Tabs.Item active={true} title={firstTabTitle} className='h-full'>
             {
               currentUser?.friends?.length === 0
-                ? <p>You do not have any friends</p>
-                : <CarosuelContainer>
+                ? <p className='h-[26rem] text-center text-text-dark-green text-xl'>You have not added any friends. Go to the discover page and add some</p>
+                : <ListCardsContainer>
                     {
-                      users.filter(user => currentUserFriendsList?.includes(user.id as string)).map(user => (
+                      loggedUserUserListFriends.map(user => (
                         <FriendCard
                           key={user.id}
                           displayName={`${user.firstName} ${user.lastName}`}
                           friendsCount={user.friendsCount ?? 0}
                           userId={user.id}
                           likesCount={user.likesCount ?? 0}
-                          areWeFriends={true}
+                          areWeFriends={areWeFriends(user.id as string)}
                         />))
                     }
-                  </CarosuelContainer>
+                  </ListCardsContainer>
             }
             </Tabs.Item>
 
@@ -87,19 +91,19 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
             {
               loggedUserFriendsList?.length === users.length - 1
                 ? <p>Congrats! You are friends with all the users in the app</p>
-                : <CarosuelContainer>
+                : <ListCardsContainer>
                     {
-                      users.filter(user => user.id !== id && !currentUserFriendsList?.includes(user.id as string) && user.id !== authUser?.uid).map(user => (
+                      dicoverNewUsersList.map(user => (
                         <FriendCard
                           key={user.id}
                           displayName={`${user.firstName} ${user.lastName}`}
                           friendsCount={user.friendsCount ?? 0}
                           userId={user.id}
                           likesCount={user.likesCount ?? 0}
-                          areWeFriends={loggedUserFriendsList?.includes(user.id as string)}
+                          areWeFriends={areWeFriends(user.id as string)}
                         />))
                     }
-                  </CarosuelContainer>
+                  </ListCardsContainer>
               }
             </Tabs.Item>
           </Tabs.Group>

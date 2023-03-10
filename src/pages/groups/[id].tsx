@@ -1,5 +1,5 @@
 import { db } from '../../../firebase/client'
-import { CarosuelContainer } from 'components/CaroselContainer'
+import { ListCardsContainer } from 'components/ListCardsContainer'
 import { CreateGroupModal } from 'components/CreateGroupModal'
 import { GroupCard } from 'components/GroupCard'
 import { NavBarMobile } from 'components/NavBarMobile'
@@ -60,9 +60,10 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
         <h1 className='font-concert-one text-3xl text-center row-span-1 text-text-dark-green'>Groups</h1>
 
         <div className='row-span-3 flex flex-col items-center font-concert-one'>
+          <button className='w-3/5 bg-dark-green rounded-full pb-2 text-ligth-text-green' onClick={() => setShowModal(true)}>Create group</button>
           <Tabs.Group style='underline' className='justify-center'>
             <Tabs.Item active={true} title={firstTabTitle}>
-              <CarosuelContainer>
+              <ListCardsContainer>
                 {
                   currentUserGroups.map(group => (
                     <GroupCard
@@ -77,12 +78,12 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
                       joinRequests={group.joinRequests || []}
                     />))
                 }
-              </CarosuelContainer>
+              </ListCardsContainer>
 
             </Tabs.Item>
 
             <Tabs.Item title='Discover'>
-              <CarosuelContainer>
+              <ListCardsContainer>
                 {
                   loggedUserGroups.map(group => (
                     <GroupCard
@@ -97,10 +98,9 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
                       joinRequests={group.joinRequests || []}
                     />))
                 }
-              </CarosuelContainer>
+              </ListCardsContainer>
             </Tabs.Item>
           </Tabs.Group>
-          <button className='w-3/5 bg-dark-green rounded-full pb-2 text-ligth-text-green' onClick={() => setShowModal(true)}>Create group</button>
         </div>
 
       </section>

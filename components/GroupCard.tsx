@@ -46,39 +46,42 @@ export const GroupCard = ({ groupName, membersCount, likesCount, adminId, groupI
 
   return (
     <>
-      <div className='flex flex-col h-full items-center justify-center gap-2 p-6'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between'>
         <Link href={`/group/${groupId}`}>
-          <Avatar rounded={true} size={'lg'}/>
-          <h2 className='font-concert-one text-xl text-ligth-text-green'>{groupName}</h2>
+          <Avatar rounded={true}>
+            <p className='text-ligth-text-green mb-1'>{groupName}</p>
+            <div className='flex gap-2'>
+              <SlideCardIcons friendsCount={membersCount} likesCount={likesCount}/>
+            </div>
+          </Avatar>
         </Link>
 
-        <div className='flex gap-2'>
-          <SlideCardIcons friendsCount={membersCount} likesCount={likesCount}/>
+        <div className='flex flex-col justify-center items-center gap-2'>
+          {
+            isAdmin && <button onClick={() => setShowModal(true)} className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one h-9 w-28'>Delete Group</button>
+          }
+
+          {
+            (!isAdmin && !isMember && !isPrivate) && <button onClick={handleJoinGroup} className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one w-28 h-fit'>Join</button>
+          }
+
+          {
+            (isMember && !isAdmin) && <button onClick={handleLeaveGroup} className='bg-light-green text-text-dark-green w-28 h-fit rounded-full pb-2 pt-0 px-2 text-sm font-concert-one'>Leave</button>
+          }
+
+          {
+            (!isMember && isPrivate && !isRequestSent) && <button onClick={handleJoinRequest} className='bg-light-green w-28 h-fit text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one '>Join Request</button>
+          }
+
+          {
+            (isRequestSent) &&
+              <div className='flex flex-col items-center gap-2 w-28'>
+                <p className='font-karla text-ligth-text-green text-center text-xs'>Waiting for admin response</p>
+                <button className='bg-light-green text-text-dark-green w-28 rounded-full pb-2 pt-0 px-2 text-sm font-concert-one' onClick={handleCancelJoinRequest}>Cancel Request</button>
+              </div>
+          }
         </div>
 
-        {
-          isAdmin && <button onClick={() => setShowModal(true)} className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one h-9 w-28'>Delete Group</button>
-        }
-
-        {
-          (!isAdmin && !isMember && !isPrivate) && <button onClick={handleJoinGroup} className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one h-9 w-28'>Join Group</button>
-        }
-
-        {
-          (isMember && !isAdmin) && <button onClick={handleLeaveGroup} className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one h-9 w-28'>Leave Group</button>
-        }
-
-        {
-          (!isMember && isPrivate && !isRequestSent) && <button onClick={handleJoinRequest} className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one'>Request to join Group</button>
-        }
-
-        {
-          (isRequestSent) &&
-            <div className='flex flex-col items-center gap-2'>
-              <p className='font-karla text-ligth-text-green'>Waiting for admin response</p>
-              <button className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one' onClick={handleCancelJoinRequest}>Cancel Request</button>
-            </div>
-        }
       </div>
 
       <Modal

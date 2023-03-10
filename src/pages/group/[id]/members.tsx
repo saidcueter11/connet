@@ -1,5 +1,5 @@
 import { db } from '../../../../firebase/client'
-import { CarosuelContainer } from 'components/CaroselContainer'
+import { ListCardsContainer } from 'components/ListCardsContainer'
 import ArrowLeft from 'components/Icons/ArrowLeft'
 import { MembersCard } from 'components/MembersCard'
 import { NavBarMobile } from 'components/NavBarMobile'
@@ -63,7 +63,7 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
         <div className='row-span-3 font-concert-one'>
           <Tabs.Group style='underline' className='justify-center'>
             <Tabs.Item active={true} title='Current Members'>
-              <CarosuelContainer>
+              <ListCardsContainer>
               {
                 currentMembers.map(user => (
                   <MembersCard
@@ -77,26 +77,30 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
                     isAdmin={isAdmin}
                   />))
               }
-              </CarosuelContainer>
+              </ListCardsContainer>
             </Tabs.Item>
 
             {
                 isAdmin
                   ? <Tabs.Item title='Join Requests'>
-                    <CarosuelContainer>
-                      {
-                        joinRequestMembers.map(user => (
-                          <MembersCard
-                            key={user.id}
-                            displayName={`${user.firstName} ${user.lastName}`}
-                            friendsCount={user.friendsCount ?? 0}
-                            userId={user.id}
-                            likesCount={user.likesCount ?? 0}
-                            isMember={false}
-                            groupId={id as string}
-                          />))
-                      }
-                    </CarosuelContainer>
+                    {
+                      joinRequestMembers.length > 0
+                        ? <ListCardsContainer>
+                        {
+                          joinRequestMembers.map(user => (
+                            <MembersCard
+                              key={user.id}
+                              displayName={`${user.firstName} ${user.lastName}`}
+                              friendsCount={user.friendsCount ?? 0}
+                              userId={user.id}
+                              likesCount={user.likesCount ?? 0}
+                              isMember={false}
+                              groupId={id as string}
+                            />))
+                        }
+                      </ListCardsContainer>
+                        : <p className='h-[26rem] text-text-dark-green text-center text-lg'>There are no request at the momment</p>
+                    }
                   </Tabs.Item>
                   : ''
             }

@@ -29,11 +29,11 @@ export const AddCommentForm = ({ postId, loading }:AddCommentFormProps) => {
 
   return (
     <>
-      <form className='relative bg-light-green min-h-[80px] w-11/12 mx-auto rounded-xl shadow' onSubmit={handleSubmit}>
+      <form className='relative bg-light-green min-h-[80px] w-11/12 mx-auto rounded-xl shadow pt-2 pr-2' onSubmit={handleSubmit}>
         <div className='absolute top-2 left-2'>
           <Avatar size={'sm'} rounded={true}/>
         </div>
-        <textarea onChange={(e) => setContent(e.target.value)} value={content} placeholder='Write a comment' className='font-karla rounded-lg h-3/6 w-5/6 bg-inherit text-sm outline-transparent resize-none border-none absolute right-0'></textarea>
+        <textarea onChange={(e) => setContent(e.target.value)} value={content} placeholder='Write a comment' className='font-karla rounded-lg h-3/6 w-5/6 bg-inherit text-sm outline-none resize-none border-none absolute right-0'></textarea>
         <button className='absolute bottom-2 right-3' disabled={content.length === 0}>
           {
             !loading

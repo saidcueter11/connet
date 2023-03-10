@@ -32,23 +32,23 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
 
   return (
     <>
-      <div className='flex flex-col h-full items-center justify-center gap-2 p-6'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between'>
         <div onClick={goToProfile}>
-          <Avatar rounded={true} size={'lg'}/>
-          <h2 className='font-concert-one text-xl text-ligth-text-green'>{displayName} {userId === auth.authUser?.uid && '(You)'}</h2>
-        </div>
-
-        <div className='flex gap-2'>
-          <SlideCardIcons friendsCount={friendsCount} likesCount={likesCount}/>
-        </div>
-
-        {
-          auth.authUser?.uid !== userId &&
-            <div className='flex gap-4'>
-              <button onClick={handleAddFriend} className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one min-h-[48px] min-w-[125px]'>{areWeFriends ? 'Remove from friend' : 'Add friend'}</button>
-              <button className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one'>Send direct message</button>
+          <Avatar rounded={true}>
+            <p className='text-ligth-text-green mb-1'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>
+            <div className='flex gap-2'>
+              <SlideCardIcons friendsCount={friendsCount} likesCount={likesCount}/>
             </div>
-        }
+          </Avatar>
+        </div>
+
+        <div className='flex flex-col justify-center items-center gap-2'>
+          {
+            auth.authUser?.uid !== userId &&
+              <button onClick={handleAddFriend} className='w-28 bg-light-green rounded-full pb-2 px-2 h-fit text-sm font-concert-one'>{areWeFriends ? 'Remove friend' : 'Add friend'}</button>
+          }
+
+        </div>
 
       </div>
     </>

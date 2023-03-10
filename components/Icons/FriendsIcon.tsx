@@ -9,7 +9,7 @@ interface FriendsIconProps extends IconsProps {
 export function FriendsIcon ({ width, height, fill, stroke, id }: FriendsIconProps) {
   const router = useRouter()
 
-  const goToFriends = () => router.push(`/friends/${id}`)
+  const goToFriends = () => id !== undefined && router.push(`/friends/${id}`)
 
   return (
     <svg onClick={goToFriends} xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-users inline" width={width} height={height} viewBox="0 0 24 24" strokeWidth="2" stroke={stroke} fill={fill} strokeLinecap="round" strokeLinejoin="round">

@@ -7,6 +7,8 @@ import { SettingsIcon } from './Icons/SettingsIcon'
 import { LogoutIcon } from './Icons/LogoutIcon'
 import { useAuth } from 'context/authUserContext'
 import Link from 'next/link'
+import { FriendsIcon } from './Icons/FriendsIcon'
+import { GroupIcon } from './Icons/GroupsIcon'
 
 interface SideBarProfileProps {
   isNotificationOpen?: boolean
@@ -56,29 +58,28 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
               <Avatar rounded={true} />
               <div className='flex flex-col items-center justify-center gap-1'>
                 <h3 className='font-concert-one text-ligth-text-green text-xl'>{fullName}</h3>
-                <Link href={`/profile/${authUser?.uid}`} className='font-karla text-ligth-text-green text-sm'>
-                  View profile
-                </Link>
+                <Link href={`/profile/${authUser?.uid}`} className='font-karla text-ligth-text-green text-sm'>View profile</Link>
               </div>
             </div>
 
             <div className='h-44 gap-2 flex flex-col justify-center'>
-              <Link href={`/friends/${authUser?.uid}`} className='font-karla text-ligth-text-green'>Friends</Link>
-              <Link href={`/groups/${authUser?.uid}`} className='font-karla text-ligth-text-green'>Groups</Link>
-            </div>
-
-            <div className='pb-5 flex flex-col gap-2 absolute bottom-1'>
-
-              <div className='h-full flex items-end gap-2'>
+              <Link href={`/friends/${authUser?.uid}`} className='font-karla text-ligth-text-green flex gap-2'>
+                <FriendsIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
+                <p>Friends</p>
+              </Link>
+              <Link href={`/groups/${authUser?.uid}`} className='font-karla text-ligth-text-green flex gap-2'>
+                <GroupIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
+                <p>Groups</p>
+              </Link>
+              <div className='flex items-end gap-2'>
                 <SettingsIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
                 <p className='text-ligth-text-green font-karla'>Settings</p>
               </div>
 
-              <div className='flex items-end gap-2 pl-1 w-fit' onClick={handleLogout}>
+              <div className='flex items-end gap-2 w-fit' onClick={handleLogout}>
                 <LogoutIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
                 <p className='text-ligth-text-green font-karla'>Logout</p>
               </div>
-
             </div>
           </div>
         </div>

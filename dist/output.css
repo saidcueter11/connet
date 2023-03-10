@@ -1041,6 +1041,10 @@ input:checked + .toggle-bg{
   bottom: -0.25rem;
 }
 
+.-bottom-20{
+  bottom: -5rem;
+}
+
 .-bottom-4{
   bottom: -1rem;
 }
@@ -1115,10 +1119,6 @@ input:checked + .toggle-bg{
 
 .top-3{
   top: 0.75rem;
-}
-
-.bottom-1{
-  bottom: 0.25rem;
 }
 
 .z-10{
@@ -1438,10 +1438,6 @@ input:checked + .toggle-bg{
   height: 1.75rem;
 }
 
-.h-72{
-  height: 18rem;
-}
-
 .h-8{
   height: 2rem;
 }
@@ -1452,6 +1448,10 @@ input:checked + .toggle-bg{
 
 .h-96{
   height: 24rem;
+}
+
+.h-\[26rem\]{
+  height: 26rem;
 }
 
 .h-auto{
@@ -1696,13 +1696,18 @@ input:checked + .toggle-bg{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.-translate-y-32{
-  --tw-translate-y: -8rem;
+.-translate-y-48{
+  --tw-translate-y: -12rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .translate-x-full{
   --tw-translate-x: 100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-20{
+  --tw-translate-y: 5rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -2839,10 +2844,6 @@ input:checked + .toggle-bg{
   padding-bottom: 0.5rem;
 }
 
-.pb-24{
-  padding-bottom: 6rem;
-}
-
 .pb-28{
   padding-bottom: 7rem;
 }
@@ -2857,10 +2858,6 @@ input:checked + .toggle-bg{
 
 .pl-0{
   padding-left: 0px;
-}
-
-.pl-1{
-  padding-left: 0.25rem;
 }
 
 .pl-10{
@@ -2885,6 +2882,10 @@ input:checked + .toggle-bg{
 
 .pr-10{
   padding-right: 2.5rem;
+}
+
+.pr-2{
+  padding-right: 0.5rem;
 }
 
 .pr-3{
@@ -3270,10 +3271,6 @@ input:checked + .toggle-bg{
 
 .outline-dark-green{
   outline-color: #233E40;
-}
-
-.outline-transparent{
-  outline-color: transparent;
 }
 
 .ring-2{
