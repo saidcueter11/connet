@@ -58,7 +58,7 @@ export const GroupCard = ({ groupName, membersCount, likesCount, adminId, groupI
 
         <div className='flex flex-col justify-center items-center gap-2'>
           {
-            isAdmin && <button onClick={() => setShowModal(true)} className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one h-9 w-28'>Delete Group</button>
+            isAdmin && <button onClick={() => setShowModal(true)} className='bg-light-green text-text-dark-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one w-28'>Delete Group</button>
           }
 
           {

@@ -36,7 +36,7 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
   return (
     <>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
-      <section className='h-screen overflow-y-scroll no-scrollbar pb-36'>
+      <section className='h-screen overflow-y-scroll no-scrollbar pb-36 relative'>
         {
           !loading
             ? <>

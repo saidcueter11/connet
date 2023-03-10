@@ -54,7 +54,7 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
 
   return (
     <>
-      <div className={`absolute rounded-lg -bottom-20 p-4 bg-dark-green w-3/5 z-10 text-center font-karla text-ligth-text-green left-1/2 transform -translate-x-1/2 ${!failPostPopout ? 'translate-y-20' : '-translate-y-48'} transition-transform`}>
+      <div className={`absolute rounded-lg -bottom-20 p-4 bg-dark-green w-4/5 z-10 text-center font-karla text-ligth-text-green left-1/2 transform -translate-x-1/2 ${!failPostPopout ? 'translate-y-20' : '-translate-y-56'} transition-transform`}>
         <p>You must be a member of the group to create a post</p>
       </div>
       <div className='grid justify-items-center grid-rows-2 grid-cols-3 items-center'>
