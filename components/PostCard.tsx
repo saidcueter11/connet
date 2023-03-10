@@ -2,17 +2,17 @@ import { Avatar, Dropdown, Modal } from 'flowbite-react'
 import Like from 'components/Icons/Like'
 import { CommentIcon } from 'components/Icons/Comment'
 import { Dot } from './Icons/Dot'
-import { PostCollection } from 'types/databaseTypes'
+import { GroupPostCollection, PostCollection } from 'types/databaseTypes'
 import { useTimeAgo } from 'hooks/useTimeAgo'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { decrementLikes, deletePost, incrementLikes } from '@firebase/client'
+import { decrementLikes, decrementLikesGroupPost, deletePost, incrementLikes, incrementLikesGroupPost } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { DotsVerticalIcon } from './Icons/DotsVerticalIcon'
 import { PostsModal } from './PostsModal'
 
 interface PostCardProps {
-  post: PostCollection
+  post: PostCollection | GroupPostCollection
 }
 
 export const PostCard = ({ post }:PostCardProps) => {
@@ -21,28 +21,41 @@ export const PostCard = ({ post }:PostCardProps) => {
   const normalizeDate = post.createdAt ? post.normalizedDate ?? +post.createdAt?.toDate() : 0
   const timeAgo = useTimeAgo(post.normalizedDate ?? normalizeDate)
   const router = useRouter()
-  const { id } = router.query
+  const { id, postId } = router.query
   const [showModal, setShowModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const handleClick = (e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
-    if (post.id) router.push(`/post/${post.id}`)
+    if (post.groupId && post.id) router.push(`/group/${post.groupId}/post/${post.id}`)
+    if (post.id && !post.groupId) router.push(`/post/${post.id}`)
   }
 
   const handleLikes = () => {
     if (!isPostLiked) {
-      incrementLikes({
+      !post.groupId && incrementLikes({
         id: post.id ? post.id : id as string,
         currentUserId: auth.authUser?.uid,
         userId: post.userId
       })
+
+      post.groupId && incrementLikesGroupPost({
+        id: post.id ? post.id : postId as string,
+        groupId: post.groupId,
+        currentUserId: auth.authUser?.uid
+      })
     }
 
     if (isPostLiked) {
-      decrementLikes({
+      !post.groupId && decrementLikes({
         id: post.id ? post.id : id as string,
         currentUserId: auth.authUser?.uid,
         userId: post.userId
+      })
+
+      post.groupId && decrementLikesGroupPost({
+        id: post.id ? post.id : postId as string,
+        groupId: post.groupId,
+        currentUserId: auth.authUser?.uid
       })
     }
   }

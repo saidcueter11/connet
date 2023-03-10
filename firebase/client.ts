@@ -294,3 +294,37 @@ export const getLastestGroupPosts = (cb: (post: GroupPostCollection[]) => void, 
     cb(newPost)
   })
 }
+
+interface likesGroupPostType {
+  id?: string,
+  currentUserId?: string,
+  groupId?: string
+}
+
+export const incrementLikesGroupPost = async ({ id, currentUserId, groupId }:likesGroupPostType) => {
+  const collectionDb = collection(db, 'groupPosts')
+  const userDb = collection(db, 'groups')
+
+  updateDoc(doc(userDb, groupId), {
+    likesCount: increment(1)
+  })
+
+  return await updateDoc(doc(collectionDb, id), {
+    likesCount: increment(1),
+    likes: arrayUnion(currentUserId)
+  })
+}
+
+export const decrementLikesGroupPost = async ({ id, currentUserId, groupId }:likesGroupPostType) => {
+  const collectionDb = collection(db, 'groupPosts')
+  const userDb = collection(db, 'groups')
+
+  updateDoc(doc(userDb, groupId), {
+    likesCount: increment(-1)
+  })
+
+  return await updateDoc(doc(collectionDb, id), {
+    likesCount: increment(-1),
+    likes: arrayRemove(currentUserId)
+  })
+}

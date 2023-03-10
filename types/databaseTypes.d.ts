@@ -36,6 +36,7 @@ export interface PostCollection {
   img?: string,
   comments?: CommentCollection[],
   likes?: string[]
+  groupId?: string
 }
 
 export interface GroupPostCollection extends PostCollection {

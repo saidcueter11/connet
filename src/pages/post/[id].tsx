@@ -44,7 +44,7 @@ export default function Post ({ id, post }: PostProps) {
 
       <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-28 no-scrollbar'>
 
-        <ProfileHeader displayName={props.user?.displayName ?? ''} userId={post.userId}/>
+        <ProfileHeader displayName={props.user?.displayName ?? ''} userId={props.userId}/>
 
         <div className='w-full m-auto'>
           <PostCard post={props}/>
