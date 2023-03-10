@@ -1,11 +1,11 @@
-import { CreateIcon } from './Icons/CreateIcon'
-import { HomeIcon } from './Icons/HomeIcon'
-import { MessagesIcon } from './Icons/MessagesIcon'
+import { CreateIcon } from '../Icons/CreateIcon'
+import { HomeIcon } from '../Icons/HomeIcon'
+import { MessagesIcon } from '../Icons/MessagesIcon'
 import { useState } from 'react'
-import { PostsModal } from './PostsModal'
-import { FriendsIcon } from './Icons/FriendsIcon'
+import { PostsModal } from '../Modal/PostsModal'
+import { FriendsIcon } from '../Icons/FriendsIcon'
 import { useAuth } from 'context/authUserContext'
-import { Dot } from './Icons/Dot'
+import { Dot } from '../Icons/Dot'
 import { useRouter } from 'next/router'
 
 interface NavBarMobileProps {

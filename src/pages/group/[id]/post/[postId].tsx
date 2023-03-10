@@ -1,5 +1,5 @@
 import { db } from '@firebase/client'
-import { PostPageLayout } from 'components/PostPageLayout'
+import { PostPageLayout } from 'components/Posts/PostPageLayout'
 import { doc } from 'firebase/firestore'
 import { Spinner } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'

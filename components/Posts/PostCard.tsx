@@ -1,15 +1,15 @@
 import { Avatar, Dropdown, Modal } from 'flowbite-react'
 import Like from 'components/Icons/Like'
 import { CommentIcon } from 'components/Icons/Comment'
-import { Dot } from './Icons/Dot'
+import { Dot } from '../Icons/Dot'
 import { GroupPostCollection, PostCollection } from 'types/databaseTypes'
 import { useTimeAgo } from 'hooks/useTimeAgo'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { decrementLikes, decrementLikesGroupPost, deletePost, incrementLikes, incrementLikesGroupPost } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
-import { DotsVerticalIcon } from './Icons/DotsVerticalIcon'
-import { PostsModal } from './PostsModal'
+import { DotsVerticalIcon } from '../Icons/DotsVerticalIcon'
+import { PostsModal } from '../Modal/PostsModal'
 
 interface PostCardProps {
   post: PostCollection | GroupPostCollection

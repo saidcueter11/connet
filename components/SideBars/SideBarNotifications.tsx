@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CloseIcon } from './Icons/CloseIcon'
+import { CloseIcon } from '../Icons/CloseIcon'
 
 interface SideBarNotificationsPros {
   toggle: boolean

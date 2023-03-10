@@ -1,7 +1,7 @@
 import { Avatar } from 'flowbite-react'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
-import { SlideCardIcons } from './SlideCardIcons'
+import { SlideCardIcons } from '../Utils/SlideCardIcons'
 import { acceptJoinRequestGroup, declineJoinRequestGroup, removeGroupMember } from '@firebase/client'
 interface MembersCardProps {
   displayName: string,

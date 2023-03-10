@@ -1,5 +1,5 @@
 import { Avatar, Modal } from 'flowbite-react'
-import { SlideCardIcons } from './SlideCardIcons'
+import { SlideCardIcons } from '../Utils/SlideCardIcons'
 import { useAuth } from 'context/authUserContext'
 import { cancelJoinRequest, deleteGroup, joinGroup, joinRequestGroup, leaveGroup } from '@firebase/client'
 import { useState } from 'react'

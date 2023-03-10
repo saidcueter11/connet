@@ -1,11 +1,11 @@
 import { PostCollection } from 'types/databaseTypes'
-import { AddCommentForm } from './AddCommentForm'
+import { AddCommentForm } from '../Forms/AddCommentForm'
 import { CommentCard } from './CommentCard'
-import ArrowLeft from './Icons/ArrowLeft'
-import { NavBarMobile } from './NavBarMobile'
+import ArrowLeft from '../Icons/ArrowLeft'
+import { NavBarMobile } from '../Utils/NavBarMobile'
 import { PostCard } from './PostCard'
-import { ProfileHeader } from './ProfileHeader'
-import { SideBarNotifications } from './SideBarNotifications'
+import { ProfileHeader } from '../Profile/ProfileHeader'
+import { SideBarNotifications } from '../SideBars/SideBarNotifications'
 
 interface PostPageLayoutProps {
   toggleSideBarNotifications: boolean,

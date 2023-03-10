@@ -1,14 +1,14 @@
 import { logoutWithEmail } from '@firebase/client'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { CloseIcon } from './Icons/CloseIcon'
+import { CloseIcon } from '../Icons/CloseIcon'
 import { Avatar } from 'flowbite-react'
-import { SettingsIcon } from './Icons/SettingsIcon'
-import { LogoutIcon } from './Icons/LogoutIcon'
+import { SettingsIcon } from '../Icons/SettingsIcon'
+import { LogoutIcon } from '../Icons/LogoutIcon'
 import { useAuth } from 'context/authUserContext'
 import Link from 'next/link'
-import { FriendsIcon } from './Icons/FriendsIcon'
-import { GroupIcon } from './Icons/GroupsIcon'
+import { FriendsIcon } from '../Icons/FriendsIcon'
+import { GroupIcon } from '../Icons/GroupsIcon'
 
 interface SideBarProfileProps {
   isNotificationOpen?: boolean

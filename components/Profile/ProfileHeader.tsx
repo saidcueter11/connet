@@ -1,10 +1,10 @@
 import { Avatar } from 'flowbite-react'
-import { FriendsIcon } from './Icons/FriendsIcon'
-import { GroupIcon } from './Icons/GroupsIcon'
-import { SendIcon } from './Icons/SendIcon'
+import { FriendsIcon } from '../Icons/FriendsIcon'
+import { GroupIcon } from '../Icons/GroupsIcon'
+import { SendIcon } from '../Icons/SendIcon'
 import Link from 'next/link'
 import { useAuth } from 'context/authUserContext'
-import { EditIcon } from './Icons/EditIcon'
+import { EditIcon } from '../Icons/EditIcon'
 
 interface ProfileHeaderProps {
   displayName: string

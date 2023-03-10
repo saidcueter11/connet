@@ -5,7 +5,7 @@ import { doc } from 'firebase/firestore'
 import { GetServerSidePropsContext } from 'next'
 import { Spinner } from 'flowbite-react'
 import { useState } from 'react'
-import { PostPageLayout } from 'components/PostPageLayout'
+import { PostPageLayout } from 'components/Posts/PostPageLayout'
 
 interface PostProps {
   id: string

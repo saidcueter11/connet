@@ -1,6 +1,6 @@
 import { Modal, Avatar } from 'flowbite-react'
-import { CloseIcon } from './Icons/CloseIcon'
-import { UploadImgIcon } from './Icons/UploadImgIcon'
+import { CloseIcon } from '../Icons/CloseIcon'
+import { UploadImgIcon } from '../Icons/UploadImgIcon'
 import { useAuth } from 'context/authUserContext'
 import React, { FormEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { addGroupPost, addPost, modifyPost, uploadImage } from '@firebase/client'

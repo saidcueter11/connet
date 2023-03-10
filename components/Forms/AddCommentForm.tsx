@@ -1,5 +1,5 @@
 import { Avatar, Spinner } from 'flowbite-react'
-import { SendIcon } from './Icons/SendIcon'
+import { SendIcon } from '../Icons/SendIcon'
 import { SyntheticEvent, useState } from 'react'
 import { addComment, addCommentPostGroup } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'

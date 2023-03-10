@@ -1,5 +1,5 @@
 import { Avatar } from 'flowbite-react'
-import { Dot } from './Icons/Dot'
+import { Dot } from '../Icons/Dot'
 import { CommentCollection } from 'types/databaseTypes'
 import { useTimeAgo } from 'hooks/useTimeAgo'
 

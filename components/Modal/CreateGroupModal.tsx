@@ -1,6 +1,6 @@
 import { Modal } from 'flowbite-react'
-import { CloseIcon } from './Icons/CloseIcon'
-import { CreateGroupForm } from './CreateGroupForm'
+import { CloseIcon } from '../Icons/CloseIcon'
+import { CreateGroupForm } from '../Forms/CreateGroupForm'
 import { useEffect, useState } from 'react'
 
 interface CreateGroupModalProps {

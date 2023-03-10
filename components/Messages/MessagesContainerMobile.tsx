@@ -7,7 +7,7 @@ interface MessagesContainerMobileProps {
 export const MessagesContainerMobile = ({ children }: MessagesContainerMobileProps) => {
   return (
     <>
-       <section className='flex flex-col gap-3 h-5/6 overflow-y-scroll no-scrollbar px-1 relative max-h-screen'>
+      <section className='flex flex-col gap-3 h-5/6 overflow-y-scroll no-scrollbar px-1 relative max-h-screen'>
         {children}
       </section>
     </>

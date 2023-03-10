@@ -1137,6 +1137,10 @@ input:checked + .toggle-bg{
   bottom: 0.75rem;
 }
 
+.right-2{
+  right: 0.5rem;
+}
+
 .z-10{
   z-index: 10;
 }
@@ -2583,6 +2587,11 @@ input:checked + .toggle-bg{
   background-color: rgb(248 250 252 / var(--tw-bg-opacity));
 }
 
+.bg-black{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
 }
@@ -3052,6 +3061,10 @@ input:checked + .toggle-bg{
 
 .pb-10{
   padding-bottom: 2.5rem;
+}
+
+.pt-3{
+  padding-top: 0.75rem;
 }
 
 .text-left{

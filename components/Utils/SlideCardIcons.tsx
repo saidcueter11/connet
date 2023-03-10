@@ -1,5 +1,5 @@
-import { FriendsIcon } from './Icons/FriendsIcon'
-import Like from './Icons/Like'
+import { FriendsIcon } from '../Icons/FriendsIcon'
+import Like from '../Icons/Like'
 
 interface SlideCardIconsProps {
   friendsCount: number
