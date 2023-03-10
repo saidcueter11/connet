@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tailwind:watch": "npx tailwindcss -i ./src/styles/globals.css -o ./dist/output.css --watch"
   },
   "dependencies": {
     "@next/font": "13.1.6",
