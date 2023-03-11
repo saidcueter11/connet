@@ -1868,6 +1868,16 @@ input:checked + .toggle-bg{
   animation: spin 1s linear infinite;
 }
 
+@keyframes pulse{
+  50%{
+    opacity: .5;
+  }
+}
+
+.animate-pulse{
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 .cursor-grab{
   cursor: grab;
 }
@@ -1916,6 +1926,10 @@ input:checked + .toggle-bg{
 
 .grid-cols-3{
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .grid-rows-1{
@@ -3455,6 +3469,10 @@ input:checked + .toggle-bg{
 
 .opacity-80{
   opacity: 0.8;
+}
+
+.opacity-100{
+  opacity: 1;
 }
 
 .shadow{

@@ -1,5 +1,5 @@
 import { db } from '@firebase/client'
-import ArrowLeft from 'components/Icons/ArrowLeft'
+import { ChatHeader } from 'components/Messages/ChatHeader'
 import { MessagesCard } from 'components/Messages/MessagesCard'
 import { MessagesContainerMobile } from 'components/Messages/MessagesContainerMobile'
 import { SendMessageFormContainer } from 'components/Messages/SendMessageFormContainer'
@@ -38,12 +38,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
 
   return (
     <>
-      <ArrowLeft width={24} height={24} stroke={'black'}/>
-      <header className='relative mb-5'>
-        <div className='flex gap-5 flex-col w-4/5 items-center m-auto'>
-          <h1 className='font-concert-one text-3xl text-center text-text-dark-green'>{chatUser?.firstName} {chatUser?.lastName}</h1>
-        </div>
-      </header>
+      <ChatHeader userName={`${chatUser?.firstName} ${chatUser?.lastName}`}/>
 
       <MessagesContainerMobile>
         {
