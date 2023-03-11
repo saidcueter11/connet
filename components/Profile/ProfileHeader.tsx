@@ -5,15 +5,32 @@ import { SendIcon } from '../Icons/SendIcon'
 import Link from 'next/link'
 import { useAuth } from 'context/authUserContext'
 import { EditIcon } from '../Icons/EditIcon'
+import { StartNewMessageModal } from 'components/Modal/StartNewMessageModal'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 interface ProfileHeaderProps {
   displayName: string
   userId?: string
   loading?: boolean
+  chatingWith?: {
+    userId: string,
+    chatId: string
+  }[]
 }
 
-export const ProfileHeader = ({ displayName, userId, loading }: ProfileHeaderProps) => {
+export const ProfileHeader = ({ displayName, userId, loading, chatingWith }: ProfileHeaderProps) => {
   const { authUser } = useAuth()
+  const router = useRouter()
+  const [showModal, setShowModal] = useState(false)
+  const handleStartChat = () => {
+    if (chatingWith?.length) {
+      const currentChat = chatingWith.find(chat => chat.userId === authUser?.uid)
+      router.push(`/messages/${authUser?.uid}/chat/${currentChat?.chatId}`)
+    }
+
+    if (!chatingWith?.length)setShowModal(true)
+  }
   return (
     <>
       <div className='grid justify-items-center grid-rows-2 grid-cols-3 items-center'>
@@ -42,7 +59,7 @@ export const ProfileHeader = ({ displayName, userId, loading }: ProfileHeaderPro
             {
               authUser?.uid === userId
                 ? <EditIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
-                : <Link href={`/messages/${authUser?.uid}/chat/${userId}`}><SendIcon width={28} height={28} stroke='#FD8C77' fill='none' /></Link>
+                : <div onClick={handleStartChat}><SendIcon width={28} height={28} stroke='#FD8C77' fill='none' /></div>
             }
           </button>
           <p className='font-concert-one text-text-dark-green text-center'>
@@ -54,6 +71,8 @@ export const ProfileHeader = ({ displayName, userId, loading }: ProfileHeaderPro
           </p>
         </div>
       </div>
+
+      <StartNewMessageModal showModal={showModal} setShowModal={setShowModal} receiverName={displayName} receiverId={userId}/>
     </>
   )
 }

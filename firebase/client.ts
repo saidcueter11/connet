@@ -362,9 +362,10 @@ interface SendMessageType {
 
 export const sendMessage = async ({ receiverUser, content, userId, senderUser, imgUrl, chatId }: SendMessageType) => {
   const collectionDb = collection(db, 'messages')
+  const collectionUsers = collection(db, 'users')
 
   if (chatId === undefined) {
-    return await addDoc(collectionDb, {
+    const added = await addDoc(collectionDb, {
       receiverUser,
       senderUser,
       messages: arrayUnion({
@@ -374,6 +375,21 @@ export const sendMessage = async ({ receiverUser, content, userId, senderUser, i
         createdAt: Timestamp.now()
       })
     })
+
+    await updateDoc(doc(collectionUsers, senderUser?.id), {
+      chatingWith: arrayUnion({
+        userId: receiverUser?.id,
+        chatId: added.id
+      })
+    })
+    await updateDoc(doc(collectionUsers, receiverUser?.id), {
+      chatingWith: arrayUnion({
+        userId: senderUser?.id,
+        chatId: added.id
+      })
+    })
+
+    return added
   }
 
   if (chatId) {

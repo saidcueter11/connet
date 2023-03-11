@@ -13,7 +13,8 @@ interface PostPageLayoutProps {
   props: PostCollection,
   postId?: string,
   loading: boolean,
-  postGroupId?: string
+  postGroupId?: string,
+
 }
 
 export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNotifications, props, postId, loading, postGroupId }: PostPageLayoutProps) => {
@@ -24,7 +25,7 @@ export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNot
 
       <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-28 no-scrollbar'>
 
-        <ProfileHeader displayName={props.user?.displayName ?? ''} userId={props.userId}/>
+        <ProfileHeader displayName={props.user?.displayName ?? ''} userId={props.userId} loading={loading} chatingWith={props.user?.chatingWith}/>
 
         <div className='w-full m-auto'>
           <PostCard post={props}/>

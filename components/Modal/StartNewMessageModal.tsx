@@ -12,9 +12,11 @@ import { useRouter } from 'next/router'
 interface StartNewMessageModalProps {
   showModal: boolean
   setShowModal: (isOpen: boolean) => void
+  receiverName?: string
+  receiverId?: string
 }
 
-export const StartNewMessageModal = ({ showModal, setShowModal }: StartNewMessageModalProps) => {
+export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, receiverId }: StartNewMessageModalProps) => {
   const { authUser } = useAuth()
   const [isHydratated, setIsHydratated] = useState(false)
   const [content, setContent] = useState('')
@@ -38,10 +40,11 @@ export const StartNewMessageModal = ({ showModal, setShowModal }: StartNewMessag
       })
       listUsers && setUsers(listUsers)
     }
+    if (receiverName) setSearch(receiverName)
   }, [loading])
 
   const userSearch = users.filter(user => search.length > 0 && user.id !== authUser?.uid && (user.firstName?.toLowerCase()?.includes(search) || user.lastName?.toLowerCase()?.includes(search)))
-  const selectedUser = users.find(user => search.length > 0 && (search.includes(`${user.firstName} ${user.lastName}`)))
+  const selectedUser = users.find(user => (search.length) > 0 && (search.includes(`${user.firstName} ${user.lastName}`)))
   const loggedUser = users.find(user => user.id === authUser?.uid)
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {

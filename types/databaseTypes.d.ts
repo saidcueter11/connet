@@ -13,6 +13,10 @@ export interface UserCollection {
   friends?: string[]
   likesCount?: number
   friendsCount?: number
+  chatingWith?: {
+    userId: string,
+    chatId: string
+  }[]
 }
 
 export interface CommentCollection {
