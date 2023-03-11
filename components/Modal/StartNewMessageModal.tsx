@@ -54,7 +54,7 @@ export const StartNewMessageModal = ({ showModal, setShowModal }: StartNewMessag
       imgUrl
     }).then(doc => {
       setShowModal(false)
-      router.push(`/messages/${authUser?.uid}/chat/${doc.id}`)
+      if (doc) router.push(`/messages/${authUser?.uid}/chat/${doc.id}`)
     })
   }
 
