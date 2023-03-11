@@ -1528,6 +1528,18 @@ input:checked + .toggle-bg{
   height: 100vh;
 }
 
+.h-4\/5{
+  height: 80%;
+}
+
+.h-3\/5{
+  height: 60%;
+}
+
+.h-3\/4{
+  height: 75%;
+}
+
 .max-h-8{
   max-height: 2rem;
 }
@@ -3105,6 +3117,10 @@ input:checked + .toggle-bg{
 
 .pb-20{
   padding-bottom: 5rem;
+}
+
+.pb-6{
+  padding-bottom: 1.5rem;
 }
 
 .text-left{
