@@ -7,9 +7,11 @@ import { db } from '@firebase/client'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { useEffect, useState } from 'react'
 import { MessageCollection } from 'types/databaseTypes'
+import { useAuth } from 'context/authUserContext'
 
 export default function ChatsPage () {
   const collectionMessages = collection(db, 'messages')
+  const { authUser } = useAuth()
   const [value, loading, error] = useCollection(collectionMessages)
   const [chats, setChats] = useState<MessageCollection[]>()
 
@@ -28,6 +30,8 @@ export default function ChatsPage () {
     }
   }, [loading, value])
 
+  const loggedUserChats = chats?.filter(chat => chat.receiverUser.id === authUser?.uid || chat.senderUser.id === authUser?.uid)
+
   return (
     <>
       <SideBarProfile/>
@@ -35,7 +39,7 @@ export default function ChatsPage () {
 
       <section className='h-full pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar pb-48'>
         {
-          chats?.map(message => {
+          loggedUserChats?.map(message => {
             const lastMessage = message.messages.slice(-1)[0]
             const lastUser = message.receiverUser.id === lastMessage.userId ? message.receiverUser : message.senderUser
 

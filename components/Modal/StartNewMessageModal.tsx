@@ -78,7 +78,7 @@ export const StartNewMessageModal = ({ showModal, setShowModal }: StartNewMessag
 
                 {
                   (search.length > 0 && userSearch.length > 0) &&
-                    <div className='absolute bg-light-green shadow shadow-black/25 p-2 rounded-lg top-14'>
+                    <div className='absolute z-20 bg-light-green shadow shadow-black/25 p-2 rounded-lg top-14 w-3/4 flex flex-col gap-2'>
                       {
                         userSearch.map(user => (
                           <p onClick={() => setSearch(`${user.firstName} ${user.lastName}`)} className='font-karla' key={user.id}>{user.firstName} {user.lastName}</p>
