@@ -37,7 +37,7 @@ export default function ChatsPage () {
       <SideBarProfile/>
       <MessagesHeader/>
 
-      <section className='h-full pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar pb-48'>
+      <section className='h-full pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar'>
         {
           loggedUserChats?.map(message => {
             const lastMessage = message.messages.slice(-1)[0]
