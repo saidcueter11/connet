@@ -2,7 +2,7 @@ import { Avatar } from 'flowbite-react'
 import { addFriend, removeFriend } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
-import { SlideCardIcons } from './SlideCardIcons'
+import { SlideCardIcons } from '../Utils/SlideCardIcons'
 interface FriendCardProps {
   displayName: string,
   likesCount: number,
@@ -32,7 +32,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
 
   return (
     <>
-      <div className='flex bg-dark-green rounded-lg p-3 justify-between'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px]'>
         <div onClick={goToProfile}>
           <Avatar rounded={true}>
             <p className='text-ligth-text-green mb-1'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>

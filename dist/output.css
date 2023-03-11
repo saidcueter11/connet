@@ -1774,6 +1774,26 @@ input:checked + .toggle-bg{
   width: 0px;
 }
 
+.w-\[90vw\]{
+  width: 90vw;
+}
+
+.w-\[85vw\]{
+  width: 85vw;
+}
+
+.w-\[82vw\]{
+  width: 82vw;
+}
+
+.w-\[81vw\]{
+  width: 81vw;
+}
+
+.w-\[83vw\]{
+  width: 83vw;
+}
+
 .min-w-\[327px\]{
   min-width: 327px;
 }
@@ -1805,6 +1825,14 @@ input:checked + .toggle-bg{
 
 .min-w-\[40\%\]{
   min-width: 40%;
+}
+
+.min-w-\[83vw\]{
+  min-width: 83vw;
+}
+
+.min-w-\[320px\]{
+  min-width: 320px;
 }
 
 .max-w-2xl{
@@ -2050,6 +2078,10 @@ input:checked + .toggle-bg{
 
 .items-center{
   align-items: center;
+}
+
+.items-stretch{
+  align-items: stretch;
 }
 
 .justify-start{

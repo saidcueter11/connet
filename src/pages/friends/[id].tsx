@@ -1,6 +1,6 @@
 import { db } from '../../../firebase/client'
 import { ListCardsContainer } from 'components/Utils/ListCardsContainer'
-import { FriendCard } from 'components/Utils/FriendCard'
+import { FriendCard } from 'components/Friends/FriendCard'
 import ArrowLeft from 'components/Icons/ArrowLeft'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { SideBarProfile } from 'components/SideBars/SideBarProfile'
@@ -11,6 +11,7 @@ import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { UserCollection } from 'types/databaseTypes'
+import { FriendsHeader } from 'components/Friends/FriendsHeader'
 
 interface FriendsPageProp {
   userList?: UserCollection[]
@@ -62,12 +63,12 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
           ? <SideBarProfile/>
           : <ArrowLeft width={24} height={24} stroke={'black'}/>
       }
-      <section className='h-full grid justify-center w-full grid-rows-10'>
-        <h1 className='text-3xl text-text-dark-green font-concert-one text-center h-0 row-span-1 w-full'>Friends</h1>
+      <main className='h-screen'>
+        <FriendsHeader/>
 
-        <div className='row-span-3 font-concert-one w-full'>
+        <section className='h-screen font-concert-one w-full grid justify-center items-start'>
           <Tabs.Group style='underline' className='justify-center'>
-            <Tabs.Item active={true} title={firstTabTitle} className='h-full'>
+            <Tabs.Item active={true} title={firstTabTitle} className=''>
             {
               currentUser?.friends?.length === 0
                 ? <p className='h-[26rem] text-center text-text-dark-green text-xl'>You have not added any friends. Go to the discover page and add some</p>
@@ -107,9 +108,9 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
               }
             </Tabs.Item>
           </Tabs.Group>
-        </div>
+        </section>
 
-      </section>
+      </main>
 
       <NavBarMobile/>
     </>
