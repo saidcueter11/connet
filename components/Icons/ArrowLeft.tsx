@@ -6,15 +6,9 @@ export default function ArrowLeft ({ width, height, fill, stroke }: IconsProps) 
 
   const goBack = () => router.back()
   return (
-    <svg className='inline' onClick={goBack} width={width} height={height} viewBox="0 0 21 21" fill={fill} stroke={stroke}>
-      <g
-        fill="none"
-        fillRule="evenodd"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M7.5 6.497l-4 4.002 4 4M16.5 10.5h-13" />
-      </g>
+    <svg onClick={goBack} xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-left inline" width="26" height="26" viewBox="0 0 24 24" strokeWidth="2" stroke="#EB6440" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <polyline points="15 6 9 12 15 18" />
     </svg>
   )
 }

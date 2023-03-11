@@ -35,27 +35,28 @@ export default function ChatsPage () {
   return (
     <>
       <SideBarProfile/>
-      <MessagesHeader/>
+      <main className='h-full w-full'>
+        <MessagesHeader/>
+        <section className='h-3/4 pb-11 pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar'>
+          {
+            loggedUserChats?.map(message => {
+              const lastMessage = message.messages.slice(-1)[0]
+              const lastUser = message.receiverUser.id === lastMessage.userId ? message.receiverUser : message.senderUser
+              const directMessageUser = message.receiverUser.id === authUser?.uid ? message.senderUser : message.receiverUser
 
-      <section className='h-full pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar'>
-        {
-          loggedUserChats?.map(message => {
-            const lastMessage = message.messages.slice(-1)[0]
-            const lastUser = message.receiverUser.id === lastMessage.userId ? message.receiverUser : message.senderUser
-            const directMessageUser = message.receiverUser.id === authUser?.uid ? message.senderUser : message.receiverUser
+              return <MessagesPreviewCard
+                key={message.id}
+                chatId={message.id as string}
+                content={lastMessage.content}
+                lastMessageUser={lastUser.firstName as string}
+                directMessageUser={`${directMessageUser.firstName} ${directMessageUser.lastName}`}
+                createdAt={lastMessage.createdAt}
+                />
+            })
+          }
 
-            return <MessagesPreviewCard
-              key={message.id}
-              chatId={message.id as string}
-              content={lastMessage.content}
-              lastMessageUser={lastUser.firstName as string}
-              directMessageUser={`${directMessageUser.firstName} ${directMessageUser.lastName}`}
-              createdAt={lastMessage.createdAt}
-              />
-          })
-        }
-
-      </section>
+        </section>
+      </main>
 
       <NavBarMobile/>
     </>

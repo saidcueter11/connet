@@ -37,7 +37,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
   const chatUser = loggedUser?.id === messages?.receiverUser.id ? messages?.senderUser : messages?.receiverUser
 
   return (
-    <>
+    <main className='h-screen w-full'>
       <ChatHeader userName={`${chatUser?.firstName} ${chatUser?.lastName}`}/>
 
       <MessagesContainerMobile>
@@ -56,7 +56,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
 
       <SendMessageFormContainer/>
 
-    </>
+    </main>
   )
 }
 
