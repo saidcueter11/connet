@@ -4,7 +4,7 @@ import React, { FormEvent, useEffect, useState } from 'react'
 import { UploadImgContainer } from './UploadImgContainer'
 import { SendMessageButton } from 'components/Messages/SendMessageButton'
 
-interface ExpansibleTextareaProps {
+interface ExpansibleTexareaMessagesProps {
   content: string
   setContent: (newVal: string) => void
   imgUrl: string
@@ -19,7 +19,7 @@ const DRAG_IMAGE_STATES = {
   COMPLETE: 3
 }
 
-export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: ExpansibleTextareaProps) => {
+export const ExpansibleTexareaMessages = ({ content, setContent, imgUrl, setImgUrl }: ExpansibleTexareaMessagesProps) => {
   const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
   const [task, setTask] = useState<UploadTask>()
 
@@ -75,6 +75,7 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
+    console.log(e)
     const file = e.target.files ? e.target.files[0] : undefined
 
     if (file) {
@@ -85,35 +86,36 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
 
   return (
     <>
-      <div className='bg-light-green rounded-lg pt-2 grid justify-center gap-2 w-full'>
-        <div className='w-full p-2'>
-          <textarea
-            className={`rounded-xl w-[77vw] max-w-sm focus:outline-none focus:ring-0 focus:border-action-red-ligth bg-light-green font-karla text-text-dark-green text-lg outline-none resize-none border-2 transition-colors ${drag === DRAG_IMAGE_STATES.DRAG_OVER ? 'border-action-red-ligth' : 'border-transparent'}`}
-            value={content}
-            onInput={handleInput}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            rows={1}
-            placeholder="What's popping?"
-          />
-
-          {
-            imgUrl && imgUrl.length > 0 &&
-              <div className='relative px-3'>
-                <button className='absolute right-3 top-3 rounded-full bg-black/80 text-slate-50 w-6 h-6' onClick={() => setImgUrl('')}>X</button>
-                <img src={imgUrl} className='rounded h-auto max-w-full object-cover mb-3'/>
-              </div>
-          }
-
-          <div className='flex justify-between'>
+      <div className='bg-light-green rounded-lg grid justify-center gap-2 w-full'>
+        <div className='w-full flex items-center'>
+          <div className={`${imgUrl ? 'self-end pb-3' : ''}`}>
             <UploadImgContainer handleImgChange={handleImgChange}/>
-            <SendMessageButton />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <textarea
+              className={`rounded-xl min-w-[77vw] focus:outline-none focus:ring-0 focus:border-action-red-ligth bg-light-green font-karla text-text-dark-green text-lg outline-none resize-none border-2 transition-colors ${drag === DRAG_IMAGE_STATES.DRAG_OVER ? 'border-action-red-ligth' : 'border-transparent'}`}
+              value={content}
+              onInput={handleInput}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              rows={1}
+            />
+
+            {
+              imgUrl && imgUrl.length > 0 &&
+                <div className='relative px-3'>
+                  <button className='absolute right-3 top-3 rounded-full bg-black/80 text-slate-50 w-6 h-6' onClick={() => setImgUrl('')}>X</button>
+                  <img src={imgUrl} className='rounded h-auto max-w-full object-cover mb-3'/>
+                </div>
+            }
+
           </div>
 
         </div>
 
       </div>
+      <SendMessageButton />
     </>
   )
 }

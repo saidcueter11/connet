@@ -62,7 +62,7 @@ export const SideBarProfile = ({ isNotificationOpen, isOpen }:SideBarProfileProp
               </div>
             </div>
 
-            <div className='h-44 gap-2 flex flex-col justify-center'>
+            <div className='mt-5 gap-4 flex flex-col justify-center'>
               <Link href={`/friends/${authUser?.uid}`} className='font-karla text-ligth-text-green flex gap-2'>
                 <FriendsIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
                 <p>Friends</p>

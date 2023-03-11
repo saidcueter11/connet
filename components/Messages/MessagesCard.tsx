@@ -18,10 +18,22 @@ export const MessagesCard = ({ content, userId, imgUrl, createdAt }: MessagesCar
         authUser?.uid === userId
           ? <div className='bg-light-green grid rounded-2xl rounded-br-none shadow w-4/5 shadow-black/25 ml-auto p-4 pb-0'>
               <p className='font-karla text-text-dark-green pb-3'>{content}</p>
+                {
+                  imgUrl &&
+                    <a href={imgUrl} target='_blank' className='flex justify-center pb-2' rel="noreferrer">
+                      <img src={imgUrl} className='rounded w-4/5 object-cover'/>
+                    </a>
+                }
               <time className='font-karla text-action-red pb-2 text-end'>{time}</time>
             </div>
           : <div className='bg-dark-green grid rounded-2xl rounded-bl-none shadow w-4/5 shadow-black/25 p-4 pb-0'>
               <p className='font-karla text-ligth-text-green pb-3'>{content}</p>
+                {
+                  imgUrl &&
+                    <a href={imgUrl} target='_blank' className='flex justify-center pb-2' rel="noreferrer">
+                      <img src={imgUrl} className='rounded w-4/5 object-cover'/>
+                    </a>
+                }
               <time className='font-karla text-action-red-ligth pb-2'>{time}</time>
             </div>
       }

@@ -13,7 +13,7 @@ export const MessagesContainerMobile = ({ children }: MessagesContainerMobilePro
 
   return (
     <>
-      <section className='flex flex-col gap-3 h-4/5 overflow-y-scroll no-scrollbar px-1 relative pb-5' ref={chatContainerRef}>
+      <section className='flex flex-col gap-3 h-[87%] overflow-y-scroll no-scrollbar px-1 relative pb-3' ref={chatContainerRef}>
         {children}
       </section>
     </>

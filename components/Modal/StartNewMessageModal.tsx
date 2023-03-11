@@ -76,7 +76,7 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
               <form className='grid gap-5 justify-items-center pt-3 relative' onSubmit={handleSubmit}>
                 <div className='self-start flex max-w-[240px] gap-3'>
                   <label className='font-concert-one text-ligth-text-green'>To:</label>
-                  <input className='rounded bg-light-green px-2 py-1 w-3/4' value={search} onChange={(e) => setSearch(e.target.value)}/>
+                  <input className='rounded bg-light-green px-2 py-1 w-3/4 font-karla' value={search} placeholder='Send to...' onChange={(e) => setSearch(e.target.value)}/>
                 </div>
 
                 {
