@@ -58,11 +58,13 @@ export interface GroupCollecion {
 }
 
 export interface MessageCollection {
-  firstUser: string
-  secondUser: string
-  messages: [
+  id?: string
+  senderUser: UserCollection
+  receiverUser: UserCollection
+  messages: {
     content: string,
     createdAt: Timestamp,
-    userId: string
-  ]
+    userId: string,
+    imgUrl?: string
+  }[]
 }

@@ -1,4 +1,4 @@
-import { LoginForm } from 'components/LoginForm'
+import { LoginForm } from 'components/Forms/LoginForm'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
 

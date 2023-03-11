@@ -1,6 +1,6 @@
 import { PostCollection } from 'types/databaseTypes'
 import { useDocument } from 'react-firebase-hooks/firestore'
-import { db } from '../../../firebase/client'
+import { db } from '@firebase/client'
 import { doc } from 'firebase/firestore'
 import { GetServerSidePropsContext } from 'next'
 import { Spinner } from 'flowbite-react'

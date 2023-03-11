@@ -1,12 +1,18 @@
 import { UploadImgIcon } from '../Icons/UploadImgIcon'
+import React from 'react'
 
-export const UploadImgContainer = () => {
+interface UploadImgContainerProps {
+  handleImgChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+
+}
+
+export const UploadImgContainer = ({ handleImgChange }:UploadImgContainerProps) => {
   return (
-    <>
-      <label htmlFor='file-input' className='absolute bottom-2 left-2'>
+    <div className=''>
+      <label htmlFor='file-input'>
         <UploadImgIcon width={30} height={30} fill='none' stroke='#EB6440'/>
       </label>
-      <input type='file' className='hidden' accept=".jpg, .jpeg, .png" id='file-input'/>
-    </>
+      <input type='file' className='hidden' onChange={handleImgChange} accept=".jpg, .jpeg, .png" id='file-input'/>
+    </div>
   )
 }

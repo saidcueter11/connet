@@ -1,13 +1,32 @@
 import { MessagesHeader } from 'components/Messages/MessagesHeader'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { SideBarProfile } from 'components/SideBars/SideBarProfile'
-import { useAuth } from 'context/authUserContext'
-import { Avatar } from 'flowbite-react'
-import Link from 'next/link'
+import { MessagesPreviewCard } from 'components/Messages/MessagesPreviewCard'
+import { collection } from 'firebase/firestore'
+import { db } from '@firebase/client'
+import { useCollection } from 'react-firebase-hooks/firestore'
+import { useEffect, useState } from 'react'
+import { MessageCollection } from 'types/databaseTypes'
 
 export default function ChatsPage () {
-  const { authUser } = useAuth()
-  const id = '10'
+  const collectionMessages = collection(db, 'messages')
+  const [value, loading, error] = useCollection(collectionMessages)
+  const [chats, setChats] = useState<MessageCollection[]>()
+
+  if (error) return <p>There was an error</p>
+
+  useEffect(() => {
+    if (!loading) {
+      const newMessages = value?.docs.map(doc => {
+        const data = doc.data() as MessageCollection
+        const { id } = doc
+
+        return { ...data, id }
+      })
+
+      setChats(newMessages)
+    }
+  }, [loading, value])
 
   return (
     <>
@@ -15,15 +34,20 @@ export default function ChatsPage () {
       <MessagesHeader/>
 
       <section className='h-full pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar pb-48'>
+        {
+          chats?.map(message => {
+            const lastMessage = message.messages.slice(-1)[0]
+            const lastUser = message.receiverUser.id === lastMessage.userId ? message.receiverUser : message.senderUser
 
-        <Link href={`/messages/${authUser?.uid}/chat/${id}`} className='grid grid-cols-2 p-4 bg-light-green shadow shadow-black/25 rounded-2xl relative '>
-          <Avatar rounded={true} className='col-span-2 self-start justify-self-start'>
-            <p className='font-concert-one text-lg pb-2 text-text-dark-green'>Said Cueter</p>
-          </Avatar>
-          <p className='col-span-2 pl-14 font-karla text-text-dark-green'>This is a message</p>
-
-          <time className='absolute top-3 right-4 text-sm text-action-red font-karla'>10:45 PM</time>
-        </Link>
+            return <MessagesPreviewCard
+              key={message.id}
+              chatId={message.id as string}
+              content={lastMessage.content}
+              lastMessageUser={`${lastUser.firstName} ${lastUser.lastName}`}
+              createdAt={lastMessage.createdAt}
+              />
+          })
+        }
 
       </section>
 

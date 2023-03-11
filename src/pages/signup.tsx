@@ -1,5 +1,5 @@
 import ArrowLeft from 'components/Icons/ArrowLeft'
-import { SignupForm } from 'components/SignupForm'
+import { SignupForm } from 'components/Forms/SignupForm'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
 

@@ -352,24 +352,38 @@ export const addCommentPostGroup = async ({ content, user, postGroupId, userId }
 }
 
 interface SendMessageType {
-  firstUserName: string,
-  secondUserName: string,
+  senderUser?: UserCollection,
+  receiverUser?: UserCollection,
   content: string,
   userId: string,
-  senderName: string
+  imgUrl?: string,
+  chatId?: string
 }
 
-export const sendMessage = async ({ firstUserName, secondUserName, content, userId, senderName }: SendMessageType) => {
+export const sendMessage = async ({ receiverUser, content, userId, senderUser, imgUrl, chatId }: SendMessageType) => {
   const collectionDb = collection(db, 'messages')
 
-  return await addDoc(collectionDb, {
-    firstUserName,
-    secondUserName,
-    messages: arrayUnion({
-      content,
-      userId,
-      createdAt: Timestamp.now(),
-      senderName
+  if (chatId === undefined) {
+    return await addDoc(collectionDb, {
+      receiverUser,
+      senderUser,
+      messages: arrayUnion({
+        content,
+        userId,
+        imgUrl,
+        createdAt: Timestamp.now()
+      })
     })
-  })
+  }
+
+  if (chatId) {
+    return await updateDoc(doc(collectionDb, chatId), {
+      messages: arrayUnion({
+        content,
+        userId,
+        imgUrl,
+        createdAt: Timestamp.now()
+      })
+    })
+  }
 }
