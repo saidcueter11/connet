@@ -32,7 +32,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
 
   return (
     <>
-      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px]'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px] w-full'>
         <div onClick={goToProfile}>
           <Avatar rounded={true}>
             <p className='text-ligth-text-green mb-1'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>

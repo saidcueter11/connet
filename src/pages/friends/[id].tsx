@@ -30,7 +30,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
     return (
     <>
       <SideBarProfile/>
-      <h1 className='text-3xl text-text-dark-green font-concert-one text-center h-0 row-span-1'>Friends</h1>
+      <FriendsHeader/>
 
       <Spinner/>
       <NavBarMobile/>
@@ -68,7 +68,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 
         <section className='h-screen font-concert-one w-full grid justify-center items-start'>
           <Tabs.Group style='underline' className='justify-center'>
-            <Tabs.Item active={true} title={firstTabTitle} className=''>
+            <Tabs.Item active={true} title={firstTabTitle}>
             {
               currentUser?.friends?.length === 0
                 ? <p className='h-[26rem] text-center text-text-dark-green text-xl'>You have not added any friends. Go to the discover page and add some</p>

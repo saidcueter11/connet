@@ -46,7 +46,7 @@ export const GroupCard = ({ groupName, membersCount, likesCount, adminId, groupI
 
   return (
     <>
-      <div className='flex bg-dark-green rounded-lg p-3 justify-between'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px] w-full'>
         <Link href={`/group/${groupId}`}>
           <Avatar rounded={true}>
             <p className='text-ligth-text-green mb-1'>{groupName}</p>

@@ -1129,6 +1129,14 @@ input:checked + .toggle-bg{
   top: 0.75rem;
 }
 
+.left-full{
+  left: 100%;
+}
+
+.-left-full{
+  left: -100%;
+}
+
 .z-10{
   z-index: 10;
 }
@@ -1615,6 +1623,10 @@ input:checked + .toggle-bg{
 
 .w-screen{
   width: 100vw;
+}
+
+.w-2\/5{
+  width: 40%;
 }
 
 .min-w-\[320px\]{
@@ -3336,8 +3348,19 @@ input:checked + .toggle-bg{
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-xl{
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-black\/25{
   --tw-shadow-color: rgb(0 0 0 / 0.25);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-black{
+  --tw-shadow-color: #000000;
   --tw-shadow: var(--tw-shadow-colored);
 }
 
@@ -3503,6 +3526,18 @@ input:checked + .toggle-bg{
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+.backdrop\:shadow-md::backdrop{
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.backdrop\:shadow-lg::backdrop{
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .after\:translate-x-full::after{

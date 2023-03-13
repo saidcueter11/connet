@@ -1,6 +1,5 @@
 import { db } from '../../../firebase/client'
 import { ListCardsContainer } from 'components/Utils/ListCardsContainer'
-import { CreateGroupModal } from 'components/Modal/CreateGroupModal'
 import { GroupCard } from 'components/Group/GroupCard'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { SideBarProfile } from 'components/SideBars/SideBarProfile'
@@ -12,6 +11,8 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore'
 import { GroupCollecion, UserCollection } from 'types/databaseTypes'
+import { GroupsHeader } from 'components/Group/GroupsHeader'
+import ArrowLeft from 'components/Icons/ArrowLeft'
 
 interface GroupsPageProps {
   groupsList: GroupCollecion[]
@@ -33,7 +34,7 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
     return (
     <>
       <SideBarProfile/>
-      <h1 className='font-concert-one text-3xl text-center row-span-1 text-text-dark-green'>Groups</h1>
+      <GroupsHeader setShowModal={setShowModal} showModal={showModal}/>
       <Spinner/>
       <NavBarMobile/>
     </>
@@ -47,6 +48,7 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
   })
 
   const userSnap = valueCurrentUser?.data()
+  const userId = valueCurrentUser?.id
 
   const groups = snap ?? groupsList ?? []
   const loggedUserGroups = groups.filter(group => !group.groupMembers?.includes(authUser?.uid as string))
@@ -55,12 +57,15 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
 
   return (
     <>
-      <SideBarProfile/>
-      <section className='h-full grid justify-center w-full grid-rows-10'>
-        <h1 className='font-concert-one text-3xl text-center row-span-1 text-text-dark-green'>Groups</h1>
+      {
+        userId === authUser?.uid
+          ? <SideBarProfile/>
+          : <ArrowLeft width={24} height={24} stroke={'black'}/>
+      }
+      <main className='h-screen'>
+        <GroupsHeader setShowModal={setShowModal} showModal={showModal}/>
 
-        <div className='row-span-3 flex flex-col items-center font-concert-one'>
-          <button className='w-3/5 bg-dark-green rounded-full pb-2 text-ligth-text-green' onClick={() => setShowModal(true)}>Create group</button>
+        <section className='h-screen font-concert-one w-full grid justify-center items-start'>
           <Tabs.Group style='underline' className='justify-center'>
             <Tabs.Item active={true} title={firstTabTitle}>
               <ListCardsContainer>
@@ -101,11 +106,9 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
               </ListCardsContainer>
             </Tabs.Item>
           </Tabs.Group>
-        </div>
+        </section>
 
-      </section>
-
-      <CreateGroupModal setShowModal={setShowModal} showModal={showModal}/>
+      </main>
 
       <NavBarMobile/>
     </>
