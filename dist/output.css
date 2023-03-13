@@ -1701,6 +1701,10 @@ input:checked + .toggle-bg{
   max-width: 20rem;
 }
 
+.max-w-\[48px\]{
+  max-width: 48px;
+}
+
 .flex-1{
   flex: 1 1 0%;
 }
@@ -1897,6 +1901,11 @@ input:checked + .toggle-bg{
 
 .gap-5{
   gap: 1.25rem;
+}
+
+.gap-x-2{
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
 }
 
 .-space-x-4 > :not([hidden]) ~ :not([hidden]){

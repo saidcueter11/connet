@@ -40,7 +40,15 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
         {
           !loading
             ? <>
-                <GroupHeader groupName={group.groupName} groupId={id} groupDescription={group.description} groupMembers={group.groupMembers} joinRequest={group.joinRequests} adminId={group.adminId}/>
+                <GroupHeader
+                  groupName={group.groupName}
+                  groupId={id}
+                  groupDescription={group.description}
+                  groupMembers={group.groupMembers}
+                  joinRequest={group.joinRequests}
+                  adminId={group.adminId}
+                  privacy={group.privacy}
+                />
 
                 <div className='flex flex-col gap-4 pt-10'>
                   {
