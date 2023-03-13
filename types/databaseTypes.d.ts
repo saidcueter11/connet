@@ -46,6 +46,7 @@ export interface PostCollection {
 
 export interface GroupPostCollection extends PostCollection {
   groupId?: string
+  groupName?: string
 }
 
 export interface GroupCollecion {

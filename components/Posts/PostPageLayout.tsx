@@ -1,37 +1,34 @@
-import { PostCollection } from 'types/databaseTypes'
+import { GroupPostCollection } from 'types/databaseTypes'
 import { AddCommentForm } from '../Forms/AddCommentForm'
 import { CommentCard } from './CommentCard'
-import ArrowLeft from '../Icons/ArrowLeft'
 import { NavBarMobile } from '../Utils/NavBarMobile'
 import { PostCard } from './PostCard'
-import { ProfileHeader } from '../Profile/ProfileHeader'
-import { SideBarNotifications } from '../SideBars/SideBarNotifications'
+import { PostPageHeader } from './PostPageHeader'
 
 interface PostPageLayoutProps {
   toggleSideBarNotifications: boolean,
   setToggleSideBarNotifications: (isOpen: boolean) => void,
-  props: PostCollection,
+  props: GroupPostCollection,
   postId?: string,
   loading: boolean,
   postGroupId?: string,
-
 }
 
 export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNotifications, props, postId, loading, postGroupId }: PostPageLayoutProps) => {
   return (
     <>
-      <SideBarNotifications toggle={toggleSideBarNotifications} onToggle={setToggleSideBarNotifications}/>
-      <ArrowLeft width={24} height={24} stroke={'black'}/>
-
-      <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-28 no-scrollbar'>
-
-        <ProfileHeader displayName={props.user?.displayName ?? ''} userId={props.userId} loading={loading} chatingWith={props.user?.chatingWith}/>
-
-        <div className='w-full m-auto'>
+      <PostPageHeader
+        displayName={props.user?.displayName as string}
+        userId={props.userId as string}
+        groupName={props.groupName}
+        groupId={props.groupId}
+        />
+      <div className='h-full overflow-y-scroll no-scrollbar pb-20'>
+        <div className='w-full m-auto pt-16'>
           <PostCard post={props}/>
         </div>
 
-        <div className='flex flex-col gap-2'>
+        <div className='grid gap-4 pt-4'>
           <h3 className='font-concert-one text-lg text-text-dark-green'>Comments</h3>
           <AddCommentForm postId={postId as string} loading={loading} postGroupId={postGroupId} />
 
@@ -40,8 +37,9 @@ export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNot
           }
         </div>
 
-        <NavBarMobile onNotificationClick={setToggleSideBarNotifications}/>
       </div>
+
+      <NavBarMobile onNotificationClick={setToggleSideBarNotifications}/>
     </>
   )
 }

@@ -270,7 +270,7 @@ export const removeGroupMember = async (id: string, userId: string) => {
   })
 }
 
-export const addGroupPost = async ({ content, userId, user, commentsCount, likesCount, img, groupId }: GroupPostCollection) => {
+export const addGroupPost = async ({ content, userId, user, commentsCount, likesCount, img, groupId, groupName }: GroupPostCollection) => {
   const collecitonDb = collection(db, 'groupPosts')
 
   return await addDoc(collecitonDb, {
@@ -281,7 +281,8 @@ export const addGroupPost = async ({ content, userId, user, commentsCount, likes
     likesCount,
     commentsCount,
     img,
-    groupId
+    groupId,
+    groupName
   })
 }
 

@@ -5,7 +5,7 @@ import { Spinner } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useState } from 'react'
 import { useDocument } from 'react-firebase-hooks/firestore'
-import { PostCollection } from 'types/databaseTypes'
+import { GroupPostCollection, PostCollection } from 'types/databaseTypes'
 
 interface PostsGroupProps {
   post: PostCollection
@@ -25,7 +25,7 @@ export default function PostsGroup ({ post, id, postId }: PostsGroupProps) {
     )
   }
 
-  const props: PostCollection = value?.data() ?? post
+  const props: GroupPostCollection = value?.data() ?? post
 
   props.comments?.reverse()
 

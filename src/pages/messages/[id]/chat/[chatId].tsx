@@ -38,7 +38,10 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
 
   return (
     <main className='h-screen w-full'>
-      <ChatHeader userName={`${chatUser?.firstName} ${chatUser?.lastName}`}/>
+      <ChatHeader
+        userName={`${chatUser?.firstName} ${chatUser?.lastName}`}
+        userId={chatUser?.id as string}
+        />
 
       <MessagesContainerMobile>
         {
