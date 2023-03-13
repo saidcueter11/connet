@@ -51,7 +51,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
   const loggedUserFriendsList = loggedUser?.friends
   const firstTabTitle = authUser?.uid === id ? 'My Friends' : `${currentUser?.firstName}'s Friends`
   const loggedUserUserListFriends = users.filter(user => currentUserFriendsList?.includes(user.id as string))
-  const dicoverNewUsersList = users.filter(user => user.id !== id && !currentUserFriendsList?.includes(user.id as string) && user.id !== authUser?.uid)
+  const dicoverNewUsersList = users.filter(user => user.id !== id && !loggedUserFriendsList?.includes(user.id as string) && user.id !== authUser?.uid)
 
   const areWeFriends = (userId: string) => loggedUserFriendsList?.includes(userId)
 
