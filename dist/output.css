@@ -1366,6 +1366,14 @@ input:checked + .toggle-bg{
   margin-top: 1.5rem;
 }
 
+.-mr-1{
+  margin-right: -0.25rem;
+}
+
+.-mt-1{
+  margin-top: -0.25rem;
+}
+
 .\!block{
   display: block !important;
 }
@@ -1653,6 +1661,14 @@ input:checked + .toggle-bg{
   width: 40%;
 }
 
+.w-80{
+  width: 20rem;
+}
+
+.w-96{
+  width: 24rem;
+}
+
 .min-w-\[320px\]{
   min-width: 320px;
 }
@@ -1667,6 +1683,10 @@ input:checked + .toggle-bg{
 
 .min-w-\[77vw\]{
   min-width: 77vw;
+}
+
+.min-w-full{
+  min-width: 100%;
 }
 
 .max-w-2xl{
@@ -2555,6 +2575,26 @@ input:checked + .toggle-bg{
   background-color: rgb(159 88 10 / var(--tw-bg-opacity));
 }
 
+.bg-gray-300{
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.bg-orange-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 90 31 / var(--tw-bg-opacity));
+}
+
+.bg-red-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 82 82 / var(--tw-bg-opacity));
+}
+
+.bg-yellow-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(194 120 3 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-50{
   --tw-bg-opacity: 0.5;
 }
@@ -2924,6 +2964,11 @@ input:checked + .toggle-bg{
 .py-28{
   padding-top: 7rem;
   padding-bottom: 7rem;
+}
+
+.px-1{
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .pb-0{
@@ -3318,6 +3363,11 @@ input:checked + .toggle-bg{
 .text-yellow-900{
   --tw-text-opacity: 1;
   color: rgb(99 49 18 / var(--tw-text-opacity));
+}
+
+.text-orange-500{
+  --tw-text-opacity: 1;
+  color: rgb(255 90 31 / var(--tw-text-opacity));
 }
 
 .underline{

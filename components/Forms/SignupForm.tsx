@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { SyntheticEvent, useState } from 'react'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { UserCollection } from 'types/databaseTypes'
+import { ProgressBar } from './ProgressBar'
 
 export const SignupForm = () => {
   const [email, setEmail] = useState('')
@@ -15,6 +16,8 @@ export const SignupForm = () => {
   const [lastName, setLastName] = useState('')
   const [username, setUsername] = useState('')
   const [errorPassword, setErrorPassword] = useState('')
+  const [errorEmail, setErrorEmail] = useState('')
+
   let errorMessage = ''
 
   const router = useRouter()
@@ -67,45 +70,50 @@ export const SignupForm = () => {
     }
   }
 
+  const onInvalidEmail = () => {
+    setErrorEmail('Please enter the correct email pattern. Must be @contestogac.on.ca')
+  }
+
   return (
     <>
-      <form className='flex flex-col gap-4 items-center font-karla w-screen' onSubmit={handleSubmit}>
-        <div>
+      <form className='flex flex-col gap-4 items-center font-karla w-96' onSubmit={handleSubmit}>
+        <div className='w-3/5'>
           <div className="mb-2 block">
             <Label className='font-concert-one' htmlFor="firstName" value="First Name"/>
           </div>
           <TextInput id='firstName' type='text' value={firstName} onChange={e => setFirstName(e.target.value)} placeholder='Jon' required={true}/>
         </div>
 
-        <div>
+        <div className='w-3/5'>
           <div className="mb-2 block">
             <Label className='font-concert-one' htmlFor="lastName" value="Last Name"/>
           </div>
           <TextInput id='lastName' value={lastName} type='text' onChange={e => setLastName(e.target.value)} placeholder='Jon' required={true}/>
         </div>
 
-        <div>
+        <div className='w-3/5'>
           <div className="mb-2 block">
             <Label className='font-concert-one' htmlFor="username" value="Username"/>
           </div>
           <TextInput id='username' value={username} onChange={e => setUsername(e.target.value)} type='text' placeholder='Jon' required={true}/>
         </div>
 
-        <div>
+        <div className='w-3/5'>
           <div className="mb-2 block">
             <Label className='font-concert-one' htmlFor="email" value="Email"/>
           </div>
-          <TextInput id='email' type='email' value={email} placeholder='example@email.com' onChange={e => setEmail(e.target.value)} required={true}/>
+          <TextInput id='email' onInvalid={onInvalidEmail} pattern='^[a-zA-Z0-9._%+-]+@conestogac\.on\.ca$' type='email' value={email} placeholder='example@email.com' onChange={e => setEmail(e.target.value)} required={true}/>
         </div>
 
-        <div>
+        <div className='w-3/5'>
           <div className="mb-2 block">
             <Label className='font-concert-one' htmlFor="password" value="Password"/>
           </div>
           <TextInput id='password' type='password' value={password} onChange={e => setPassword(e.target.value)} required={true}/>
+          <ProgressBar password={password}/>
         </div>
 
-        <div>
+        <div className='w-3/5'>
           <div className="mb-2 block">
             <Label className='font-concert-one' htmlFor="confirmedPassword" value="Confirm Password"/>
           </div>
@@ -118,6 +126,10 @@ export const SignupForm = () => {
 
         {
           errorPassword.length > 0 && <p className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorPassword}</p>
+        }
+
+        {
+          errorEmail && <p className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorEmail}</p>
         }
 
         <button className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center p-2 text-center font-semibold font-karla rounded-lg w-3/5'>

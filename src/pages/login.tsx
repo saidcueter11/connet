@@ -14,8 +14,8 @@ export default function Login () {
       <Head>
         <title>Login</title>
       </Head>
-      <section className="w-full h-full grid place-content-center">
-        <img className='object-cover' src='logo.png'/>
+      <section className="w-full h-full grid place-content-center gap-2">
+        <img className='w-3/4 object-cover mx-auto' src='logo.png'/>
         <LoginForm/>
       </section>
     </>
