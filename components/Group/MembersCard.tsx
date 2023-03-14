@@ -35,7 +35,7 @@ export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isM
   return (
     <>
       <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px]'>
-        <div onClick={goToProfile}>
+        <div onClick={goToProfile} className='self-center'>
           <Avatar rounded={true}>
             <p className='text-ligth-text-green mb-1'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>
             <div className='flex gap-2'>
@@ -65,8 +65,9 @@ export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isM
               }
 
               {
-
+                (isMember && !isAdmin) && <button className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one' onClick={goToProfile}>View Profile</button>
               }
+
             </div>
         }
 

@@ -4,7 +4,7 @@ import { AppLayout } from 'components/Utils/AppLayout'
 import { AuthUserProvider } from 'context/authUserContext'
 import Head from 'next/head'
 
-export default function App ({ Component, pageProps }: AppProps) {
+export default function App ({ Component, pageProps, router }: AppProps) {
   return (
     <AppLayout>
       <AuthUserProvider>
