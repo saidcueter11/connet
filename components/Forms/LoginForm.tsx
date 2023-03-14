@@ -21,7 +21,7 @@ export const LoginForm = () => {
   }
 
   return (
-    <form className='flex flex-col gap-4 items-center w-52' onSubmit={(e) => handleLogin(e)}>
+    <form className='flex flex-col gap-4 items-center w-full' onSubmit={(e) => handleLogin(e)}>
       <div className='w-full'>
         <div className="mb-2 block">
           <Label htmlFor="email" value="Email"/>

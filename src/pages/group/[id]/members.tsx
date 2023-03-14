@@ -10,6 +10,7 @@ import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore'
 import { GroupCollecion, UserCollection } from 'types/databaseTypes'
+import { MembersHeader } from 'components/Group/MembersHeader'
 
 interface FriendsPageProp {
   usersList?: UserCollection[]
@@ -31,8 +32,7 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
     return (
     <>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
-      <h1 className='text-3xl text-text-dark-green font-concert-one text-center h-0 row-span-1'>Members</h1>
-
+      <MembersHeader/>
       <Spinner/>
       <NavBarMobile/>
     </>
@@ -57,10 +57,10 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
 
       <ArrowLeft width={24} height={24} stroke={'black'}/>
 
-      <section className='h-full grid justify-center w-full grid-rows-10'>
-        <h1 className='text-3xl text-text-dark-green font-concert-one text-center h-0 row-span-1'>Members</h1>
+      <main className='h-screen'>
+        <MembersHeader/>
 
-        <div className='row-span-3 font-concert-one'>
+        <section className='h-screen font-concert-one w-full grid justify-center items-start'>
           <Tabs.Group style='underline' className='justify-center'>
             <Tabs.Item active={true} title='Current Members'>
               <ListCardsContainer>
@@ -106,9 +106,9 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
             }
 
           </Tabs.Group>
-        </div>
+        </section>
 
-      </section>
+      </main>
 
       <NavBarMobile/>
     </>

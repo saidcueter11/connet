@@ -31,10 +31,10 @@ export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isM
   const handleDeclineRequest = () => {
     declineJoinRequestGroup(groupId as string, userId as string)
   }
+
   return (
     <>
-
-    <div className='flex bg-dark-green rounded-lg p-3 justify-between'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px]'>
         <div onClick={goToProfile}>
           <Avatar rounded={true}>
             <p className='text-ligth-text-green mb-1'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>
@@ -59,9 +59,13 @@ export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isM
               {
                 isAdmin &&
                   <div className='flex flex-col gap-2'>
-                      <button className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one' onClick={handleRemoveMember}>Remove Member</button>
-                      <button className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one' onClick={goToProfile}>View Profile</button>
-                    </div>
+                    <button className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one' onClick={handleRemoveMember}>Remove Member</button>
+                    <button className='bg-light-green rounded-full pb-2 pt-0 px-2 text-sm font-concert-one' onClick={goToProfile}>View Profile</button>
+                  </div>
+              }
+
+              {
+
               }
             </div>
         }
@@ -69,7 +73,6 @@ export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isM
         </div>
 
       </div>
-
     </>
   )
 }
