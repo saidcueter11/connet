@@ -42,9 +42,10 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
     }
     if (receiverName) setSearch(receiverName)
   }, [loading])
+  console.log({ users })
 
-  const userSearch = users.filter(user => search.length > 0 && user.id !== authUser?.uid && (user.firstName?.toLowerCase()?.includes(search) || user.lastName?.toLowerCase()?.includes(search)))
   const selectedUser = users.find(user => (search.length) > 0 && (search.includes(`${user.firstName} ${user.lastName}`)))
+  const userSearch = users.filter(user => search.length > 0 && user.id !== authUser?.uid && (user.firstName?.toLowerCase()?.includes(search) || user.lastName?.toLowerCase()?.includes(search)) && !user.chatingWith?.find(chattingUser => chattingUser.userId !== user?.id))
   const loggedUser = users.find(user => user.id === authUser?.uid)
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
@@ -81,7 +82,7 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
 
                 {
                   (search.length > 0 && userSearch.length > 0) &&
-                    <div className='absolute z-20 bg-light-green shadow shadow-black/25 p-2 rounded-lg top-14 w-3/4 flex flex-col gap-2'>
+                    <div className='absolute z-40 bg-light-green shadow shadow-black/25 p-2 rounded-lg top-14 w-3/4 flex flex-col gap-2'>
                       {
                         userSearch.map(user => (
                           <p onClick={() => setSearch(`${user.firstName} ${user.lastName}`)} className='font-karla' key={user.id}>{user.firstName} {user.lastName}</p>

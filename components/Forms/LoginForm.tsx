@@ -25,7 +25,7 @@ export const LoginForm = () => {
         <div className="mb-2 block">
           <Label htmlFor="email" value="Email"/>
         </div>
-        <TextInput id='email' pattern='^[a-zA-Z0-9._%+-]+@conestogac\.on\.ca$' value={email} onChange={e => setEmail(e.target.value)} type='email' placeholder='example@email.com' required={true} />
+        <TextInput id='email' value={email} onChange={e => setEmail(e.target.value)} type='email' placeholder='example@email.com' required={true} />
       </div>
 
       <div className='w-full'>
