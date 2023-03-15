@@ -34,8 +34,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
       setMessages(snap)
       updateChatStatus(chatId as string)
       const lastMessage = snap.messages.slice(-1)[0]
-      console.log(lastMessage)
-      if (lastMessage.userId !== id) updateChatStatus(chatId as string)
+      if (lastMessage.userId !== id as string) updateChatStatus(chatId as string)
     }
   }, [loading, value])
 
