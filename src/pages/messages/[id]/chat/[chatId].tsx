@@ -33,13 +33,15 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
       const snap: MessageCollection = value?.data() as MessageCollection
       setMessages(snap)
       updateChatStatus(chatId as string)
-      id !== authUser?.uid && updateChatStatus(chatId as string)
+      const lastMessage = snap.messages.slice(-1)[0]
+      console.log(lastMessage)
+      if (id === authUser?.uid && lastMessage.userId !== id) updateChatStatus(chatId as string)
     }
   }, [loading, value])
 
   const loggedUser = messages?.receiverUser.id === id ? messages?.receiverUser : messages?.senderUser
   const chatUser = loggedUser?.id === messages?.receiverUser.id ? messages?.senderUser : messages?.receiverUser
-  // const sortedMessages = messages && messages.messages.sort((a, b) => a.createdAt > b.createdAt)
+  // const sortedMessages = messages && messages.messages.sort((a, b) => a.createdAt.seconds > b.createdAt.seconds)
 
   return (
     <main className='h-screen w-full'>
