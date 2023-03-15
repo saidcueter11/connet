@@ -424,5 +424,5 @@ export const updateChatStatus = async (chatId: string) => {
     }
   })
 
-  await updateDoc(docRef, { messages })
+  return await updateDoc(docRef, { messages })
 }

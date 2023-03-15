@@ -3,6 +3,7 @@ import { ChatHeader } from 'components/Messages/ChatHeader'
 import { MessagesCard } from 'components/Messages/MessagesCard'
 import { MessagesContainerMobile } from 'components/Messages/MessagesContainerMobile'
 import { SendMessageFormContainer } from 'components/Messages/SendMessageFormContainer'
+import { useAuth } from 'context/authUserContext'
 import { collection, doc } from 'firebase/firestore'
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
@@ -17,6 +18,7 @@ interface ChatPageProps {
 
 export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
   const router = useRouter()
+  const { authUser } = useAuth()
   const chatId = router.query.chatId ?? currentChatId
   const id = router.query.id ?? userId
   const collectionMessages = collection(db, 'messages')
@@ -31,6 +33,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
       const snap: MessageCollection = value?.data() as MessageCollection
       setMessages(snap)
       updateChatStatus(chatId as string)
+      id === authUser?.uid && updateChatStatus(chatId as string)
     }
   }, [loading, value])
 
