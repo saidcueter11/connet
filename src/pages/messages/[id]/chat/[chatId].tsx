@@ -31,8 +31,9 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
       const snap: MessageCollection = value?.data() as MessageCollection
       setMessages(snap)
       updateChatStatus(chatId as string)
-      const lastMessage = snap.messages.slice(-1)[0]
-      if (lastMessage.userId !== id as string) updateChatStatus(chatId as string)
+      // const lastMessage = snap.messages.slice(-1)[0]
+      // console.log({ lastMessage, id })
+      // if (lastMessage.userId !== id as string) updateChatStatus(chatId as string)
     }
   }, [loading, value])
 
