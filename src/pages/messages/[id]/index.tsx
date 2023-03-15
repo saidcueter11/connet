@@ -41,6 +41,7 @@ export default function ChatsPage () {
           {
             loggedUserChats?.map(message => {
               const lastMessage = message.messages.slice(-1)[0]
+              const unreadMessages = message.messages.filter(m => m.status === 'unread' && m.userId !== authUser?.uid).length
               const lastUser = message.receiverUser.id === lastMessage.userId ? message.receiverUser : message.senderUser
               const directMessageUser = message.receiverUser.id === authUser?.uid ? message.senderUser : message.receiverUser
 
@@ -51,6 +52,7 @@ export default function ChatsPage () {
                 lastMessageUser={lastUser.firstName as string}
                 directMessageUser={`${directMessageUser.firstName} ${directMessageUser.lastName}`}
                 createdAt={lastMessage.createdAt}
+                unreadMessages={unreadMessages}
                 />
             })
           }

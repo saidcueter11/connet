@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
-import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where, writeBatch } from 'firebase/firestore'
+import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where, writeBatch } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { CommentCollection, GroupCollecion, GroupPostCollection, PostCollection, UserCollection } from 'types/databaseTypes'
+import { CommentCollection, GroupCollecion, GroupPostCollection, Message, MessageCollection, PostCollection, UserCollection } from 'types/databaseTypes'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 
 const firebaseConfig = {
@@ -373,20 +373,23 @@ export const sendMessage = async ({ receiverUser, content, userId, senderUser, i
         content,
         userId,
         imgUrl,
-        createdAt: Timestamp.now()
+        createdAt: Timestamp.now(),
+        status: 'unread'
       })
     })
 
     await updateDoc(doc(collectionUsers, senderUser?.id), {
       chatingWith: arrayUnion({
         userId: receiverUser?.id,
-        chatId: added.id
+        chatId: added.id,
+        status: 'unread'
       })
     })
     await updateDoc(doc(collectionUsers, receiverUser?.id), {
       chatingWith: arrayUnion({
         userId: senderUser?.id,
-        chatId: added.id
+        chatId: added.id,
+        status: 'unread'
       })
     })
 
@@ -399,8 +402,27 @@ export const sendMessage = async ({ receiverUser, content, userId, senderUser, i
         content,
         userId,
         imgUrl,
-        createdAt: Timestamp.now()
+        createdAt: Timestamp.now(),
+        status: 'unread'
       })
     })
   }
+}
+
+export const updateChatStatus = async (chatId: string) => {
+  const docRef = doc(db, 'messages', chatId)
+
+  const docData = await getDoc(docRef)
+  const messages: MessageCollection[] = docData.data()?.messages.map((message: Message) => {
+    if (message.status === 'unread') {
+      return {
+        ...message,
+        status: 'read'
+      }
+    } else {
+      return message
+    }
+  })
+
+  await updateDoc(docRef, { messages })
 }

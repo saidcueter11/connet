@@ -42,7 +42,6 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
     }
     if (receiverName) setSearch(receiverName)
   }, [loading])
-  console.log({ users })
 
   const selectedUser = users.find(user => (search.length) > 0 && (search.includes(`${user.firstName} ${user.lastName}`)))
   const userSearch = users.filter(user => search.length > 0 && user.id !== authUser?.uid && (user.firstName?.toLowerCase()?.includes(search) || user.lastName?.toLowerCase()?.includes(search)) && !user.chatingWith?.find(chattingUser => chattingUser.userId !== user?.id))

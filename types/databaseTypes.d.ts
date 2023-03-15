@@ -61,15 +61,17 @@ export interface GroupCollecion {
   id?: string,
   joinRequests?: string[]
 }
+export interface Message {
+  content: string,
+  createdAt: Timestamp,
+  userId: string,
+  imgUrl?: string
+  status: 'read' | 'unread'
+}
 
 export interface MessageCollection {
   id?: string
   senderUser: UserCollection
   receiverUser: UserCollection
-  messages: {
-    content: string,
-    createdAt: Timestamp,
-    userId: string,
-    imgUrl?: string
-  }[]
+  messages: Message[]
 }

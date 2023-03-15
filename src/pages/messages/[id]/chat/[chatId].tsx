@@ -1,4 +1,4 @@
-import { db } from '@firebase/client'
+import { db, updateChatStatus } from '@firebase/client'
 import { ChatHeader } from 'components/Messages/ChatHeader'
 import { MessagesCard } from 'components/Messages/MessagesCard'
 import { MessagesContainerMobile } from 'components/Messages/MessagesContainerMobile'
@@ -30,6 +30,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
     if (!loading) {
       const snap: MessageCollection = value?.data() as MessageCollection
       setMessages(snap)
+      updateChatStatus(chatId as string)
     }
   }, [loading, value])
 
