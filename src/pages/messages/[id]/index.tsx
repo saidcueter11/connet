@@ -31,7 +31,7 @@ export default function ChatsPage () {
   }, [loading, value])
 
   const loggedUserChats = chats?.filter(chat => chat.receiverUser.id === authUser?.uid || chat.senderUser.id === authUser?.uid)
-
+  const sortedChats = loggedUserChats?.sort((a, b) => b.messages.slice(-1)[0].createdAt.seconds - a.messages.slice(-1)[0].createdAt.seconds)
   return (
     <>
       <SideBarProfile/>
@@ -39,7 +39,7 @@ export default function ChatsPage () {
         <MessagesHeader/>
         <section className='h-3/4 pb-11 pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar'>
           {
-            loggedUserChats?.map(message => {
+            sortedChats?.map(message => {
               const lastMessage = message.messages.slice(-1)[0]
               const unreadMessages = message.messages.filter(m => m.status === 'unread' && m.userId !== authUser?.uid).length
               const lastUser = message.receiverUser.id === lastMessage.userId ? message.receiverUser : message.senderUser
