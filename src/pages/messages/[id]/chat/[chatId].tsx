@@ -1,4 +1,4 @@
-import { db, newMessageReceived, updateChatStatus } from '@firebase/client'
+import { db, updateChatStatus } from '@firebase/client'
 import { ChatHeader } from 'components/Messages/ChatHeader'
 import { MessagesCard } from 'components/Messages/MessagesCard'
 import { MessagesContainerMobile } from 'components/Messages/MessagesContainerMobile'
@@ -31,12 +31,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
       const snap: MessageCollection = value?.data() as MessageCollection
       setMessages(snap)
       const lastMessage = snap.messages.slice(-1)[0]
-      newMessageReceived({
-        chatId: chatId as string,
-        content: lastMessage.content,
-        senderName: snap.receiverUser.firstName as string,
-        userId: snap.senderUser.id as string
-      })
+
       if (lastMessage.userId !== id as string) {
         updateChatStatus(chatId as string)
       }
@@ -67,7 +62,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
         }
       </MessagesContainerMobile>
 
-      <SendMessageFormContainer/>
+      <SendMessageFormContainer senderName={`${loggedUser?.firstName} ${loggedUser?.lastName}`} receiverId={chatUser?.id as string}/>
 
     </main>
   )

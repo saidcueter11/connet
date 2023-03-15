@@ -1,10 +1,15 @@
 import { SyntheticEvent, useState } from 'react'
-import { sendMessage } from '@firebase/client'
+import { newMessageReceived, sendMessage } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
 import { ExpansibleTexareaMessages } from 'components/Forms/ExpansibleTexareaMessages'
 
-export const SendMessageFormContainer = () => {
+interface SendMessageFormContainerProps {
+  senderName: string
+  receiverId: string
+}
+
+export const SendMessageFormContainer = ({ senderName, receiverId }: SendMessageFormContainerProps) => {
   const [content, setContent] = useState('')
   const [imgUrl, setImgUrl] = useState('')
   const { authUser } = useAuth()
@@ -21,6 +26,11 @@ export const SendMessageFormContainer = () => {
     }).then(() => {
       setContent('')
       setImgUrl('')
+      newMessageReceived({
+        chatId: chatId as string,
+        senderName,
+        userId: receiverId
+      })
     })
   }
 

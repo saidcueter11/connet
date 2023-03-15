@@ -430,21 +430,22 @@ export const updateChatStatus = async (chatId: string) => {
 interface newMessageReceivedType {
   userId: string,
   chatId: string,
-  content: string,
   senderName: string,
   senderAvatar?: string
 }
 
-export const newMessageReceived = async ({ userId, chatId, content, senderName, senderAvatar }: newMessageReceivedType) => {
+export const newMessageReceived = async ({ userId, chatId, senderName, senderAvatar }: newMessageReceivedType) => {
   const collectionDb = collection(db, 'users')
   const docRef = doc(collectionDb, userId)
 
   return await updateDoc(docRef, {
-    'notifications.messages': arrayUnion({
-      chatId,
-      content,
-      senderName,
-      senderAvatar: senderAvatar ?? ''
+    notifications: arrayUnion({
+      messages: {
+        chatId,
+        senderName,
+        senderAvatar: senderAvatar ?? '',
+        createdAt: Timestamp.now()
+      }
     })
   })
 }

@@ -5,6 +5,7 @@ import { collection, doc } from 'firebase/firestore'
 import { db } from '@firebase/client'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { useAuth } from 'context/authUserContext'
+import { UserCollection } from 'types/databaseTypes'
 
 interface SideBarNotificationsPros {
   isProfileOpen?: boolean
@@ -16,16 +17,18 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
   const { authUser } = useAuth()
   const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-full ')
   const collectionUser = collection(db, 'users')
-  const docRef = doc(collectionUser, authUser?.uid)
-  const [notifications, setNotifications] = useState()
+  const docRef = authUser && doc(collectionUser, authUser?.uid)
+  const [user, setUser] = useState<UserCollection>()
   const [value, loading, error] = useDocument(docRef)
+
+  if (error) return <p>There was an error</p>
 
   useEffect(() => {
     if (!loading) {
-      const snap = value?.data()
-      snap && setNotifications(snap)
+      const snap: UserCollection = value?.data() as UserCollection
+      setUser(snap)
     }
-  }, [loading])
+  }, [loading, authUser])
 
   const handleSideBarToggle = () => {
     if (!isProfileOpen) {
@@ -34,6 +37,9 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
       if (toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-full ')
     }
   }
+
+  const notifications = user?.notifications
+  console.log({ notifications })
 
   return (
     <>
@@ -48,6 +54,16 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
                 </div>
                 <h2 className='justify-self-center font-concert-one text-xl text-ligth-text-green'>Notifications</h2>
               </div>
+
+              {
+                notifications && notifications.map((notification, index) => {
+                  console.log(notification)
+                  if (notification.messages) {
+                    return <p key={index}>{notification.messages.senderName}</p>
+                  }
+                  return ''
+                })
+              }
 
             </div>
           </div>

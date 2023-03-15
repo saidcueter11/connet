@@ -1,5 +1,31 @@
 import { Timestamp } from 'firebase/firestore'
 
+export interface NotificationType {
+    messages: {
+      chatId: string,
+      senderAvatar: string,
+      senderName: string,
+      createdAt: Timestamp
+    },
+    likedPost: {
+      postLikedId: string,
+      userAvatar: string,
+      userName: string,
+      createdAt: Timestamp
+    },
+    commentedPost: {
+      postCommentedId: string,
+      userAvatar: string,
+      userName: string,
+      createdAt: Timestamp
+    },
+    friendAdded: {
+      userId: string,
+      userName: string,
+      userAvatar: string,
+      createdAt: Timestamp
+    }
+}
 export interface UserCollection {
   email?: string,
   firstName?: string,
@@ -17,6 +43,7 @@ export interface UserCollection {
     userId: string,
     chatId: string
   }[]
+  notifications?: NotificationType[]
 }
 
 export interface CommentCollection {
