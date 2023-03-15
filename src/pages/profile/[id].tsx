@@ -3,12 +3,10 @@ import ArrowLeft from 'components/Icons/ArrowLeft'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { PostCard } from 'components/Posts/PostCard'
 import { ProfileHeader } from 'components/Profile/ProfileHeader'
-import { SideBarNotifications } from 'components/SideBars/SideBarNotifications'
 import { collection, doc, query, where } from 'firebase/firestore'
 import { Spinner } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore'
 import { PostCollection, UserCollection } from 'types/databaseTypes'
 
@@ -26,7 +24,6 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
   const docUser = doc(collectionUser, userId)
   const [valueUser, loadingUser, errorUser] = useDocument(docUser)
   const [value, loading, error] = useCollection<PostCollection>(qPosts)
-  const [toggleSideBarNotifications, setToggleSideBarNotifications] = useState(false)
 
   if (error || errorUser) return <p>There was an error...</p>
 
@@ -44,7 +41,6 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
 
   return (
     <>
-      <SideBarNotifications toggle={toggleSideBarNotifications} onToggle={setToggleSideBarNotifications}/>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
       <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-28 no-scrollbar'>
 
@@ -61,7 +57,7 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
         }
       </div>
 
-      <NavBarMobile onNotificationClick={setToggleSideBarNotifications}/>
+      <NavBarMobile/>
     </>
   )
 }

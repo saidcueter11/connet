@@ -3,7 +3,6 @@ import { ListCardsContainer } from 'components/Utils/ListCardsContainer'
 import { FriendCard } from 'components/Friends/FriendCard'
 import ArrowLeft from 'components/Icons/ArrowLeft'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
-import { SideBarProfile } from 'components/SideBars/SideBarProfile'
 import { useAuth } from 'context/authUserContext'
 import { collection } from 'firebase/firestore'
 import { Spinner, Tabs } from 'flowbite-react'
@@ -12,6 +11,7 @@ import { useRouter } from 'next/router'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { UserCollection } from 'types/databaseTypes'
 import { FriendsHeader } from 'components/Friends/FriendsHeader'
+import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 
 interface FriendsPageProp {
   userList?: UserCollection[]
@@ -29,7 +29,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
   if (loading) {
     return (
     <>
-      <SideBarProfile/>
+      <SideBarContainer/>
       <FriendsHeader/>
 
       <Spinner/>
@@ -60,7 +60,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 
       {
         loggedUser?.id === currentUser?.id
-          ? <SideBarProfile/>
+          ? <SideBarContainer/>
           : <ArrowLeft width={24} height={24} stroke={'black'}/>
       }
       <main className='h-screen'>

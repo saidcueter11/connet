@@ -1,6 +1,5 @@
 import { MessagesHeader } from 'components/Messages/MessagesHeader'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
-import { SideBarProfile } from 'components/SideBars/SideBarProfile'
 import { MessagesPreviewCard } from 'components/Messages/MessagesPreviewCard'
 import { collection } from 'firebase/firestore'
 import { db } from '@firebase/client'
@@ -8,6 +7,7 @@ import { useCollection } from 'react-firebase-hooks/firestore'
 import { useEffect, useState } from 'react'
 import { MessageCollection } from 'types/databaseTypes'
 import { useAuth } from 'context/authUserContext'
+import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 
 export default function ChatsPage () {
   const collectionMessages = collection(db, 'messages')
@@ -34,10 +34,10 @@ export default function ChatsPage () {
   const sortedChats = loggedUserChats?.sort((a, b) => b.messages.slice(-1)[0].createdAt.seconds - a.messages.slice(-1)[0].createdAt.seconds)
   return (
     <>
-      <SideBarProfile/>
+      <SideBarContainer/>
       <main className='h-full w-full'>
         <MessagesHeader/>
-        <section className='h-3/4 pb-11 pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar'>
+        <section className='h-3/4 pb-11 pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar px-1'>
           {
             sortedChats?.map(message => {
               const lastMessage = message.messages.slice(-1)[0]

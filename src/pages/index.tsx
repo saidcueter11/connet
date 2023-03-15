@@ -2,17 +2,14 @@ import { getLastestPosts } from '@firebase/client'
 import { HeaderMobile } from 'components/Utils/HeaderMobile'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { PostCard } from 'components/Posts/PostCard'
-import { SideBarNotifications } from 'components/SideBars/SideBarNotifications'
-import { SideBarProfile } from 'components/SideBars/SideBarProfile'
 import { useAuth } from 'context/authUserContext'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { PostCollection } from 'types/databaseTypes'
+import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 
 export default function Home () {
-  const [toggleSideBarNotifications, setToggleSideBarNotifications] = useState(false)
-  const [toggleSideBarProfile, setToggleSideBarProfile] = useState(false)
   const [search, setSearch] = useState('')
   const [posts, setPosts] = useState<PostCollection[]>([])
 
@@ -37,8 +34,7 @@ export default function Home () {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="logo_ico.ico" />
       </Head>
-      <SideBarProfile isNotificationOpen={toggleSideBarNotifications} isOpen={setToggleSideBarProfile}/>
-      <SideBarNotifications isProfileOpen={toggleSideBarProfile} toggle={toggleSideBarNotifications} onToggle={setToggleSideBarNotifications}/>
+      <SideBarContainer />
       <main className='w-full h-screen'>
         <HeaderMobile search={search} setSearch={setSearch}/>
 
@@ -59,7 +55,7 @@ export default function Home () {
 
       </main>
 
-      <NavBarMobile onNotificationClick={setToggleSideBarNotifications} isProfileOpen={toggleSideBarProfile}/>
+      <NavBarMobile />
     </>
   )
 }

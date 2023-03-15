@@ -2,7 +2,6 @@ import { db } from '../../../firebase/client'
 import { ListCardsContainer } from 'components/Utils/ListCardsContainer'
 import { GroupCard } from 'components/Group/GroupCard'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
-import { SideBarProfile } from 'components/SideBars/SideBarProfile'
 import { useAuth } from 'context/authUserContext'
 import { collection, doc } from 'firebase/firestore'
 import { Spinner, Tabs } from 'flowbite-react'
@@ -13,6 +12,7 @@ import { useCollection, useDocument } from 'react-firebase-hooks/firestore'
 import { GroupCollecion, UserCollection } from 'types/databaseTypes'
 import { GroupsHeader } from 'components/Group/GroupsHeader'
 import ArrowLeft from 'components/Icons/ArrowLeft'
+import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 
 interface GroupsPageProps {
   groupsList: GroupCollecion[]
@@ -33,7 +33,7 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
   if (loading || loadingCurrentUser) {
     return (
     <>
-      <SideBarProfile/>
+      <SideBarContainer/>
       <GroupsHeader setShowModal={setShowModal} showModal={showModal}/>
       <Spinner/>
       <NavBarMobile/>
@@ -59,7 +59,7 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
     <>
       {
         userId === authUser?.uid
-          ? <SideBarProfile/>
+          ? <SideBarContainer/>
           : <ArrowLeft width={24} height={24} stroke={'black'}/>
       }
       <main className='h-screen'>
