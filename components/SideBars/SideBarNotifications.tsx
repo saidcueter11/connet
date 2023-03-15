@@ -6,6 +6,7 @@ import { db } from '@firebase/client'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { useAuth } from 'context/authUserContext'
 import { UserCollection } from 'types/databaseTypes'
+import { MessageNotificationCard } from 'components/Notifications/MessageNotificationCard'
 
 interface SideBarNotificationsPros {
   isProfileOpen?: boolean
@@ -33,13 +34,12 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
   const handleSideBarToggle = () => {
     if (!isProfileOpen) {
       setToggle(prev => !prev)
-      if (!toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-64 h-screen transition-transform')
-      if (toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-full ')
+      if (!toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-72 h-screen transition-transform')
+      if (toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-72 h-screen transition-transform translate-x-full ')
     }
   }
 
   const notifications = user?.notifications
-  console.log({ notifications })
 
   return (
     <>
@@ -55,22 +55,32 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
                 <h2 className='justify-self-center font-concert-one text-xl text-ligth-text-green'>Notifications</h2>
               </div>
 
-              {
-                notifications && notifications.map((notification, index) => {
-                  console.log(notification)
-                  if (notification.messages) {
-                    return <p key={index}>{notification.messages.senderName}</p>
-                  }
-                  return ''
-                })
-              }
+              <div className='flex flex-col gap-2 mt-5'>
+                {
+                  notifications && notifications.map((notification, index) => {
+                    if (notification.messages) {
+                      return <MessageNotificationCard
+                                key={index}
+                                chatId={notification.messages.chatId}
+                                userName={notification.messages.senderName}/>
+                    }
+                    return ''
+                  })
+                }
+              </div>
 
             </div>
           </div>
         </aside>
 
         <div onClick={handleSideBarToggle} className='absolute z-10 bg-dark-green rounded-full p-1.5 right-0'>
-          <NotificationIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
+          <div className='relative'>
+            <NotificationIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
+
+            {
+              notifications && notifications?.length > 0 && <div className='absolute text-center shadow-md -right-2 -top-3 rounded-full bg-action-red text-ligth-text-green font-karla w-5 h-5'>{notifications?.length}</div>
+            }
+          </div>
         </div>
       </div>
 
