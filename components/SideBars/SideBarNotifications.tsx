@@ -29,7 +29,7 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
       const snap: UserCollection = value?.data() as UserCollection
       setUser(snap)
     }
-  }, [loading, authUser])
+  }, [loading, authUser, value])
 
   const handleSideBarToggle = () => {
     if (!isProfileOpen) {
