@@ -1,17 +1,17 @@
 import { Avatar, Spinner } from 'flowbite-react'
 import { SendIcon } from '../Icons/SendIcon'
 import { SyntheticEvent, useState } from 'react'
-import { addComment, addCommentPostGroup } from '@firebase/client'
+import { addComment, addCommentPostGroup, commentedNotification } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 
 interface AddCommentFormProps {
   postId: string
   loading: boolean
   postGroupId?: string
+  postUserId: string
 }
 
-export const AddCommentForm = ({ postId, loading, postGroupId }:AddCommentFormProps) => {
-  console.log({ postGroupId })
+export const AddCommentForm = ({ postId, loading, postGroupId, postUserId }:AddCommentFormProps) => {
   const [content, setContent] = useState('')
   const auth = useAuth()
 
@@ -26,7 +26,21 @@ export const AddCommentForm = ({ postId, loading, postGroupId }:AddCommentFormPr
         username: auth.authUser?.displayName?.split('|')[1] ?? ''
       },
       postId
-    }).then(() => setContent(''))
+    }).then(() => {
+      setContent('')
+      console.log({
+        avatar: auth.authUser?.photoURL ?? '',
+        fullname: auth.authUser?.displayName?.split('|')[0] as string,
+        postId,
+        userId: postUserId
+      })
+      auth.authUser?.uid !== postUserId && commentedNotification({
+        avatar: auth.authUser?.photoURL ?? '',
+        fullname: auth.authUser?.displayName?.split('|')[0] as string,
+        postId,
+        userId: postUserId
+      })
+    })
 
     postGroupId && addCommentPostGroup({
       content,
@@ -42,7 +56,7 @@ export const AddCommentForm = ({ postId, loading, postGroupId }:AddCommentFormPr
 
   return (
     <>
-      <form className='relative bg-light-green min-h-[80px] w-11/12 mx-auto rounded-xl shadow pt-2 pr-2' onSubmit={handleSubmit}>
+      <form className='relative bg-light-green min-h-[80px] w-11/12 mx-auto rounded-xl shadow shadow-black/25 pt-2 pr-2' onSubmit={handleSubmit}>
         <div className='absolute top-2 left-2'>
           <Avatar size={'sm'} rounded={true}/>
         </div>
