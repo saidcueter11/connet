@@ -6,7 +6,7 @@ import { db, updateNotificationsStatus } from '@firebase/client'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { useAuth } from 'context/authUserContext'
 import { UserCollection } from 'types/databaseTypes'
-import { MessageNotificationCard } from 'components/Notifications/MessageNotificationCard'
+import { NotificationCard } from 'components/Notifications/NotificationCard'
 
 interface SideBarNotificationsPros {
   isProfileOpen?: boolean
@@ -16,7 +16,7 @@ interface SideBarNotificationsPros {
 
 export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideBarNotificationsPros) => {
   const { authUser } = useAuth()
-  const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 right-0 z-40 w-64 h-screen transition-transform translate-x-full ')
+  const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 right-0 z-40 w-80 h-screen transition-transform translate-x-full ')
   const collectionUser = collection(db, 'users')
   const docRef = authUser && doc(collectionUser, authUser?.uid)
   const [user, setUser] = useState<UserCollection>()
@@ -36,15 +36,21 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
       setToggle(prev => !prev)
       if (!toggle) {
         updateNotificationsStatus(authUser?.uid as string)
-        setToggleSideBarClass('fixed top-0 right-0 z-40 w-72 h-screen transition-transform')
+        setToggleSideBarClass('fixed top-0 right-0 z-40 w-80 h-screen transition-transform')
       }
       if (toggle) {
-        setToggleSideBarClass('fixed top-0 right-0 z-40 w-72 h-screen transition-transform translate-x-full ')
+        setToggleSideBarClass('fixed top-0 right-0 z-40 w-80 h-screen transition-transform translate-x-full ')
       }
     }
   }
 
   const notifications = user?.notifications
+  const unreadNotifications = notifications && notifications.filter(m => (
+    (m.messages && m.messages.status === 'unread') ||
+    (m.likedPost && m.likedPost.status === 'unread') ||
+    (m.commentedPost && m.commentedPost.status === 'unread') ||
+    (m.friendAdded && m.friendAdded.status === 'unread')
+  ))
 
   return (
     <>
@@ -62,17 +68,7 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
 
               <div className='flex flex-col gap-2 mt-5'>
                 {
-                  notifications && notifications.map((notification, index) => {
-                    if (notification.messages) {
-                      return <MessageNotificationCard
-                                key={index}
-                                chatId={notification.messages.chatId}
-                                userName={notification.messages.senderName}
-                                status={notification.messages.status}
-                                />
-                    }
-                    return ''
-                  })
+                  notifications && notifications.map((notification, index) => <NotificationCard notification={notification} key={index}/>)
                 }
               </div>
 
@@ -85,7 +81,7 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
             <NotificationIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
 
             {
-              user?.notificationStatus === 'unread' && <div className='absolute text-center shadow-md -right-2 -top-3 rounded-full bg-action-red text-ligth-text-green font-karla w-5 h-5'>{notifications?.length}</div>
+              user?.notificationStatus === 'unread' && <div className='absolute text-center shadow-md -right-2 -top-3 rounded-full bg-action-red text-ligth-text-green font-karla w-5 h-5'>{unreadNotifications?.length}</div>
             }
           </div>
         </div>

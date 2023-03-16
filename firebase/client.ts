@@ -452,6 +452,31 @@ export const messageNotification = async ({ userId, chatId, senderName, senderAv
   })
 }
 
+interface likedNotificationType {
+  postId: string,
+  avatar: string,
+  fullname: string,
+  userId: string
+}
+
+export const likeNotification = async ({ postId, avatar, fullname, userId }: likedNotificationType) => {
+  const collectionDb = collection(db, 'users')
+  const docRef = doc(collectionDb, userId)
+
+  return await updateDoc(docRef, {
+    notifications: arrayUnion({
+      likedPost: {
+        postLikedId: postId,
+        userAvatar: avatar,
+        userName: fullname,
+        createdAt: Timestamp.now(),
+        status: 'unread'
+      }
+    }),
+    notificationStatus: 'unread'
+  })
+}
+
 export const updateNotificationsStatus = async (userId: string) => {
   const collectionDb = collection(db, 'users')
   const docRef = doc(collectionDb, userId)

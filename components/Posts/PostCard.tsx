@@ -6,7 +6,7 @@ import { GroupPostCollection, PostCollection } from 'types/databaseTypes'
 import { useTimeAgo } from 'hooks/useTimeAgo'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { decrementLikes, decrementLikesGroupPost, deletePost, incrementLikes, incrementLikesGroupPost } from '@firebase/client'
+import { decrementLikes, decrementLikesGroupPost, deletePost, incrementLikes, incrementLikesGroupPost, likeNotification } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { DotsVerticalIcon } from '../Icons/DotsVerticalIcon'
 import { PostsModal } from '../Modal/PostsModal'
@@ -32,11 +32,19 @@ export const PostCard = ({ post }:PostCardProps) => {
 
   const handleLikes = () => {
     if (!isPostLiked) {
-      !post.groupId && incrementLikes({
-        id: post.id ? post.id : id as string,
-        currentUserId: auth.authUser?.uid,
-        userId: post.userId
-      })
+      if (!post.groupId) {
+        incrementLikes({
+          id: post.id ? post.id : id as string,
+          currentUserId: auth.authUser?.uid,
+          userId: post.userId
+        })
+        auth.authUser?.uid !== post.userId && likeNotification({
+          avatar: '',
+          fullname: auth.authUser?.displayName?.split('|')[0] as string,
+          postId: post.id ? post.id : id as string,
+          userId: post.userId as string
+        })
+      }
 
       post.groupId && incrementLikesGroupPost({
         id: post.id ? post.id : postId as string,
