@@ -502,6 +502,31 @@ export const commentedNotification = async ({ postId, avatar, fullname, userId }
   })
 }
 
+interface friendAddedNotificationType {
+  userId: string,
+  avatar: string,
+  fullname: string,
+  friendId: string
+}
+
+export const friendAddedNotification = async ({ userId, avatar, fullname, friendId }: friendAddedNotificationType) => {
+  const collectionDb = collection(db, 'users')
+  const docRef = doc(collectionDb, userId)
+
+  return await updateDoc(docRef, {
+    notifications: arrayUnion({
+      friendAdded: {
+        userId: friendId,
+        userAvatar: avatar,
+        userName: fullname,
+        createdAt: Timestamp.now(),
+        status: 'unread'
+      }
+    }),
+    notificationStatus: 'unread'
+  })
+}
+
 export const updateNotificationsStatus = async (userId: string) => {
   const collectionDb = collection(db, 'users')
   const docRef = doc(collectionDb, userId)

@@ -1,5 +1,5 @@
 import { Avatar } from 'flowbite-react'
-import { addFriend, removeFriend } from '@firebase/client'
+import { addFriend, friendAddedNotification, removeFriend } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
 import { SlideCardIcons } from '../Utils/SlideCardIcons'
@@ -20,6 +20,13 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
     !areWeFriends && addFriend({
       id: auth.authUser?.uid,
       friendId: userId
+    }).then(() => {
+      auth.authUser?.uid !== userId && friendAddedNotification({
+        avatar: '',
+        friendId: auth.authUser?.uid as string,
+        fullname: auth.authUser?.displayName?.split('|')[0] as string,
+        userId: userId as string
+      })
     })
 
     areWeFriends && removeFriend({
