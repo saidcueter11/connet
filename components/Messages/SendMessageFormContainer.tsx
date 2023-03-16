@@ -1,5 +1,5 @@
 import { SyntheticEvent, useState } from 'react'
-import { newMessageReceived, sendMessage } from '@firebase/client'
+import { messageNotification, sendMessage } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
 import { ExpansibleTexareaMessages } from 'components/Forms/ExpansibleTexareaMessages'
@@ -26,7 +26,7 @@ export const SendMessageFormContainer = ({ senderName, receiverId }: SendMessage
     }).then(() => {
       setContent('')
       setImgUrl('')
-      newMessageReceived({
+      messageNotification({
         chatId: chatId as string,
         senderName,
         userId: receiverId

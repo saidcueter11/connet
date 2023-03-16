@@ -434,7 +434,7 @@ interface newMessageReceivedType {
   senderAvatar?: string
 }
 
-export const newMessageReceived = async ({ userId, chatId, senderName, senderAvatar }: newMessageReceivedType) => {
+export const messageNotification = async ({ userId, chatId, senderName, senderAvatar }: newMessageReceivedType) => {
   const collectionDb = collection(db, 'users')
   const docRef = doc(collectionDb, userId)
 
@@ -445,7 +445,8 @@ export const newMessageReceived = async ({ userId, chatId, senderName, senderAva
         senderName,
         senderAvatar: senderAvatar ?? '',
         createdAt: Timestamp.now()
-      }
+      },
+      status: 'unread'
     })
   })
 }

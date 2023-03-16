@@ -3,7 +3,7 @@ import { useState, useEffect, SyntheticEvent } from 'react'
 import { ExpansibleTextarea } from '../Forms/ExpansibleTextarea'
 import { CloseIcon } from '../Icons/CloseIcon'
 import { useCollection } from 'react-firebase-hooks/firestore'
-import { db, sendMessage } from '@firebase/client'
+import { db, messageNotification, sendMessage } from '@firebase/client'
 import { collection } from 'firebase/firestore'
 import { UserCollection } from 'types/databaseTypes'
 import { useAuth } from 'context/authUserContext'
@@ -32,16 +32,16 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
   useEffect(() => {
     setIsHydratated(true)
     if (!loading) {
-      const listUsers = value?.docs.map(doc => {
+      const listUsers: UserCollection[] = value?.docs.map(doc => {
         const data: UserCollection = doc.data()
         const { id } = doc
 
         return { ...data, id }
-      })
-      listUsers && setUsers(listUsers)
+      }) as UserCollection[]
+      setUsers(listUsers)
     }
     if (receiverName) setSearch(receiverName)
-  }, [loading])
+  }, [loading, showModal])
 
   const selectedUser = users.find(user => (search.length) > 0 && (search.includes(`${user.firstName} ${user.lastName}`)))
   const userSearch = users.filter(user => search.length > 0 && user.id !== authUser?.uid && (user.firstName?.toLowerCase()?.includes(search) || user.lastName?.toLowerCase()?.includes(search)) && !user.chatingWith?.find(chattingUser => chattingUser.userId !== user?.id))
@@ -57,7 +57,15 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
       imgUrl
     }).then(doc => {
       setShowModal(false)
-      if (doc) router.push(`/messages/${authUser?.uid}/chat/${doc.id}`)
+      if (doc) {
+        messageNotification({
+          chatId: doc.id,
+          senderName: `${loggedUser?.firstName} ${loggedUser?.lastName}`,
+          userId: selectedUser?.id as string
+        })
+
+        router.push(`/messages/${authUser?.uid}/chat/${doc.id}`)
+      }
     })
   }
 
@@ -84,7 +92,7 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
                     <div className='absolute z-40 bg-light-green shadow shadow-black/25 p-2 rounded-lg top-14 w-3/4 flex flex-col gap-2'>
                       {
                         userSearch.map(user => (
-                          <p onClick={() => setSearch(`${user.firstName} ${user.lastName}`)} className='font-karla' key={user.id}>{user.firstName} {user.lastName}</p>
+                          <p onClick={() => setSearch(`${user.firstName} ${user.lastName}`)} className='font-karla' key={user.id}>{user.firstName} {user.lastName} ({user.username})</p>
                         ))
                       }
                     </div>
