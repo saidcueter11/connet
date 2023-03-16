@@ -2763,6 +2763,18 @@ input:checked + .toggle-bg{
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-light-green\/80{
+  --tw-gradient-from: rgb(214 228 229 / 0.8);
+  --tw-gradient-to: rgb(214 228 229 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-light-green\/70{
+  --tw-gradient-from: rgb(214 228 229 / 0.7);
+  --tw-gradient-to: rgb(214 228 229 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .via-blue-600{
   --tw-gradient-to: rgb(28 100 242 / 0);
   --tw-gradient-stops: var(--tw-gradient-from), #1C64F2, var(--tw-gradient-to);
@@ -2811,6 +2823,11 @@ input:checked + .toggle-bg{
 .via-teal-500{
   --tw-gradient-to: rgb(6 148 162 / 0);
   --tw-gradient-stops: var(--tw-gradient-from), #0694A2, var(--tw-gradient-to);
+}
+
+.via-light-green\/50{
+  --tw-gradient-to: rgb(214 228 229 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(214 228 229 / 0.5), var(--tw-gradient-to);
 }
 
 .to-blue-500{

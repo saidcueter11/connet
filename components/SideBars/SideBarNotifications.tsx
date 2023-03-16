@@ -5,7 +5,7 @@ import { collection, doc } from 'firebase/firestore'
 import { db, updateNotificationsStatus } from '@firebase/client'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { useAuth } from 'context/authUserContext'
-import { UserCollection } from 'types/databaseTypes'
+import { NotificationType, UserCollection } from 'types/databaseTypes'
 import { NotificationCard } from 'components/Notifications/NotificationCard'
 
 interface SideBarNotificationsPros {
@@ -27,6 +27,7 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
   useEffect(() => {
     if (!loading) {
       const snap: UserCollection = value?.data() as UserCollection
+      snap.notifications?.reverse()
       setUser(snap)
     }
   }, [loading, authUser, value])
@@ -44,13 +45,15 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
     }
   }
 
-  const notifications = user?.notifications
+  const notifications = user?.notifications as NotificationType[]
   const unreadNotifications = notifications && notifications.filter(m => (
     (m.messages && m.messages.status === 'unread') ||
     (m.likedPost && m.likedPost.status === 'unread') ||
     (m.commentedPost && m.commentedPost.status === 'unread') ||
     (m.friendAdded && m.friendAdded.status === 'unread')
   ))
+
+  const chats: string[] = []
 
   return (
     <>
@@ -66,9 +69,18 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
                 <h2 className='justify-self-center font-concert-one text-xl text-ligth-text-green'>Notifications</h2>
               </div>
 
-              <div className='flex flex-col gap-2 mt-5'>
+              <div className='flex flex-col gap-2 mt-5 overflow-y-scroll no-scrollbar'>
                 {
-                  notifications && notifications.map((notification, index) => <NotificationCard notification={notification} key={index}/>)
+                  notifications && notifications.map((notification, index) => {
+                    if (notification.messages && !chats.includes(notification.messages.chatId)) {
+                      chats.push(notification.messages.chatId)
+                      return <NotificationCard notification={notification} key={index}/>
+                    }
+
+                    notification.messages && <NotificationCard notification={notification} key={index}/>
+
+                    return null
+                  })
                 }
               </div>
 

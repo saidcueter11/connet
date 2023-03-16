@@ -535,3 +535,50 @@ export const updateNotificationsStatus = async (userId: string) => {
     notificationStatus: 'read'
   })
 }
+
+interface updateNotificationsEventsProp {
+  userId: string,
+  chatId?: string,
+  postId?: string,
+  friendId?: string,
+  event: 'messages' | 'friendAdded' | 'commentedPost' | 'likedPost'
+}
+
+export const updateNotificationsEvents = async ({ userId, chatId, postId, friendId, event }: updateNotificationsEventsProp) => {
+  const collectionDb = collection(db, 'users')
+  const docRef = doc(collectionDb, userId)
+
+  const docData = await getDoc(docRef)
+  const user = docData.data() as UserCollection
+
+  user.notifications?.map(notification => {
+    switch (event) {
+      case 'messages':
+        if (notification.messages?.chatId === chatId && notification.messages.status === 'unread') {
+          notification.messages.status = 'read'
+        }
+        break
+      case 'likedPost':
+        if (notification.likedPost?.postLikedId === postId && notification.likedPost.status === 'unread') {
+          notification.likedPost.status = 'read'
+        }
+        break
+      case 'commentedPost':
+        if (notification.commentedPost?.postCommentedId === postId && notification.commentedPost.status === 'unread') {
+          notification.commentedPost.status = 'read'
+        }
+        break
+      case 'friendAdded':
+        if (notification.friendAdded?.userId === friendId && notification.friendAdded.status === 'unread') {
+          notification.friendAdded.status = 'read'
+        }
+        break
+      default:
+        break
+    }
+
+    return notification
+  })
+
+  return await updateDoc(docRef, { notifications: user.notifications })
+}

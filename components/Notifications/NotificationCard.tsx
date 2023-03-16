@@ -9,6 +9,7 @@ interface NotificationCardProps {
 export const NotificationCard = ({ notification }: NotificationCardProps) => {
   const { authUser } = useAuth()
   const { commentedPost, friendAdded, likedPost, messages } = notification
+
   return (
     <div className='bg-light-green rounded-lg py-2 px-1 flex flex-col items-center gap-2 relative'>
       {
@@ -20,6 +21,8 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
             status={messages.status}
             userName={messages.senderName}
             callToAction='Check chat'
+            event='messages'
+            chatId={messages.chatId}
             />
       }
 
@@ -32,6 +35,8 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
             status={commentedPost.status}
             userName={commentedPost.userName}
             callToAction='Check post'
+            event='commentedPost'
+            postId={commentedPost.postCommentedId}
             />
       }
 
@@ -44,6 +49,8 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
             status={friendAdded.status}
             userName={friendAdded.userName}
             callToAction='Check profile'
+            event='friendAdded'
+            friendId={friendAdded.userId}
             />
       }
 
@@ -56,6 +63,8 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
             status={likedPost.status}
             userName={likedPost.userName}
             callToAction='Check post'
+            event='likedPost'
+            postId={likedPost.postLikedId}
             />
       }
 
