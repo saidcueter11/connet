@@ -27,7 +27,7 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
   useEffect(() => {
     if (!loading) {
       const snap: UserCollection = value?.data() as UserCollection
-      snap.notifications?.reverse()
+      snap && snap.notifications?.reverse()
       setUser(snap)
     }
   }, [loading, authUser, value])
