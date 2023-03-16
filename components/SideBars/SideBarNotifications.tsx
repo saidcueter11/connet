@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { CloseIcon } from '../Icons/CloseIcon'
 import { NotificationIcon } from 'components/Icons/NotificationIcon'
 import { collection, doc } from 'firebase/firestore'
-import { db } from '@firebase/client'
+import { db, updateNotificationsStatus } from '@firebase/client'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { useAuth } from 'context/authUserContext'
 import { UserCollection } from 'types/databaseTypes'
@@ -34,8 +34,13 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
   const handleSideBarToggle = () => {
     if (!isProfileOpen) {
       setToggle(prev => !prev)
-      if (!toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-72 h-screen transition-transform')
-      if (toggle) setToggleSideBarClass('fixed top-0 right-0 z-40 w-72 h-screen transition-transform translate-x-full ')
+      if (!toggle) {
+        updateNotificationsStatus(authUser?.uid as string)
+        setToggleSideBarClass('fixed top-0 right-0 z-40 w-72 h-screen transition-transform')
+      }
+      if (toggle) {
+        setToggleSideBarClass('fixed top-0 right-0 z-40 w-72 h-screen transition-transform translate-x-full ')
+      }
     }
   }
 
@@ -62,7 +67,9 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
                       return <MessageNotificationCard
                                 key={index}
                                 chatId={notification.messages.chatId}
-                                userName={notification.messages.senderName}/>
+                                userName={notification.messages.senderName}
+                                status={notification.messages.status}
+                                />
                     }
                     return ''
                   })
@@ -78,7 +85,7 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
             <NotificationIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
 
             {
-              notifications && notifications?.length > 0 && <div className='absolute text-center shadow-md -right-2 -top-3 rounded-full bg-action-red text-ligth-text-green font-karla w-5 h-5'>{notifications?.length}</div>
+              user?.notificationStatus === 'unread' && <div className='absolute text-center shadow-md -right-2 -top-3 rounded-full bg-action-red text-ligth-text-green font-karla w-5 h-5'>{notifications?.length}</div>
             }
           </div>
         </div>

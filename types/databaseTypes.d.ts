@@ -5,25 +5,29 @@ export interface NotificationType {
       chatId: string,
       senderAvatar: string,
       senderName: string,
-      createdAt: Timestamp
+      createdAt: Timestamp,
+      status: 'read' | 'unread'
     },
     likedPost: {
       postLikedId: string,
       userAvatar: string,
       userName: string,
-      createdAt: Timestamp
+      createdAt: Timestamp,
+      status: 'read' | 'unread'
     },
     commentedPost: {
       postCommentedId: string,
       userAvatar: string,
       userName: string,
-      createdAt: Timestamp
+      createdAt: Timestamp,
+      status: 'read' | 'unread'
     },
     friendAdded: {
       userId: string,
       userName: string,
       userAvatar: string,
-      createdAt: Timestamp
+      createdAt: Timestamp,
+      status: 'read' | 'unread'
     }
 }
 export interface UserCollection {
@@ -44,6 +48,7 @@ export interface UserCollection {
     chatId: string
   }[]
   notifications?: NotificationType[]
+  notificationStatus?: 'read' | 'unread'
 }
 
 export interface CommentCollection {

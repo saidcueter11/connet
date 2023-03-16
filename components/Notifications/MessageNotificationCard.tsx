@@ -5,9 +5,10 @@ import Link from 'next/link'
 interface MessageNotificationCardProps {
   userName: string
   chatId: string
+  status: 'read' | 'unread'
 }
 
-export const MessageNotificationCard = ({ userName, chatId }: MessageNotificationCardProps) => {
+export const MessageNotificationCard = ({ userName, chatId, status }: MessageNotificationCardProps) => {
   const { authUser } = useAuth()
   return (
     <div className='bg-light-green rounded-lg p-1 flex flex-col items-center gap-2'>
@@ -17,6 +18,10 @@ export const MessageNotificationCard = ({ userName, chatId }: MessageNotificatio
       </Avatar>
 
       <Link href={`/messages/${authUser?.uid}/chat/${chatId}`} className='bg-dark-green rounded-xl text-center w-2/4 pb-2 text-sm font-concert-one text-ligth-text-green'>Check chat</Link>
+
+      {
+        status === 'unread' && <p>Unread</p>
+      }
 
     </div>
   )

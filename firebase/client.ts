@@ -444,9 +444,19 @@ export const messageNotification = async ({ userId, chatId, senderName, senderAv
         chatId,
         senderName,
         senderAvatar: senderAvatar ?? '',
-        createdAt: Timestamp.now()
-      },
-      status: 'unread'
-    })
+        createdAt: Timestamp.now(),
+        status: 'unread'
+      }
+    }),
+    notificationStatus: 'unread'
+  })
+}
+
+export const updateNotificationsStatus = async (userId: string) => {
+  const collectionDb = collection(db, 'users')
+  const docRef = doc(collectionDb, userId)
+
+  return await updateDoc(docRef, {
+    notificationStatus: 'read'
   })
 }
