@@ -77,7 +77,7 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
                       return <NotificationCard notification={notification} key={index}/>
                     }
 
-                    notification.messages && <NotificationCard notification={notification} key={index}/>
+                    if (!notification.messages) return <NotificationCard notification={notification} key={index}/>
 
                     return null
                   })
