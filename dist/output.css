@@ -1065,6 +1065,10 @@ input:checked + .toggle-bg{
   right: -0.5rem;
 }
 
+.-right-4{
+  right: -1rem;
+}
+
 .-top-1{
   top: -0.25rem;
 }
@@ -1099,6 +1103,10 @@ input:checked + .toggle-bg{
 
 .left-2{
   left: 0.5rem;
+}
+
+.left-24{
+  left: 6rem;
 }
 
 .right-0{
@@ -1139,6 +1147,10 @@ input:checked + .toggle-bg{
 
 .top-3{
   top: 0.75rem;
+}
+
+.top-4{
+  top: 1rem;
 }
 
 .top-5{
@@ -1480,6 +1492,10 @@ input:checked + .toggle-bg{
 
 .h-\[89\%\]{
   height: 89%;
+}
+
+.h-\[95vh\]{
+  height: 95vh;
 }
 
 .h-auto{
@@ -1857,6 +1873,10 @@ input:checked + .toggle-bg{
 
 .items-center{
   align-items: center;
+}
+
+.items-baseline{
+  align-items: baseline;
 }
 
 .justify-start{
@@ -2793,9 +2813,19 @@ input:checked + .toggle-bg{
   fill: #E3A008;
 }
 
+.object-contain{
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
 .object-cover{
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.object-bottom{
+  -o-object-position: bottom;
+     object-position: bottom;
 }
 
 .\!p-2{
