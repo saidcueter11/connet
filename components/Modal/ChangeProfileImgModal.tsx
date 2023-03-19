@@ -69,7 +69,7 @@ export const ChangeProfileImgModal = ({ showModal, setShowModal, prevImg, setImg
                 {
                   !imgLoading &&
                     <img
-                    className="object-contain w-full h-full"
+                    className="object-cover w-full h-full"
                     src={prevImg}
                   />
                 }

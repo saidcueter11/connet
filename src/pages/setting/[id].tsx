@@ -39,6 +39,8 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
       setUser(data)
       setFullname(`${data?.firstName} ${data?.lastName}`)
       setUsername(data?.username as string)
+      setImgUrl(data.avatar)
+      setPrevImg(data.avatar)
     }
 
     if (!authUser) router.push('/login')
@@ -62,11 +64,11 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
       <ArrowLeft/>
 
       <main>
-        <h1 className='text-3xl font-concert-one text-center text-text-dark-green'>Settings</h1>
+        <h1 className='text-3xl font-concert-one text-center text-text-dark-green backdrop-blur-[2px]'>Settings</h1>
 
-        <section className='h-full pt-10 flex flex-col gap-4 items-center'>
+        <section className='h-screen pt-10 pb-20 flex flex-col gap-4 items-center overflow-y-scroll'>
           <div className='relative'>
-            <Avatar size={'lg'} rounded={true} img={imgUrl} className='avatar-img border border-dark-green rounded-full bg-white' />
+            <Avatar size={'xl'} rounded={true} img={imgUrl} className='avatar-img' />
             <div onClick={handleOpenModal} className='absolute flex justify-center items-center -top-1 -right-4 transform -translate-x-1/2 bg-dark-green rounded-full h-7 w-7'>
               <EditIcon width={18} height={18} stroke='#FD8C77' fill='none'/>
             </div>

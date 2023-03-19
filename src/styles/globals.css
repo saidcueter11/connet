@@ -18,6 +18,6 @@
   }
 
   .avatar-img img {
-    object-fit: contain;
+    object-fit: cover;
   }
 }
