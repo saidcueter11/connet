@@ -7,17 +7,23 @@ import { useAuth } from 'context/authUserContext'
 import { getAuth } from 'firebase/auth'
 import { doc } from 'firebase/firestore'
 import { Avatar } from 'flowbite-react'
+import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useUpdateProfile } from 'react-firebase-hooks/auth'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { UserCollection } from 'types/databaseTypes'
 
-export default function SettingsPage () {
+interface SettingsPageProps {
+  id: string
+}
+
+export default function SettingsPage ({ id }: SettingsPageProps) {
   const { authUser } = useAuth()
+  const userId = authUser?.uid ?? id
   const router = useRouter()
   const auth = getAuth()
-  const docRef = doc(db, 'users', authUser?.uid as string)
+  const docRef = doc(db, 'users', userId)
   const [value, loading] = useDocument(docRef)
   const [updateProfile] = useUpdateProfile(auth)
   const [user, setUser] = useState<UserCollection>()
@@ -86,4 +92,9 @@ export default function SettingsPage () {
     </>
 
   )
+}
+
+export async function getServerSideProps (context: GetServerSidePropsContext) {
+  const { id } = context.query
+  return { props: { id } }
 }

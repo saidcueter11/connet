@@ -71,7 +71,7 @@ export const SideBarProfile = ({ toggle, setToggle, isNotificationOpen }: SideBa
                   <GroupIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
                   <p>Groups</p>
                 </Link>
-                <Link href={'/setting'} className='flex items-end gap-2'>
+                <Link href={`/setting/${authUser?.uid}`} className='flex items-end gap-2'>
                   <SettingsIcon width={24} height={24} fill='none' stroke='#FD8C77'/>
                   <p className='text-ligth-text-green font-karla'>Settings</p>
                 </Link>
