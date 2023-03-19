@@ -18,7 +18,7 @@ export default function SettingsPage () {
   const auth = getAuth()
   const docRef = doc(db, 'users', authUser?.uid as string)
   const [value, loading] = useDocument(docRef)
-  const [updateProfile, updating, error] = useUpdateProfile(auth)
+  const [updateProfile] = useUpdateProfile(auth)
   const [user, setUser] = useState<UserCollection>()
   const [imgUrl, setImgUrl] = useState(user?.avatar)
   const [prevImg, setPrevImg] = useState(imgUrl)
