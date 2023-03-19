@@ -13,24 +13,24 @@ interface FriendCardProps {
 }
 
 export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areWeFriends }: FriendCardProps) => {
-  const auth = useAuth()
+  const { authUser } = useAuth()
   const router = useRouter()
 
   const handleAddFriend = () => {
     !areWeFriends && addFriend({
-      id: auth.authUser?.uid,
+      id: authUser?.uid,
       friendId: userId
     }).then(() => {
-      auth.authUser?.uid !== userId && friendAddedNotification({
+      authUser?.uid !== userId && friendAddedNotification({
         avatar: '',
-        friendId: auth.authUser?.uid as string,
-        fullname: auth.authUser?.displayName?.split('|')[0] as string,
+        friendId: authUser?.uid as string,
+        fullname: authUser?.displayName?.split('|')[0] as string,
         userId: userId as string
       })
     })
 
     areWeFriends && removeFriend({
-      id: auth.authUser?.uid,
+      id: authUser?.uid,
       friendId: userId
     })
   }
@@ -41,8 +41,8 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
     <>
       <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px] w-full'>
         <div onClick={goToProfile}>
-          <Avatar rounded={true}>
-            <p className='text-ligth-text-green mb-1'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>
+          <Avatar rounded={true} img={authUser?.photoURL ?? ''} className='avatar-img'>
+            <p className='text-ligth-text-green mb-1'>{displayName} {userId === authUser?.uid && '(You)'}</p>
             <div className='flex gap-2'>
               <SlideCardIcons friendsCount={friendsCount} likesCount={likesCount}/>
             </div>
@@ -51,7 +51,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
 
         <div className='flex flex-col justify-center items-center gap-2'>
           {
-            auth.authUser?.uid !== userId &&
+            authUser?.uid !== userId &&
               <button onClick={handleAddFriend} className='w-28 bg-light-green rounded-full pb-2 px-2 h-fit text-sm font-concert-one'>{areWeFriends ? 'Remove friend' : 'Add friend'}</button>
           }
 

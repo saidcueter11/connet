@@ -16,8 +16,8 @@ interface PostCardProps {
 }
 
 export const PostCard = ({ post }:PostCardProps) => {
-  const auth = useAuth()
-  const isPostLiked = auth.authUser?.uid ? post.likes?.includes(auth.authUser?.uid) : false
+  const { authUser } = useAuth()
+  const isPostLiked = authUser?.uid ? post.likes?.includes(authUser?.uid) : false
   const normalizeDate = post.createdAt ? post.normalizedDate ?? +post.createdAt?.toDate() : 0
   const timeAgo = useTimeAgo(post.normalizedDate ?? normalizeDate)
   const router = useRouter()
@@ -35,12 +35,12 @@ export const PostCard = ({ post }:PostCardProps) => {
       if (!post.groupId) {
         incrementLikes({
           id: post.id ? post.id : id as string,
-          currentUserId: auth.authUser?.uid,
+          currentUserId: authUser?.uid,
           userId: post.userId
         })
-        auth.authUser?.uid !== post.userId && likeNotification({
+        authUser?.uid !== post.userId && likeNotification({
           avatar: '',
-          fullname: auth.authUser?.displayName?.split('|')[0] as string,
+          fullname: authUser?.displayName?.split('|')[0] as string,
           postId: post.id ? post.id : id as string,
           userId: post.userId as string
         })
@@ -49,21 +49,21 @@ export const PostCard = ({ post }:PostCardProps) => {
       post.groupId && incrementLikesGroupPost({
         id: post.id ? post.id : postId as string,
         groupId: post.groupId,
-        currentUserId: auth.authUser?.uid
+        currentUserId: authUser?.uid
       })
     }
 
     if (isPostLiked) {
       !post.groupId && decrementLikes({
         id: post.id ? post.id : id as string,
-        currentUserId: auth.authUser?.uid,
+        currentUserId: authUser?.uid,
         userId: post.userId
       })
 
       post.groupId && decrementLikesGroupPost({
         id: post.id ? post.id : postId as string,
         groupId: post.groupId,
-        currentUserId: auth.authUser?.uid
+        currentUserId: authUser?.uid
       })
     }
   }
@@ -76,11 +76,13 @@ export const PostCard = ({ post }:PostCardProps) => {
     setShowModal(true)
   }
 
+  console.log({ post })
+
   return (
     <>
       <div className='flex rounded-2xl shadow flex-col p-6 gap-4 bg-light-green shadow-black/25 min-w-[327px] relative'>
         <div className='flex gap-2' onClick={handleClick}>
-          <Avatar rounded={true}>
+          <Avatar rounded={true} img={post.user?.avatar ?? ''} className='avatar-img'>
             <div className='flex items-end'>
               <p className='font-concert-one text-text-dark-green'>{post.user?.displayName}</p>
               <Dot width={20} height={14} fill='#8D4B3F'/>
@@ -109,7 +111,7 @@ export const PostCard = ({ post }:PostCardProps) => {
         </div>
 
         {
-          post.userId === auth.authUser?.uid &&
+          post.userId === authUser?.uid &&
             <div className='absolute right-3 top-3'>
               <Dropdown placement='left' label={<DotsVerticalIcon width={20} height={20} fill='#8D4B3F'/>} size={'sm'} color={'transparent'} outline={false} arrowIcon={false} inline={true} >
                 <Dropdown.Item onClick={handleModify} className='font-concert-one'>

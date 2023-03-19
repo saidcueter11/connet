@@ -41,7 +41,7 @@ export const ProfileHeader = ({ displayName, userId, loading, chatingWith }: Pro
           <p className='font-concert-one text-text-dark-green'>Groups</p>
         </div>
         <Link href={`/profile/${userId}`} className='row-start-2 row-end-2 col-span-3 self-start'>
-          <Avatar size={'lg'} rounded={true}/>
+          <Avatar size={'lg'} rounded={true} img={authUser?.photoURL ?? ''} className='avatar-img'/>
           {
             loading
               ? <h1 className='justify-self-center font-concert-one text-xl text-text-dark-green'></h1>
