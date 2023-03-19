@@ -173,9 +173,9 @@ export const getPostsByUserId = (id: string) => {
   })
 }
 
-export const uploadImage = (file: File) => {
+export const uploadImage = (file: File, folder?:string) => {
   const storage = getStorage()
-  const reference = ref(storage, `images/${file.name}`)
+  const reference = ref(storage, `${!folder ? 'images' : folder}/${file.name}`)
   return uploadBytesResumable(reference, file)
 }
 
@@ -581,4 +581,23 @@ export const updateNotificationsEvents = async ({ userId, chatId, postId, friend
   })
 
   return await updateDoc(docRef, { notifications: user.notifications })
+}
+
+interface updateUserType {
+  userId: string
+  avatar?: string
+  firstName?: string
+  lastName?: string
+  username?: string}
+
+export const updateUser = async ({ userId, avatar, firstName, lastName, username }: updateUserType) => {
+  const collectionDb = collection(db, 'users')
+  const docRef = doc(collectionDb, userId)
+
+  return await updateDoc(docRef, {
+    avatar: avatar ?? '',
+    firstName,
+    lastName,
+    username
+  })
 }

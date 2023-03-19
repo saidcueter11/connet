@@ -55,7 +55,7 @@ export const SideBarProfile = ({ toggle, setToggle, isNotificationOpen }: SideBa
               </div>
 
               <div className='flex flex-col items-start pt-2'>
-                <Avatar rounded={true} />
+                <Avatar rounded={true} img={authUser?.photoURL ?? ''}/>
                 <div className='flex flex-col items-center justify-center gap-1'>
                   <h3 className='font-concert-one text-ligth-text-green text-xl'>{fullName}</h3>
                   <Link href={`/profile/${authUser?.uid}`} className='font-karla text-ligth-text-green text-sm'>View profile</Link>
@@ -86,7 +86,7 @@ export const SideBarProfile = ({ toggle, setToggle, isNotificationOpen }: SideBa
         </aside>
 
         <div className='absolute z-10'>
-          <Avatar rounded={true} onClick={handleSideBarToggle}/>
+          <Avatar rounded={true} onClick={handleSideBarToggle} img={authUser?.photoURL ?? ''}/>
         </div>
 
       </div>
