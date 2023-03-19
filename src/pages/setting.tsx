@@ -7,6 +7,7 @@ import { useAuth } from 'context/authUserContext'
 import { getAuth } from 'firebase/auth'
 import { doc } from 'firebase/firestore'
 import { Avatar } from 'flowbite-react'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useUpdateProfile } from 'react-firebase-hooks/auth'
 import { useDocument } from 'react-firebase-hooks/firestore'
@@ -14,7 +15,7 @@ import { UserCollection } from 'types/databaseTypes'
 
 export default function SettingsPage () {
   const { authUser } = useAuth()
-  console.log({ authUser })
+  const router = useRouter()
   const auth = getAuth()
   const docRef = doc(db, 'users', authUser?.uid as string)
   const [value, loading] = useDocument(docRef)
@@ -33,7 +34,9 @@ export default function SettingsPage () {
       setFullname(`${data?.firstName} ${data?.lastName}`)
       setUsername(data?.username as string)
     }
-  }, [loading, value])
+
+    if (!authUser) router.push('/login')
+  }, [loading, value, authUser])
 
   const handleOpenModal = () => setShowModal(true)
 
