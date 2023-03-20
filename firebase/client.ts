@@ -591,13 +591,72 @@ interface updateUserType {
   username?: string}
 
 export const updateUser = async ({ userId, avatar, firstName, lastName, username }: updateUserType) => {
-  const collectionDb = collection(db, 'users')
-  const docRef = doc(collectionDb, userId)
-
-  return await updateDoc(docRef, {
+  const batch = writeBatch(db)
+  const newUserInfo = {
+    avatar,
+    displayName: `${firstName} ${lastName}`,
+    username
+  }
+  // Updates user main profile
+  const collectioUsers = collection(db, 'users')
+  const docRef = doc(collectioUsers, userId)
+  await updateDoc(docRef, {
     avatar: avatar ?? '',
     firstName,
     lastName,
     username
   })
+
+  // Updates user's posts
+  const collectionPosts = collection(db, 'posts')
+  const qPosts = query(collectionPosts, where('userId', '==', userId))
+  const docRefPosts = await getDocs(qPosts)
+  docRefPosts.forEach(docu => {
+    const docRef = doc(collectionPosts, docu.id)
+    const data = docu.data() as PostCollection
+    data.user = newUserInfo
+    data.comments?.forEach(comment => {
+      if (comment.userId === userId) {
+        comment.user = newUserInfo
+      }
+    })
+
+    batch.update(docRef, { ...data })
+  })
+
+  // Updates user's messages information
+  const collectionMessages = collection(db, 'messages')
+  const docRefMessages = await getDocs(collectionMessages)
+  docRefMessages.forEach(docu => {
+    const docRef = doc(collectionMessages, docu.id)
+    const data = docu.data() as MessageCollection
+    const user = data.receiverUser.id === userId ? data.receiverUser : data.senderUser
+
+    user.firstName = firstName
+    user.avatar = avatar
+    user.lastName = lastName
+    user.username = username
+
+    data.receiverUser.id === userId && batch.update(docRef, { receiverUser: user })
+    data.senderUser.id === userId && batch.update(docRef, { senderUser: user })
+  })
+
+  // Updates user's posts groups
+  const collectionGroupsPosts = collection(db, 'groupPosts')
+  const qGroupsPosts = query(collectionGroupsPosts, where('userId', '==', userId))
+  const docRefGroupsPosts = await getDocs(qGroupsPosts)
+  docRefGroupsPosts.forEach(docu => {
+    const docRef = doc(collectionGroupsPosts, docu.id)
+    const data = docu.data() as GroupPostCollection
+    data.user = newUserInfo
+    data.comments?.forEach(comment => {
+      if (comment.userId === userId) {
+        comment.user = newUserInfo
+      }
+    })
+
+    batch.update(docRef, { ...data })
+  })
+
+  batch.commit()
 }
