@@ -11,16 +11,17 @@ interface MessagesPreviewCardProps {
   createdAt: Timestamp
   directMessageUser: string
   unreadMessages: number
+  userAvatar?: string
 }
 
-export const MessagesPreviewCard = ({ chatId, lastMessageUser, content, createdAt, directMessageUser, unreadMessages }: MessagesPreviewCardProps) => {
+export const MessagesPreviewCard = ({ chatId, lastMessageUser, content, createdAt, directMessageUser, unreadMessages, userAvatar }: MessagesPreviewCardProps) => {
   const { authUser } = useAuth()
   const time = useChatTime(createdAt)
   const id = chatId
   return (
     <>
       <Link href={`/messages/${authUser?.uid}/chat/${id}`} className='grid grid-cols-2 p-4 bg-light-green shadow shadow-black/25 rounded-2xl relative '>
-          <Avatar rounded={true} className='col-span-2 self-start justify-self-start avatar-img' img={authUser?.photoURL ?? ''}>
+          <Avatar rounded={true} className='col-span-2 self-start justify-self-start avatar-img' img={userAvatar}>
             <p className='font-concert-one text-lg pb-2 text-text-dark-green'>{directMessageUser}</p>
           </Avatar>
           <p className='col-span-2 pl-14 font-karla text-text-dark-green'><strong>{authUser?.displayName?.includes(lastMessageUser) ? '(You)' : lastMessageUser}:</strong> {content}</p>

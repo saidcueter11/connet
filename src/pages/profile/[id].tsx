@@ -44,7 +44,12 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
       <ArrowLeft width={24} height={24} stroke={'black'}/>
       <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-28 no-scrollbar'>
 
-        <ProfileHeader displayName={fullName} loading={loadingUser ?? loading} userId={userId} chatingWith={currentUser.chatingWith}/>
+        <ProfileHeader
+          displayName={fullName}
+          loading={loadingUser ?? loading}
+          userId={userId}
+          avatar={currentUser.avatar}
+          chatingWith={currentUser.chatingWith}/>
 
         {
           loading || loadingUser

@@ -82,6 +82,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
                           userId={user.id}
                           likesCount={user.likesCount ?? 0}
                           areWeFriends={areWeFriends(user.id as string)}
+                          avatar={user.avatar}
                         />))
                     }
                   </ListCardsContainer>
@@ -102,6 +103,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
                           userId={user.id}
                           likesCount={user.likesCount ?? 0}
                           areWeFriends={areWeFriends(user.id as string)}
+                          avatar={user.avatar}
                         />))
                     }
                   </ListCardsContainer>

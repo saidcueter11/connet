@@ -46,6 +46,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
       <ChatHeader
         userName={`${chatUser?.firstName} ${chatUser?.lastName}`}
         userId={chatUser?.id as string}
+        avatar={chatUser?.avatar}
         />
 
       <MessagesContainerMobile>

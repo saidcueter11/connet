@@ -93,7 +93,7 @@ export const PostsModal = ({ showModal, setShowModal, initialContent, initialIma
 
             <div className='grid gap-5 justify-items-center pt-8 relative'>
               <div className='justify-self-start'>
-                <Avatar rounded={true}>
+                <Avatar rounded={true} img={auth.authUser?.photoURL ?? ''}>
                   <p className='font-concert-one text-ligth-text-green text-xl pb-2'>{auth.authUser?.displayName?.split('|')[0]}</p>
                 </Avatar>
               </div>

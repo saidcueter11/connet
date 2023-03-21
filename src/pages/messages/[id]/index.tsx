@@ -53,6 +53,7 @@ export default function ChatsPage () {
                 directMessageUser={`${directMessageUser.firstName} ${directMessageUser.lastName}`}
                 createdAt={lastMessage.createdAt}
                 unreadMessages={unreadMessages}
+                userAvatar={directMessageUser.avatar}
                 />
             })
           }
