@@ -10,6 +10,7 @@ import { cancelJoinRequest, joinGroup, joinRequestGroup, leaveGroup } from '@fir
 import { useRouter } from 'next/router'
 import { JoinGroupRequestIcon } from 'components/Icons/JoinGroupRequestIcon'
 import { CancelGroupRequestIcon } from 'components/Icons/CancelGroupRequestIcon'
+import { FriendsIcon } from 'components/Icons/FriendsIcon'
 
 interface GroupHeaderProps {
   groupName?: string
@@ -86,7 +87,7 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
         <div className='col-start-2 col-end-2 flex flex-col items-center'>
           <button className='rounded-full bg-dark-green h-12 w-12'>
             {
-              isMember &&
+              (isMember && !isAdmin) &&
                 <div onClick={handleLeaveGroup}>
                   <LeaveGroupIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
                 </div>
@@ -112,11 +113,18 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
                   <CancelGroupRequestIcon width={28} height={28} stroke='#FD8C77' fill='none' />
                 </div>
             }
+
+            {
+              isAdmin &&
+                <div>
+                  <FriendsIcon width={28} height={28} stroke='#FD8C77' fill='none' />
+                </div>
+            }
           </button>
 
           <p className='font-concert-one text-text-dark-green text-center'>
               {
-                isMember && 'Leave'
+                (isMember && !isAdmin) && 'Leave'
               }
 
               {
@@ -129,6 +137,10 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
 
               {
                 isRequestSent && 'Cancel Join'
+              }
+
+              {
+                isAdmin && 'Your group'
               }
             </p>
         </div>
@@ -149,9 +161,7 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
 
       <p className='text-center mt-2 font-karla'>{groupDescription}</p>
 
-      {
-        typeof window !== 'undefined' && <PostsModal groupName={groupName} groupId={groupId} showModal={showModal} setShowModal={setShowModal}/>
-      }
+      <PostsModal groupName={groupName} groupId={groupId} showModal={showModal} setShowModal={setShowModal}/>
     </>
   )
 }

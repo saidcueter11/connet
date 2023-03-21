@@ -1,4 +1,4 @@
-import { Avatar, Dropdown, Modal } from 'flowbite-react'
+import { Avatar } from 'flowbite-react'
 import Like from 'components/Icons/Like'
 import { CommentIcon } from 'components/Icons/Comment'
 import { Dot } from '../Icons/Dot'
@@ -8,8 +8,9 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { decrementLikes, decrementLikesGroupPost, deleteGroupPost, deletePost, incrementLikes, incrementLikesGroupPost, likeNotification } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
-import { DotsVerticalIcon } from '../Icons/DotsVerticalIcon'
 import { PostsModal } from '../Modal/PostsModal'
+import { DeleteModal } from 'components/Modal/DeleteModal'
+import { DropdownPostCard } from './DropdownPostCard'
 
 interface PostCardProps {
   post: PostCollection | GroupPostCollection
@@ -74,10 +75,6 @@ export const PostCard = ({ post }:PostCardProps) => {
     post.groupId && deleteGroupPost(post.id as string)
   }
 
-  const handleModify = () => {
-    setShowModal(true)
-  }
-
   return (
     <>
       <div className='flex rounded-2xl shadow flex-col p-6 gap-4 bg-light-green shadow-black/25 min-w-[327px] relative'>
@@ -111,49 +108,24 @@ export const PostCard = ({ post }:PostCardProps) => {
         </div>
 
         {
-          post.userId === authUser?.uid &&
-            <div className='absolute right-3 top-3'>
-              <Dropdown placement='left' label={<DotsVerticalIcon width={26} height={26} fill='#8D4B3F'/>} size={'sm'} outline={false} arrowIcon={false} inline={true}>
-                <Dropdown.Item onClick={handleModify} className='font-concert-one'>
-                  Modify
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setShowDeleteModal(true)} className='font-concert-one'>
-                  Delete
-                </Dropdown.Item>
-              </Dropdown>
-            </div>
+          post.userId === authUser?.uid && <DropdownPostCard setShowDeleteModal={setShowDeleteModal} setShowModifyModal={setShowModal}/>
         }
 
       </div>
 
-      <PostsModal postId={post.id} showModal={showModal} setShowModal={setShowModal} initialContent={post.content ?? ''} initialImageUrl={post.img ?? ''} groupId={post.groupId}/>
+      <PostsModal
+        postId={post.id}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        initialContent={post.content ?? ''}
+        initialImageUrl={post.img ?? ''}
+        groupId={post.groupId}/>
 
-      {
-        typeof window !== 'undefined' &&
-        <Modal show={showDeleteModal}>
-          <Modal.Body>
-            <div className="text-center">
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete this post?
-            </h3>
-            <div className="flex justify-center gap-4">
-              <button
-                color="failure"
-                onClick={handleDelete}
-              >
-                Yes, I am sure
-              </button>
-              <button
-                color="gray"
-                onClick={() => setShowDeleteModal(false)}
-              >
-                No, cancel
-              </button>
-            </div>
-          </div>
-          </Modal.Body>
-        </Modal>
-      }
+      <DeleteModal
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
+        deleteMethod={handleDelete}
+        text='post'/>
     </>
   )
 }

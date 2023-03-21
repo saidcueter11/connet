@@ -1,9 +1,10 @@
-import { Avatar, Modal } from 'flowbite-react'
+import { Avatar } from 'flowbite-react'
 import { SlideCardIcons } from '../Utils/SlideCardIcons'
 import { useAuth } from 'context/authUserContext'
 import { cancelJoinRequest, deleteGroup, joinGroup, joinRequestGroup, leaveGroup } from '@firebase/client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { DeleteModal } from 'components/Modal/DeleteModal'
 
 interface GroupCardProps {
   groupName: string
@@ -84,34 +85,12 @@ export const GroupCard = ({ groupName, membersCount, likesCount, adminId, groupI
 
       </div>
 
-      <Modal
-        show={showModal}
-        size="md"
-      >
-
-        <Modal.Body>
-          <div className="text-center">
-          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-            Are you sure you want to delete this group?
-          </h3>
-          <div className="flex justify-center gap-4">
-            <button
-              color="failure"
-              onClick={handleDeleteGroup}
-            >
-              Yes, I am sure
-            </button>
-            <button
-              color="gray"
-              onClick={() => setShowModal(false)}
-            >
-              No, cancel
-            </button>
-          </div>
-        </div>
-        </Modal.Body>
-
-      </Modal>
+      <DeleteModal
+        setShowModal={setShowModal}
+        showModal={showModal}
+        deleteMethod={handleDeleteGroup}
+        text='group'
+        />
     </>
   )
 }
