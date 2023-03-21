@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import { JoinGroupRequestIcon } from 'components/Icons/JoinGroupRequestIcon'
 import { CancelGroupRequestIcon } from 'components/Icons/CancelGroupRequestIcon'
 import { FriendsIcon } from 'components/Icons/FriendsIcon'
+import { EventFeedback } from 'components/Utils/EventFeedback'
 
 interface GroupHeaderProps {
   groupName?: string
@@ -70,9 +71,7 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
 
   return (
     <>
-      <div className={`absolute rounded-lg p-4 bg-dark-green w-4/5 z-10 text-center font-karla text-ligth-text-green left-1/2 transform -translate-x-1/2 ${failPostPopout ? 'translate-y-5' : '-translate-y-full'} transition-transform`}>
-        <p>You must be a member of the group to create a post</p>
-      </div>
+      <EventFeedback event={failPostPopout} eventDescription='You must be a member to create a new post'/>
       <div className='grid justify-items-center grid-rows-2 grid-cols-3 items-center gap-x-2'>
         <div className='self-end justify-self-end' >
           <button className={`rounded-full bg-dark-green h-12 w-12 row-start-1 row-end-1 self-end justify-self-end ${!isMember ? 'opacity-80' : ''}`} onClick={handleCreatePost}>

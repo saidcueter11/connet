@@ -3,6 +3,7 @@ import { UploadTask, getDownloadURL } from 'firebase/storage'
 import React, { FormEvent, useEffect, useState } from 'react'
 import { UploadImgContainer } from './UploadImgContainer'
 import { SendMessageButton } from 'components/Messages/SendMessageButton'
+import { CloseIcon } from 'components/Icons/CloseIcon'
 
 interface ExpansibleTextareaProps {
   content: string
@@ -22,6 +23,7 @@ const DRAG_IMAGE_STATES = {
 export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: ExpansibleTextareaProps) => {
   const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
   const [task, setTask] = useState<UploadTask>()
+  const [isImgLoading, setIsImageLoading] = useState(false)
 
   function handleInput (event: FormEvent<HTMLTextAreaElement>) {
     const newValue = event.currentTarget.value
@@ -39,10 +41,12 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
 
   useEffect(() => {
     if (task) {
-      const onProgress = () => {}
+      const onProgress = () => {
+        setIsImageLoading(true)
+      }
       const onError = () => {}
       const onComplete = () => {
-        getDownloadURL(task.snapshot.ref).then(setImgUrl)
+        getDownloadURL(task.snapshot.ref).then(setImgUrl).then(() => setIsImageLoading(false))
       }
       task.on('state_changed',
         onProgress,
@@ -67,7 +71,7 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
     const file = e.dataTransfer?.files[0]
     setDrag(DRAG_IMAGE_STATES.NONE)
 
-    if (file) {
+    if (file.length) {
       const task = uploadImage(file)
       setTask(task)
     }
@@ -75,10 +79,10 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    const file = e.target.files ? e.target.files[0] : undefined
+    const file = e.target.files
 
-    if (file) {
-      const task = uploadImage(file)
+    if (file?.length) {
+      const task = uploadImage(file[0])
       setTask(task)
     }
   }
@@ -99,10 +103,17 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
           />
 
           {
-            imgUrl && imgUrl.length > 0 &&
-              <div className='relative px-3'>
-                <button className='absolute right-3 top-3 rounded-full bg-black/80 text-slate-50 w-6 h-6' onClick={() => setImgUrl('')}>X</button>
-                <img src={imgUrl} className='rounded h-auto max-w-full object-cover mb-3'/>
+            isImgLoading &&
+              <div className='bg-dark-green animate-pulse w-full h-28 mx-auto rounded-lg my-2'></div>
+          }
+
+          {
+            (imgUrl && !isImgLoading) &&
+              <div className='relative'>
+                <div onClick={() => setImgUrl('')} className='absolute right-3 top-3 rounded-full flex items-center justify-center bg-black text-slate-50 w-6 h-6'>
+                  <CloseIcon width={16} height={16} stroke='white'/>
+                </div>
+                <img src={imgUrl} className='rounded max-h-96 max-w-full object-cover mb-3 mx-auto'/>
               </div>
           }
 

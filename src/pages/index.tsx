@@ -12,7 +12,6 @@ import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 export default function Home () {
   const [search, setSearch] = useState('')
   const [posts, setPosts] = useState<PostCollection[]>([])
-
   const auth = useAuth()
   const router = useRouter()
 
@@ -24,6 +23,7 @@ export default function Home () {
       return () => unsub && unsub()
     }
   }, [auth.authUser])
+
   const fullName = auth.authUser?.displayName?.split('|')[0]
 
   return (
@@ -35,7 +35,7 @@ export default function Home () {
         <link rel="icon" href="logo_ico.ico" />
       </Head>
       <SideBarContainer />
-      <main className='w-full h-screen'>
+      <main className='relative w-full h-screen'>
         <HeaderMobile search={search} setSearch={setSearch}/>
 
         <div className='flex flex-col gap-4 h-screen overflow-scroll no-scrollbar'>

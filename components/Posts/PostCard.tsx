@@ -92,7 +92,7 @@ export const PostCard = ({ post }:PostCardProps) => {
           <p className='font-karla px-5 text-text-dark-green'>{post.content}</p>
 
           {
-            post.img && <img className='rounded' src={post.img}/>
+            post.img && <img className='rounded w-full max-h-80' src={post.img}/>
           }
         </div>
 
@@ -117,8 +117,8 @@ export const PostCard = ({ post }:PostCardProps) => {
         postId={post.id}
         showModal={showModal}
         setShowModal={setShowModal}
-        initialContent={post.content ?? ''}
-        initialImageUrl={post.img ?? ''}
+        initialContent={post.content}
+        initialImageUrl={post.img}
         groupId={post.groupId}/>
 
       <DeleteModal
