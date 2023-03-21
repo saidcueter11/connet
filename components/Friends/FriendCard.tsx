@@ -40,7 +40,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
   return (
     <>
       <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px] w-full'>
-        <div onClick={goToProfile}>
+        <div onClick={goToProfile} className='pr-3'>
           <Avatar rounded={true} img={authUser?.photoURL ?? ''} className='avatar-img'>
             <p className='text-ligth-text-green mb-1'>{displayName} {userId === authUser?.uid && '(You)'}</p>
             <div className='flex gap-2'>

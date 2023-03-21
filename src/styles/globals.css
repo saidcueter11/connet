@@ -20,4 +20,9 @@
   .avatar-img img {
     object-fit: cover;
   }
+
+  .avatar-img div:has(img) {
+    align-self: baseline;
+    padding-top: 4px;
+  }
 }
