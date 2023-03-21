@@ -39,10 +39,11 @@ export const PostCard = ({ post }:PostCardProps) => {
           userId: post.userId
         })
         authUser?.uid !== post.userId && likeNotification({
-          avatar: '',
+          avatar: authUser?.photoURL ?? '',
           fullname: authUser?.displayName?.split('|')[0] as string,
           postId: post.id ? post.id : id as string,
-          userId: post.userId as string
+          userId: post.userId as string,
+          senderId: authUser?.uid as string
         })
       }
 
@@ -75,8 +76,6 @@ export const PostCard = ({ post }:PostCardProps) => {
   const handleModify = () => {
     setShowModal(true)
   }
-
-  console.log({ post })
 
   return (
     <>

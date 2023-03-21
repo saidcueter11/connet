@@ -15,6 +15,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
       {
         messages &&
           <NotificationCardContent
+            avatar={messages.senderAvatar}
             createdAt={messages.createdAt}
             navigation={`/messages/${authUser?.uid}/chat/${messages.chatId}`}
             message={'Sent you a message'}
@@ -29,6 +30,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
       {
         commentedPost &&
           <NotificationCardContent
+            avatar={commentedPost.userAvatar}
             createdAt={commentedPost.createdAt}
             navigation={`/post/${commentedPost.postCommentedId}`}
             message={'Commented one of your posts'}
@@ -43,6 +45,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
       {
         friendAdded &&
           <NotificationCardContent
+            avatar={friendAdded.userAvatar}
             createdAt={friendAdded.createdAt}
             navigation={`/profile/${friendAdded.userId}`}
             message={'Added you as a friend'}
@@ -57,6 +60,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
       {
         likedPost &&
           <NotificationCardContent
+            avatar={likedPost.userAvatar}
             createdAt={likedPost.createdAt}
             navigation={`/post/${likedPost.postLikedId}`}
             message={'Liked one of your posts'}

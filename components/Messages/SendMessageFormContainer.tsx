@@ -29,7 +29,9 @@ export const SendMessageFormContainer = ({ senderName, receiverId }: SendMessage
       messageNotification({
         chatId: chatId as string,
         senderName,
-        userId: receiverId
+        userId: receiverId,
+        senderId: authUser?.uid as string,
+        senderAvatar: authUser?.photoURL ?? ''
       })
     })
   }

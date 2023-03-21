@@ -1532,14 +1532,6 @@ input:checked + .toggle-bg{
   min-height: 80px;
 }
 
-.min-h-full{
-  min-height: 100%;
-}
-
-.min-h-screen{
-  min-height: 100vh;
-}
-
 .w-10{
   width: 2.5rem;
 }
@@ -2956,11 +2948,6 @@ input:checked + .toggle-bg{
 .py-8{
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-
-.py-10{
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
 }
 
 .pb-0{

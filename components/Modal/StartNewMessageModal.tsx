@@ -61,7 +61,9 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
         messageNotification({
           chatId: doc.id,
           senderName: `${loggedUser?.firstName} ${loggedUser?.lastName}`,
-          userId: selectedUser?.id as string
+          userId: selectedUser?.id as string,
+          senderId: loggedUser?.id as string,
+          senderAvatar: loggedUser?.avatar
         })
 
         router.push(`/messages/${authUser?.uid}/chat/${doc.id}`)

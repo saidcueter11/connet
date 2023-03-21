@@ -432,9 +432,10 @@ interface newMessageReceivedType {
   chatId: string,
   senderName: string,
   senderAvatar?: string
+  senderId:string
 }
 
-export const messageNotification = async ({ userId, chatId, senderName, senderAvatar }: newMessageReceivedType) => {
+export const messageNotification = async ({ userId, chatId, senderName, senderAvatar, senderId }: newMessageReceivedType) => {
   const collectionDb = collection(db, 'users')
   const docRef = doc(collectionDb, userId)
 
@@ -445,7 +446,8 @@ export const messageNotification = async ({ userId, chatId, senderName, senderAv
         senderName,
         senderAvatar: senderAvatar ?? '',
         createdAt: Timestamp.now(),
-        status: 'unread'
+        status: 'unread',
+        senderId
       }
     }),
     notificationStatus: 'unread'
@@ -457,9 +459,10 @@ interface likedNotificationType {
   avatar: string,
   fullname: string,
   userId: string
+  senderId: string
 }
 
-export const likeNotification = async ({ postId, avatar, fullname, userId }: likedNotificationType) => {
+export const likeNotification = async ({ postId, avatar, fullname, userId, senderId }: likedNotificationType) => {
   const collectionDb = collection(db, 'users')
   const docRef = doc(collectionDb, userId)
 
@@ -470,7 +473,8 @@ export const likeNotification = async ({ postId, avatar, fullname, userId }: lik
         userAvatar: avatar,
         userName: fullname,
         createdAt: Timestamp.now(),
-        status: 'unread'
+        status: 'unread',
+        senderId
       }
     }),
     notificationStatus: 'unread'
@@ -481,10 +485,11 @@ interface commentedNotificationType {
   postId: string,
   avatar: string,
   fullname: string,
-  userId: string
+  userId: string,
+  senderId: string
 }
 
-export const commentedNotification = async ({ postId, avatar, fullname, userId }: commentedNotificationType) => {
+export const commentedNotification = async ({ postId, avatar, fullname, userId, senderId }: commentedNotificationType) => {
   const collectionDb = collection(db, 'users')
   const docRef = doc(collectionDb, userId)
 
@@ -495,7 +500,8 @@ export const commentedNotification = async ({ postId, avatar, fullname, userId }
         userAvatar: avatar,
         userName: fullname,
         createdAt: Timestamp.now(),
-        status: 'unread'
+        status: 'unread',
+        senderId
       }
     }),
     notificationStatus: 'unread'
@@ -605,6 +611,36 @@ export const updateUser = async ({ userId, avatar, firstName, lastName, username
     firstName,
     lastName,
     username
+  })
+
+  // Update notifications user info
+  const docRefNotifications = await getDocs(collectioUsers)
+  docRefNotifications.forEach(docu => {
+    const docRef = doc(collectioUsers, docu.id)
+    const data = docu.data() as UserCollection
+    data.notifications?.forEach(notification => {
+      if (notification.commentedPost && notification.commentedPost.senderId === userId) {
+        notification.commentedPost.userAvatar = avatar ?? ''
+        notification.commentedPost.userName = `${firstName} ${lastName}`
+      }
+
+      if (notification.messages && notification.messages.senderId === userId) {
+        notification.messages.senderAvatar = avatar ?? ''
+        notification.messages.senderName = `${firstName} ${lastName}`
+      }
+
+      if (notification.likedPost && notification.likedPost.senderId === userId) {
+        notification.likedPost.userAvatar = avatar ?? ''
+        notification.likedPost.userName = `${firstName} ${lastName}`
+      }
+
+      if (notification.friendAdded && notification.friendAdded.userId === userId) {
+        notification.friendAdded.userAvatar = avatar ?? ''
+        notification.friendAdded.userName = `${firstName} ${lastName}`
+      }
+    })
+
+    batch.update(docRef, { ...data })
   })
 
   // Updates user's posts

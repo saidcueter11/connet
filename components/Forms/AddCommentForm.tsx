@@ -38,7 +38,8 @@ export const AddCommentForm = ({ postId, loading, postGroupId, postUserId }:AddC
         avatar: authUser?.photoURL ?? '',
         fullname: authUser?.displayName?.split('|')[0] as string,
         postId,
-        userId: postUserId
+        userId: postUserId,
+        senderId: authUser?.uid as string
       })
     })
 

@@ -7,13 +7,15 @@ export interface NotificationType {
       senderName: string,
       createdAt: Timestamp,
       status: 'read' | 'unread'
+      senderId: string
     },
     likedPost: {
       postLikedId: string,
       userAvatar: string,
       userName: string,
       createdAt: Timestamp,
-      status: 'read' | 'unread'
+      status: 'read' | 'unread',
+      senderId: string
     },
     commentedPost: {
       postCommentedId: string,
@@ -21,6 +23,7 @@ export interface NotificationType {
       userName: string,
       createdAt: Timestamp,
       status: 'read' | 'unread'
+      senderId: string
     },
     friendAdded: {
       userId: string,

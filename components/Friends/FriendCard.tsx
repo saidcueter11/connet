@@ -22,7 +22,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
       friendId: userId
     }).then(() => {
       authUser?.uid !== userId && friendAddedNotification({
-        avatar: '',
+        avatar: authUser?.photoURL ?? '',
         friendId: authUser?.uid as string,
         fullname: authUser?.displayName?.split('|')[0] as string,
         userId: userId as string

@@ -17,9 +17,10 @@ interface NotificationCardContentProps {
   chatId?: string
   friendId?: string
   postId?: string
+  avatar?: string
 }
 
-export const NotificationCardContent = ({ userName, createdAt, message, status, navigation, callToAction, event, chatId, friendId, postId }: NotificationCardContentProps) => {
+export const NotificationCardContent = ({ userName, createdAt, message, status, navigation, callToAction, event, chatId, friendId, postId, avatar }: NotificationCardContentProps) => {
   const { authUser } = useAuth()
   const normalizeDate = +createdAt?.toDate()
   const timeAgo = useTimeAgo(normalizeDate)
@@ -35,7 +36,7 @@ export const NotificationCardContent = ({ userName, createdAt, message, status, 
   }
   return (
     <>
-      <Avatar rounded={true} size={'sm'} className='self-start pl-2'>
+      <Avatar rounded={true} size={'sm'} className='self-start pl-2' img={avatar}>
         <p className='font-concert-one text-sm flex'>
           {userName}
           {
