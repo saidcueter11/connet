@@ -31,11 +31,10 @@ export const SignupForm = () => {
 
   const handleSubmit = (e:SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    createUserWithEmailAndPassword(email, password).then(userCredential => {
-      if (password === confirmPassword) {
-        setErrorPassword('')
+    if (password === confirmPassword) {
+      setErrorPassword('')
+      createUserWithEmailAndPassword(email, password).then(userCredential => {
         const user = userCredential?.user
-        console.log({ user })
         const uid = user?.uid ?? ''
 
         const userDocRef = doc(db, 'users', uid)
@@ -48,11 +47,12 @@ export const SignupForm = () => {
         }
 
         setDoc(userDocRef, userData)
-      } else {
-        setErrorPassword('Password confirmation does not match')
-      }
-    })
-      .catch(e => console.log(e))
+      }).catch(e => {
+        errorMessage = e
+      })
+    } else {
+      setErrorPassword('Password confirmation does not match')
+    }
   }
 
   if (user?.user) {

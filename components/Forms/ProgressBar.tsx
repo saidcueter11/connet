@@ -2,9 +2,10 @@ import { usePasswordStrength } from 'hooks/usePasswordStrength'
 
 interface ProgressBarProps {
   password: string
+  mode?: 'dark' | 'normal'
 }
 
-export const ProgressBar = ({ password }: ProgressBarProps) => {
+export const ProgressBar = ({ password, mode }: ProgressBarProps) => {
   const [strength, isValid] = usePasswordStrength(password)
   const errorMessage = !isValid && 'Password must contain at least 8 characters, one letter, one digit, and one special character.'
   return (
@@ -37,7 +38,7 @@ export const ProgressBar = ({ password }: ProgressBarProps) => {
         </p>
 
         {
-          (errorMessage && password.length > 0) && <p className='text-sm text-action-red font-semibold font-karla text-center '>{errorMessage}</p>
+          (errorMessage && password.length > 0) && <p className={`text-sm ${mode === 'dark' ? 'text-ligth-text-green' : 'text-action-red'} font-semibold font-karla text-center`}>{errorMessage}</p>
         }
       </div>
     </>
