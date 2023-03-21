@@ -2,7 +2,7 @@ import { Modal, Avatar } from 'flowbite-react'
 import { CloseIcon } from '../Icons/CloseIcon'
 import { useAuth } from 'context/authUserContext'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
-import { addGroupPost, addPost, modifyPost } from '@firebase/client'
+import { addGroupPost, addPost, modifyGroupPost, modifyPost } from '@firebase/client'
 import { ExpansibleTextarea } from 'components/Forms/ExpansibleTextarea'
 
 interface PostsModalProps {
@@ -12,9 +12,10 @@ interface PostsModalProps {
   initialImageUrl?: string
   postId?: string
   groupId?: string
+  groupName?: string
 }
 
-export const PostsModal = ({ showModal, setShowModal, initialContent = '', initialImageUrl = '', postId, groupId }: PostsModalProps) => {
+export const PostsModal = ({ showModal, setShowModal, initialContent = '', initialImageUrl = '', postId, groupId, groupName }: PostsModalProps) => {
   const auth = useAuth()
   const [imgUrl, setImgUrl] = useState(initialImageUrl)
   const [content, setContent] = useState(initialContent)
@@ -23,8 +24,8 @@ export const PostsModal = ({ showModal, setShowModal, initialContent = '', initi
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (initialContent.length === 0 && !groupId) {
-      addPost({
+    if (initialContent.length === 0) {
+      !groupId && addPost({
         content,
         userId: auth.authUser?.uid,
         user: {
@@ -35,41 +36,40 @@ export const PostsModal = ({ showModal, setShowModal, initialContent = '', initi
         commentsCount: 0,
         likesCount: 0,
         img: imgUrl
-      }).then(() => {
-        setContent('')
-        setShowModal(false)
+      })
+
+      groupId && addGroupPost({
+        content,
+        userId: auth.authUser?.uid,
+        user: {
+          avatar: auth.authUser?.photoURL ?? '',
+          displayName: auth.authUser?.displayName?.split('|')[0],
+          username: auth.authUser?.displayName?.split('|')[1] ?? ''
+        },
+        commentsCount: 0,
+        likesCount: 0,
+        img: imgUrl ?? '',
+        groupId,
+        groupName
       })
     }
 
-    if (initialContent.length > 0 && !groupId) {
-      modifyPost({
+    if (initialContent.length > 0) {
+      !groupId && modifyPost({
         id: postId,
         content,
         img: imgUrl
-      }).then(() => {
-        setContent('')
-        setShowModal(false)
+      })
+
+      groupId && modifyGroupPost({
+        content,
+        img: imgUrl ?? '',
+        postId: postId as string
       })
     }
 
-    if (initialContent.length === 0 && groupId) {
-      addGroupPost({
-        content,
-        userId: auth.authUser?.uid,
-        user: {
-          avatar: auth.authUser?.photoURL ?? '',
-          displayName: auth.authUser?.displayName?.split('|')[0],
-          username: auth.authUser?.displayName?.split('|')[1] ?? ''
-        },
-        commentsCount: 0,
-        likesCount: 0,
-        img: imgUrl,
-        groupId
-      }).then(() => {
-        setContent('')
-        setShowModal(false)
-      })
-    }
+    setContent('')
+    setShowModal(false)
   }
 
   useEffect(() => setIsHydratated(true), [])
@@ -78,8 +78,8 @@ export const PostsModal = ({ showModal, setShowModal, initialContent = '', initi
     return (
     <Modal show={showModal} className='h-screen' position='center' size='lg'>
 
-      <Modal.Body className='relative grid justify-center gap-2 bg-dark-green'>
-        <div className='absolute top-2 left-2' onClick={() => setShowModal(false)}>
+      <Modal.Body className='relative grid justify-center gap-2 bg-dark-green rounded-lg'>
+        <div className='absolute top-2 left-2 h-3 w-3' onClick={() => setShowModal(false)}>
           <CloseIcon width={30} height={30} fill='none' stroke='#EB6440'/>
         </div>
 

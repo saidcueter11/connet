@@ -150,7 +150,7 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
       <p className='text-center mt-2 font-karla'>{groupDescription}</p>
 
       {
-        typeof window !== 'undefined' && <PostsModal groupId={groupId} showModal={showModal} setShowModal={setShowModal}/>
+        typeof window !== 'undefined' && <PostsModal groupName={groupName} groupId={groupId} showModal={showModal} setShowModal={setShowModal}/>
       }
     </>
   )

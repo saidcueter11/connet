@@ -286,6 +286,29 @@ export const addGroupPost = async ({ content, userId, user, commentsCount, likes
   })
 }
 
+interface modifyGroupPostType {
+  postId: string
+  content: string
+  img?: string
+}
+
+export const modifyGroupPost = async ({ postId, content, img }: modifyGroupPostType) => {
+  const collectionDb = collection(db, 'groupPosts')
+  const docRef = doc(collectionDb, postId)
+
+  return await updateDoc(docRef, {
+    img,
+    content
+  })
+}
+
+export const deleteGroupPost = async (postId: string) => {
+  const collecitonDb = collection(db, 'groupPosts')
+  const docRef = doc(collecitonDb, postId)
+
+  return await deleteDoc(docRef)
+}
+
 export const getLastestGroupPosts = (cb: (post: GroupPostCollection[]) => void, groupId: string) => {
   const collectionDb = collection(db, 'groupPosts')
   const sortedCollection = query(collectionDb, where('groupId', '==', groupId))

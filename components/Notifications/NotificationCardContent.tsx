@@ -36,7 +36,7 @@ export const NotificationCardContent = ({ userName, createdAt, message, status, 
   }
   return (
     <>
-      <Avatar rounded={true} size={'sm'} className='self-start pl-2' img={avatar}>
+      <Avatar rounded={true} size={'sm'} className='self-start pl-2 avatar-img' img={avatar}>
         <p className='font-concert-one text-sm flex'>
           {userName}
           {

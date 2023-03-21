@@ -6,7 +6,7 @@ import { GroupPostCollection, PostCollection } from 'types/databaseTypes'
 import { useTimeAgo } from 'hooks/useTimeAgo'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { decrementLikes, decrementLikesGroupPost, deletePost, incrementLikes, incrementLikesGroupPost, likeNotification } from '@firebase/client'
+import { decrementLikes, decrementLikesGroupPost, deleteGroupPost, deletePost, incrementLikes, incrementLikesGroupPost, likeNotification } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { DotsVerticalIcon } from '../Icons/DotsVerticalIcon'
 import { PostsModal } from '../Modal/PostsModal'
@@ -70,7 +70,8 @@ export const PostCard = ({ post }:PostCardProps) => {
   }
 
   const handleDelete = () => {
-    deletePost(post.id as string)
+    !post.groupId && deletePost(post.id as string)
+    post.groupId && deleteGroupPost(post.id as string)
   }
 
   const handleModify = () => {
@@ -112,7 +113,7 @@ export const PostCard = ({ post }:PostCardProps) => {
         {
           post.userId === authUser?.uid &&
             <div className='absolute right-3 top-3'>
-              <Dropdown placement='left' label={<DotsVerticalIcon width={20} height={20} fill='#8D4B3F'/>} size={'sm'} color={'transparent'} outline={false} arrowIcon={false} inline={true} >
+              <Dropdown placement='left' label={<DotsVerticalIcon width={26} height={26} fill='#8D4B3F'/>} size={'sm'} outline={false} arrowIcon={false} inline={true}>
                 <Dropdown.Item onClick={handleModify} className='font-concert-one'>
                   Modify
                 </Dropdown.Item>
@@ -125,9 +126,7 @@ export const PostCard = ({ post }:PostCardProps) => {
 
       </div>
 
-      {
-        typeof window !== 'undefined' && <PostsModal postId={post.id} showModal={showModal} setShowModal={setShowModal} initialContent={post.content ?? ''} initialImageUrl={post.img ?? ''}/>
-      }
+      <PostsModal postId={post.id} showModal={showModal} setShowModal={setShowModal} initialContent={post.content ?? ''} initialImageUrl={post.img ?? ''} groupId={post.groupId}/>
 
       {
         typeof window !== 'undefined' &&

@@ -29,12 +29,12 @@ export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNot
         </div>
 
         <div className='grid gap-4 pt-4'>
+
           <h3 className='font-concert-one text-lg text-text-dark-green'>Comments</h3>
+          <AddCommentForm postId={postId as string} loading={loading} postGroupId={postGroupId} postUserId={props.userId as string} />
           {
             props.comments && props.comments.map(comment => <CommentCard comment={comment} key={comment.normalizedDate}/>)
           }
-
-          <AddCommentForm postId={postId as string} loading={loading} postGroupId={postGroupId} postUserId={props.userId as string} />
 
         </div>
 

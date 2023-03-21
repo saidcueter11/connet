@@ -22,10 +22,12 @@ export const PostPageHeader = ({ displayName, userId, groupId, groupName }: Post
       <ArrowLeft width={24} height={24} stroke={'#EB6440'}/>
       <div className={`pl-10 ${!displayName.includes('undefined') ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
         <Avatar rounded={true} img={authUser?.photoURL ?? ''} className='avatar-img'>
-          <h1 onClick={goToProfile} className='font-concert-one text-2xl text-center text-text-dark-green pb-2'>{displayName}</h1>
-          {
-            groupId && <p onClick={goToGroup}>{groupName}</p>
-          }
+          <div className='flex items-baseline gap-2'>
+            <h1 onClick={goToProfile} className='font-concert-one text-xl text-center text-text-dark-green pb-2'>{displayName}</h1>
+            {
+              groupId && <span onClick={goToGroup} className='font-concert-one text-dark-green'>| {groupName}</span>
+            }
+          </div>
         </Avatar>
       </div>
     </header>
