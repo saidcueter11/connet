@@ -2,7 +2,6 @@ import { Avatar } from 'flowbite-react'
 import { MembersIcon } from '../Icons/MembersIcon'
 import { CreateIcon } from '../Icons/CreateIcon'
 import { JoinGroupIcon } from '../Icons/JoinGroupIcon'
-import { PostsModal } from '../Modal/PostsModal'
 import { useState } from 'react'
 import { useAuth } from 'context/authUserContext'
 import { LeaveGroupIcon } from '../Icons/LeaveGroupIcon'
@@ -12,6 +11,7 @@ import { JoinGroupRequestIcon } from 'components/Icons/JoinGroupRequestIcon'
 import { CancelGroupRequestIcon } from 'components/Icons/CancelGroupRequestIcon'
 import { FriendsIcon } from 'components/Icons/FriendsIcon'
 import { EventFeedback } from 'components/Utils/EventFeedback'
+import { CreatePostModal } from 'components/Modal/CreatePostModal'
 
 interface GroupHeaderProps {
   groupName?: string
@@ -160,7 +160,7 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
 
       <p className='text-center mt-2 font-karla'>{groupDescription}</p>
 
-      <PostsModal groupName={groupName} groupId={groupId} showModal={showModal} setShowModal={setShowModal}/>
+      <CreatePostModal groupName={groupName} groupId={groupId} showModal={showModal} setShowModal={setShowModal}/>
     </>
   )
 }

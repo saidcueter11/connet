@@ -6,9 +6,10 @@ import { SendMessageButton } from 'components/Messages/SendMessageButton'
 import { CloseIcon } from 'components/Icons/CloseIcon'
 
 interface ExpansibleTextareaProps {
-  content: string
+  content?: string
+  imgUrl?: string
+  formId: string
   setContent: (newVal: string) => void
-  imgUrl: string
   setImgUrl: (newVal: string) => void
 }
 
@@ -20,7 +21,7 @@ const DRAG_IMAGE_STATES = {
   COMPLETE: 3
 }
 
-export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: ExpansibleTextareaProps) => {
+export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl, formId }: ExpansibleTextareaProps) => {
   const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
   const [task, setTask] = useState<UploadTask>()
   const [isImgLoading, setIsImageLoading] = useState(false)
@@ -42,11 +43,13 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
   useEffect(() => {
     if (task) {
       const onProgress = () => {
+        setImgUrl('')
         setIsImageLoading(true)
       }
       const onError = () => {}
       const onComplete = () => {
         getDownloadURL(task.snapshot.ref).then(setImgUrl).then(() => setIsImageLoading(false))
+        console.log({ imgUrl })
       }
       task.on('state_changed',
         onProgress,
@@ -71,7 +74,7 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
     const file = e.dataTransfer?.files[0]
     setDrag(DRAG_IMAGE_STATES.NONE)
 
-    if (file.length) {
+    if (file) {
       const task = uploadImage(file)
       setTask(task)
     }
@@ -81,7 +84,7 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
     e.preventDefault()
     const file = e.target.files
 
-    if (file?.length) {
+    if (file) {
       const task = uploadImage(file[0])
       setTask(task)
     }
@@ -118,7 +121,7 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl }: E
           }
 
           <div className='flex justify-between'>
-            <UploadImgContainer handleImgChange={handleImgChange}/>
+            <UploadImgContainer handleImgChange={handleImgChange} formId={formId}/>
             <SendMessageButton />
           </div>
 

@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { decrementLikes, decrementLikesGroupPost, deleteGroupPost, deletePost, incrementLikes, incrementLikesGroupPost, likeNotification } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
-import { PostsModal } from '../Modal/PostsModal'
+import { ModifyPostsModal } from '../Modal/ModifyPostsModal'
 import { DeleteModal } from 'components/Modal/DeleteModal'
 import { DropdownPostCard } from './DropdownPostCard'
 
@@ -113,7 +113,7 @@ export const PostCard = ({ post }:PostCardProps) => {
 
       </div>
 
-      <PostsModal
+      <ModifyPostsModal
         postId={post.id}
         showModal={showModal}
         setShowModal={setShowModal}

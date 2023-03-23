@@ -2,7 +2,6 @@ import { CreateIcon } from '../Icons/CreateIcon'
 import { HomeIcon } from '../Icons/HomeIcon'
 import { MessagesIcon } from '../Icons/MessagesIcon'
 import { useEffect, useState } from 'react'
-import { PostsModal } from '../Modal/PostsModal'
 import { FriendsIcon } from '../Icons/FriendsIcon'
 import { useAuth } from 'context/authUserContext'
 import { Dot } from '../Icons/Dot'
@@ -11,6 +10,7 @@ import { collection } from 'firebase/firestore'
 import { db } from '@firebase/client'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { MessageCollection } from 'types/databaseTypes'
+import { CreatePostModal } from 'components/Modal/CreatePostModal'
 
 interface NavBarMobileProps {
   onNotificationClick?: (isOpen: boolean) => void
@@ -87,9 +87,8 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
       </div>
     </nav>
 
-    {
-      typeof window !== 'undefined' && <PostsModal showModal={showModal} setShowModal={setShowModal}/>
-    }
+    <CreatePostModal showModal={showModal} setShowModal={setShowModal}/>
+
    </>
   )
 }

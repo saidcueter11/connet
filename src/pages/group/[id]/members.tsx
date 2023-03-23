@@ -75,6 +75,7 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
                     isMember={true}
                     groupId={id as string}
                     isAdmin={isAdmin}
+                    avatar={user.avatar}
                   />))
               }
               </ListCardsContainer>
@@ -96,6 +97,7 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
                               likesCount={user.likesCount ?? 0}
                               isMember={false}
                               groupId={id as string}
+                              avatar={user.avatar}
                             />))
                         }
                       </ListCardsContainer>

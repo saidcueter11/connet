@@ -14,7 +14,7 @@ interface MembersCardProps {
   isAdmin?: boolean
 }
 
-export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isMember, groupId, isAdmin }: MembersCardProps) => {
+export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isMember, groupId, isAdmin, avatar }: MembersCardProps) => {
   const auth = useAuth()
   const router = useRouter()
 
@@ -36,7 +36,7 @@ export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isM
     <>
       <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px]'>
         <div onClick={goToProfile} className='self-center'>
-          <Avatar rounded={true}>
+          <Avatar rounded={true} img={avatar} className='avatar-img'>
             <p className='text-ligth-text-green mb-1'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>
             <div className='flex gap-2'>
               <SlideCardIcons friendsCount={friendsCount} likesCount={likesCount}/>

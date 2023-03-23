@@ -1065,10 +1065,6 @@ input:checked + .toggle-bg{
   right: -0.5rem;
 }
 
-.-right-4{
-  right: -1rem;
-}
-
 .-top-1{
   top: -0.25rem;
 }
@@ -1105,12 +1101,12 @@ input:checked + .toggle-bg{
   left: 0.5rem;
 }
 
-.left-24{
-  left: 6rem;
-}
-
 .right-0{
   right: 0px;
+}
+
+.right-1{
+  right: 0.25rem;
 }
 
 .right-2{
@@ -1149,28 +1145,12 @@ input:checked + .toggle-bg{
   top: 0.75rem;
 }
 
-.top-4{
-  top: 1rem;
-}
-
 .top-5{
   top: 1.25rem;
 }
 
 .top-8{
   top: 2rem;
-}
-
-.-right-3{
-  right: -0.75rem;
-}
-
-.top-1{
-  top: 0.25rem;
-}
-
-.right-1{
-  right: 0.25rem;
 }
 
 .-z-10{
