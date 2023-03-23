@@ -18,9 +18,8 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
-  setLoading(false)
-
   const handleAddFriend = () => {
+    setLoading(false)
     if (!areWeFriends) {
       addFriend({
         id: authUser?.uid,
