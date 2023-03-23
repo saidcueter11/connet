@@ -17,22 +17,26 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
   const router = useRouter()
 
   const handleAddFriend = () => {
-    !areWeFriends && addFriend({
-      id: authUser?.uid,
-      friendId: userId
-    }).then(() => {
-      authUser?.uid !== userId && friendAddedNotification({
-        avatar: authUser?.photoURL ?? '',
-        friendId: authUser?.uid as string,
-        fullname: authUser?.displayName?.split('|')[0] as string,
-        userId: userId as string
+    if (!areWeFriends) {
+      addFriend({
+        id: authUser?.uid,
+        friendId: userId
+      }).then(() => {
+        authUser?.uid !== userId && friendAddedNotification({
+          avatar: authUser?.photoURL ?? '',
+          friendId: authUser?.uid as string,
+          fullname: authUser?.displayName?.split('|')[0] as string,
+          userId: userId as string
+        })
       })
-    })
+    }
 
-    areWeFriends && removeFriend({
-      id: authUser?.uid,
-      friendId: userId
-    })
+    if (areWeFriends) {
+      removeFriend({
+        id: authUser?.uid,
+        friendId: userId
+      })
+    }
   }
 
   const goToProfile = () => router.push(`/profile/${userId}`)
@@ -58,6 +62,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
         </div>
 
       </div>
+
     </>
   )
 }

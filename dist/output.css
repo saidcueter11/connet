@@ -1153,6 +1153,14 @@ input:checked + .toggle-bg{
   top: 2rem;
 }
 
+.top-10{
+  top: 2.5rem;
+}
+
+.top-1{
+  top: 0.25rem;
+}
+
 .-z-10{
   z-index: -10;
 }
@@ -1171,6 +1179,14 @@ input:checked + .toggle-bg{
 
 .z-50{
   z-index: 50;
+}
+
+.-z-20{
+  z-index: -20;
+}
+
+.-z-50{
+  z-index: -50;
 }
 
 .col-span-2{
