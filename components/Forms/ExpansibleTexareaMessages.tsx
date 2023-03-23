@@ -89,7 +89,7 @@ export const ExpansibleTexareaMessages = ({ content, setContent, imgUrl, setImgU
       <div className='bg-light-green rounded-lg grid justify-center gap-2 w-full'>
         <div className='w-full flex items-center'>
           <div className={`${imgUrl ? 'self-end pb-3' : ''}`}>
-            <UploadImgContainer handleImgChange={handleImgChange}/>
+            <UploadImgContainer handleImgChange={handleImgChange} formId='sending-message'/>
           </div>
           <div className='flex flex-col gap-2'>
             <textarea

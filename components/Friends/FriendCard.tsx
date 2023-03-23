@@ -1,8 +1,9 @@
-import { Avatar } from 'flowbite-react'
+import { Avatar, Spinner } from 'flowbite-react'
 import { addFriend, friendAddedNotification, removeFriend } from '@firebase/client'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
 import { SlideCardIcons } from '../Utils/SlideCardIcons'
+import { useState } from 'react'
 interface FriendCardProps {
   displayName: string,
   likesCount: number,
@@ -15,6 +16,9 @@ interface FriendCardProps {
 export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areWeFriends, avatar }: FriendCardProps) => {
   const { authUser } = useAuth()
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
+
+  setLoading(false)
 
   const handleAddFriend = () => {
     if (!areWeFriends) {
@@ -56,7 +60,15 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
         <div className='flex flex-col justify-center items-center gap-2'>
           {
             authUser?.uid !== userId &&
-              <button onClick={handleAddFriend} className='w-28 bg-light-green rounded-full pb-2 px-2 h-fit text-sm font-concert-one'>{areWeFriends ? 'Remove friend' : 'Add friend'}</button>
+              <>
+                {
+                  !loading && <button onClick={handleAddFriend} className='w-28 bg-light-green rounded-full pb-2 px-2 h-fit text-sm font-concert-one'>{areWeFriends ? 'Remove friend' : 'Add friend'}</button>
+                }
+
+                {
+                  loading && <button className='w-28 bg-light-green rounded-full pb-2 px-2 h-fit text-sm font-concert-one'><Spinner/></button>
+                }
+              </>
           }
 
         </div>
