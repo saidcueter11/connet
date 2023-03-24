@@ -106,7 +106,7 @@ export const ExpansibleTexareaMessages = ({ content, setContent, imgUrl, setImgU
               imgUrl && imgUrl.length > 0 &&
                 <div className='relative px-3'>
                   <button className='absolute right-3 top-3 rounded-full bg-black/80 text-slate-50 w-6 h-6' onClick={() => setImgUrl('')}>X</button>
-                  <img src={imgUrl} className='rounded h-auto w-full max-w-xs object-cover mb-3'/>
+                  <img src={imgUrl} className='rounded h-auto w-full max-h-80 max-w-xs object-contain mb-3'/>
                 </div>
             }
 
