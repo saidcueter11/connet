@@ -4,7 +4,6 @@ import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { PostCard } from 'components/Posts/PostCard'
 import { useAuth } from 'context/authUserContext'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { PostCollection } from 'types/databaseTypes'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
@@ -13,11 +12,8 @@ export default function Home () {
   const [search, setSearch] = useState('')
   const [posts, setPosts] = useState<PostCollection[]>([])
   const auth = useAuth()
-  const router = useRouter()
 
   useEffect(() => {
-    if (!auth.authUser) router.push('/login')
-
     if (auth.authUser) {
       const unsub = getLastestPosts(setPosts)
       return () => unsub && unsub()

@@ -22,6 +22,7 @@ export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNot
         userId={props.userId as string}
         groupName={props.groupName}
         groupId={props.groupId}
+        avatar={props.user?.avatar}
         />
       <div className='h-full overflow-y-scroll no-scrollbar pb-20'>
         <div className='w-full m-auto pt-16'>

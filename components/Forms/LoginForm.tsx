@@ -1,19 +1,16 @@
 import { loginWithEmail } from '@firebase/client'
 import { TextInput, Label } from 'flowbite-react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { SyntheticEvent, useState } from 'react'
 
 export const LoginForm = () => {
   const [error, setError] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const router = useRouter()
 
   const handleLogin = (e:SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     loginWithEmail(email, password)
-      .then(() => router.replace('/'))
       .catch(error => {
         setError(error)
       })

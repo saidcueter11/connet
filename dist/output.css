@@ -1553,6 +1553,10 @@ input:checked + .toggle-bg{
   height: 100vh;
 }
 
+.h-44{
+  height: 11rem;
+}
+
 .max-h-80{
   max-height: 20rem;
 }
@@ -2862,6 +2866,11 @@ input:checked + .toggle-bg{
 
 .fill-yellow-400{
   fill: #E3A008;
+}
+
+.object-contain{
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .object-cover{

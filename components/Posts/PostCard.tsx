@@ -92,7 +92,7 @@ export const PostCard = ({ post }:PostCardProps) => {
           <p className='font-karla px-5 text-text-dark-green'>{post.content}</p>
 
           {
-            post.img && <img className='rounded w-full max-h-80' src={post.img}/>
+            post.img && <img className='rounded w-full max-h-80 object-contain' src={post.img}/>
           }
         </div>
 

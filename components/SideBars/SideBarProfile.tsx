@@ -1,5 +1,3 @@
-import { logoutWithEmail } from '@firebase/client'
-import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { CloseIcon } from '../Icons/CloseIcon'
 import { Avatar } from 'flowbite-react'
@@ -18,16 +16,12 @@ interface SideBarProfileProps {
 
 export const SideBarProfile = ({ toggle, setToggle, isNotificationOpen }: SideBarProfileProps) => {
   const [toggleSideBarClass, setToggleSideBarClass] = useState('fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full')
-  const { authUser } = useAuth()
-
-  const router = useRouter()
+  const { authUser, logout } = useAuth()
 
   const handleLogout = () => {
-    logoutWithEmail().then(() => {
-      router.replace('/login')
-      setToggle(false)
-      setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform')
-    })
+    logout()
+    setToggle(false)
+    setToggleSideBarClass('fixed top-0 left-0 z-40 w-64 h-screen transition-transform')
   }
 
   const handleSideBarToggle = () => {

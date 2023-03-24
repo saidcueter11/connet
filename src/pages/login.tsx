@@ -7,7 +7,11 @@ export default function Login () {
   const auth = useAuth()
   const router = useRouter()
 
-  if (auth.authUser) router.push('/')
+  if (auth.isAuthenticated) {
+    console.log({ auth })
+    const redirectUrl = localStorage.getItem('redirectUrl')
+    router.push(redirectUrl ?? '/')
+  }
 
   return (
     <>
