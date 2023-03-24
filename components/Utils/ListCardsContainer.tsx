@@ -7,7 +7,7 @@ interface ListCardsContainerProps {
 export const ListCardsContainer = ({ children }: ListCardsContainerProps) => {
   return (
     <>
-      <div className='h-[64vh] overflow-y-scroll w-fit flex flex-col items-center gap-2 no-scrollbar'>
+      <div className='h-[90vh] overflow-y-scroll w-fit flex flex-col items-center gap-2 no-scrollbar pb-44'>
         {children}
       </div>
     </>

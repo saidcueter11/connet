@@ -4,6 +4,7 @@ import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
 import { SlideCardIcons } from '../Utils/SlideCardIcons'
 import { useState } from 'react'
+import { EventFeedback } from 'components/Utils/EventFeedback'
 interface FriendCardProps {
   displayName: string,
   likesCount: number,
@@ -17,6 +18,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
   const { authUser } = useAuth()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [friendEvent, setFriendEvent] = useState(false)
 
   const handleAddFriend = () => {
     setLoading(false)
@@ -32,6 +34,10 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
           userId: userId as string
         })
       })
+      setFriendEvent(true)
+      setTimeout(() => {
+        setFriendEvent(false)
+      }, 1500)
     }
 
     if (areWeFriends) {
@@ -46,7 +52,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
 
   return (
     <>
-      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px] w-full'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[330px] w-full'>
         <div onClick={goToProfile} className='pr-3'>
           <Avatar rounded={true} img={avatar} className='avatar-img'>
             <p className='text-ligth-text-green mb-1'>{displayName} {userId === authUser?.uid && '(You)'}</p>
@@ -74,6 +80,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
 
       </div>
 
+      <EventFeedback event={friendEvent} eventDescription='hola'/>
     </>
   )
 }

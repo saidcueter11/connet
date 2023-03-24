@@ -66,7 +66,7 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
         <GroupsHeader setShowModal={setShowModal} showModal={showModal}/>
 
         <section className='h-screen font-concert-one w-full grid justify-center items-start'>
-          <Tabs.Group style='underline' className='justify-center'>
+          <Tabs.Group style='underline' className='justify-center list-continer'>
             <Tabs.Item active={true} title={firstTabTitle}>
               <ListCardsContainer>
                 {

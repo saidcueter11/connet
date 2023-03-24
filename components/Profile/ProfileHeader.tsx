@@ -59,7 +59,7 @@ export const ProfileHeader = ({ displayName, userId, loading, chatingWith, avata
           <button className='rounded-full bg-dark-green h-12 w-12'>
             {
               authUser?.uid === userId
-                ? <EditIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
+                ? <Link href={`/setting/${userId}`}><EditIcon width={28} height={28} stroke='#FD8C77' fill='none'/></Link>
                 : <div onClick={handleStartChat}><SendIcon width={28} height={28} stroke='#FD8C77' fill='none' /></div>
             }
           </button>
