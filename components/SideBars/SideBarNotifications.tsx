@@ -46,14 +46,8 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
   }
 
   const notifications = user?.notifications as NotificationType[]
-  const unreadNotifications = notifications && notifications.filter(m => (
-    (m.messages && m.messages.status === 'unread') ||
-    (m.likedPost && m.likedPost.status === 'unread') ||
-    (m.commentedPost && m.commentedPost.status === 'unread') ||
-    (m.friendAdded && m.friendAdded.status === 'unread')
-  ))
-
   const chats: string[] = []
+  let totalNotificationsUnread = 0
 
   return (
     <>
@@ -74,11 +68,14 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
                   notifications && notifications.map((notification, index) => {
                     if (notification.messages && !chats.includes(notification.messages.chatId)) {
                       chats.push(notification.messages.chatId)
+                      totalNotificationsUnread++
                       return <NotificationCard notification={notification} key={index}/>
                     }
 
-                    if (!notification.messages) return <NotificationCard notification={notification} key={index}/>
-
+                    if (!notification.messages) {
+                      totalNotificationsUnread++
+                      return <NotificationCard notification={notification} key={index}/>
+                    }
                     return null
                   })
                 }
@@ -93,7 +90,10 @@ export const SideBarNotifications = ({ isProfileOpen, toggle, setToggle }: SideB
             <NotificationIcon width={28} height={28} stroke='#FD8C77' fill='none'/>
 
             {
-              user?.notificationStatus === 'unread' && <div className='absolute text-center shadow-md -right-2 -top-3 rounded-full bg-action-red text-ligth-text-green font-karla w-5 h-5'>{unreadNotifications?.length}</div>
+              user?.notificationStatus === 'unread' &&
+                <div className='absolute -right-3 -top-4 rounded-full text-sm bg-action-red text-center h-6 w-6 text-ligth-text-green font-karla flex items-center justify-center'>
+                  <span>{totalNotificationsUnread}</span>
+                </div>
             }
           </div>
         </div>

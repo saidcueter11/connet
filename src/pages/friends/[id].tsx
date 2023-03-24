@@ -57,7 +57,6 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 
   return (
     <>
-
       {
         loggedUser?.id === currentUser?.id
           ? <SideBarContainer/>

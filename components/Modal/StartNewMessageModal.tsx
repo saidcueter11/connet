@@ -1,4 +1,4 @@
-import { Modal } from 'flowbite-react'
+import { Dropdown, Modal } from 'flowbite-react'
 import { useState, useEffect, SyntheticEvent } from 'react'
 import { ExpansibleTextarea } from '../Forms/ExpansibleTextarea'
 import { CloseIcon } from '../Icons/CloseIcon'
@@ -8,6 +8,7 @@ import { collection } from 'firebase/firestore'
 import { UserCollection } from 'types/databaseTypes'
 import { useAuth } from 'context/authUserContext'
 import { useRouter } from 'next/router'
+import { SearchIcon } from 'components/Icons/SearchIcon'
 
 interface StartNewMessageModalProps {
   showModal: boolean
@@ -44,8 +45,8 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
   }, [loading, showModal])
 
   const selectedUser = users.find(user => (search.length) > 0 && (search.includes(`${user.firstName} ${user.lastName}`)))
-  const userSearch = users.filter(user => search.length > 0 && user.id !== authUser?.uid && (user.firstName?.toLowerCase()?.includes(search) || user.lastName?.toLowerCase()?.includes(search)) && !user.chatingWith?.find(chattingUser => chattingUser.userId !== user?.id))
   const loggedUser = users.find(user => user.id === authUser?.uid)
+  const userFriends = users.filter(user => loggedUser?.friends?.includes(user.id as string))
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -71,6 +72,15 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
     })
   }
 
+  const handleSelectUser = (firstName?: string, lastName?: string, userId?: string) => {
+    setSearch(`${firstName} ${lastName}`)
+    const isChatStarted = loggedUser?.chatingWith?.find(user => user.userId === userId)
+    if (isChatStarted) {
+      console.log('here')
+      router.push(`/messages/${authUser?.uid}/chat/${isChatStarted.chatId}`)
+    }
+  }
+
   return (
     <>
       {
@@ -84,26 +94,35 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
               <h2 className='text-center font-concert-one text-xl text-ligth-text-green'>New message</h2>
 
               <form className='grid gap-5 justify-items-center pt-3 relative' onSubmit={handleSubmit}>
-                <div className='self-start flex max-w-[240px] gap-3'>
-                  <label className='font-concert-one text-ligth-text-green'>To:</label>
-                  <input className='rounded bg-light-green px-2 py-1 w-3/4 font-karla' value={search} placeholder='Send to...' onChange={(e) => setSearch(e.target.value)}/>
-                </div>
-
-                {
-                  (search.length > 0 && userSearch.length > 0) &&
-                    <ul className='absolute z-50 bg-light-green shadow shadow-black/25 p-2 rounded-lg top-14 w-3/4 flex flex-col gap-2'>
+                <div className='self-start flex gap-2'>
+                  <Dropdown label={
+                    <div className='flex gap-3 items-center'>
+                      <input className='rounded bg-light-green px-2 py-1 w-3/4 font-karla' value={search} placeholder='Find friends...' disabled/>
+                      <SearchIcon width={24} height={24} fill='none' stroke='#EB6440'/>
+                    </div>
+                  } size={'sm'} outline={false} arrowIcon={false} color={''}>
+                    <Dropdown.Header>
+                      <div className='flex flex-col justify-center items-center gap-2 w-full'>
+                        <p className='font-concert-one text-center'>Your friends</p>
+                        <input className='rounded bg-light-green px-2 py-1 w-3/4 font-karla' value={search} placeholder='Find friends' onChange={(e) => setSearch(e.target.value)}/>
+                      </div>
+                    </Dropdown.Header>
                       {
-                        userSearch.map(user => (
-                          <li
-                            onClick={() => setSearch(`${user.firstName} ${user.lastName}`)}
-                            className='font-karla'
-                            key={user.id}>
-                              {user.firstName} {user.lastName} ({user.username})
-                          </li>
-                        ))
+                        userFriends.map(user => {
+                          if (user.firstName?.toLocaleLowerCase().includes(search)) {
+                            return <Dropdown.Item
+                              onClick={() => handleSelectUser(user.firstName, user.lastName, user.id)}
+                              className='font-karla'
+                              key={user.id}>
+                                {user.firstName} {user.lastName} ({user.username})
+                            </Dropdown.Item>
+                          }
+
+                          return <></>
+                        })
                       }
-                    </ul>
-                }
+                  </Dropdown>
+                </div>
 
                 <ExpansibleTextarea content={content} setContent={setContent} imgUrl={imgUrl} setImgUrl={setImgUrl} formId='start-messaeg'/>
               </form>
