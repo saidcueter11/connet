@@ -56,6 +56,7 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
       setUsername(data?.username as string)
       setImgUrl(data.avatar)
       setPrevImg(data.avatar)
+      setProgram(data.program as string)
     }
 
     if (!authUser) router.push('/login')

@@ -30,17 +30,12 @@ export const ChangeProgramProfile = ({ showModal, setShowModal, setProgram, prog
           <form className='w-full flex flex-col gap-4 items-center' onSubmit={handleSaveChanges}>
             <label htmlFor="firstName" className='text-ligth-text-green font-concert-one text-lg'>Programs</label>
             <div className='bg-light-green rounded-lg p-3 flex justify-center w-fit'>
-              <Dropdown label={program} className='max-h-full overflow-y-scroll stroke-white w-full' inline={true}>
+              <Dropdown label={program} className='max-h-full overflow-y-scroll stroke-white w-full' color={''}>
                 {
                   programs.map((pro, i) => <Dropdown.Item onClick={() => setProgram(pro)} key={i}>{pro}</Dropdown.Item>)
                 }
               </Dropdown>
             </div>
-            {/* <select className='overflow-hidden'>
-              {
-                programs.map((program, index) => <option className='overflow-hidden' key={index}>{program}</option>)
-              }
-            </select> */}
             <button className='bg-light-green w-2/5 self-center rounded-lg pb-2 font-concert-one text-dark-green'>Save changes</button>
           </form>
 
