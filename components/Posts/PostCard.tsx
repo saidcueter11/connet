@@ -18,13 +18,15 @@ interface PostCardProps {
 
 export const PostCard = ({ post }:PostCardProps) => {
   const { authUser } = useAuth()
-  const isPostLiked = authUser?.uid ? post.likes?.includes(authUser?.uid) : false
+  const postLiked = authUser?.uid ? post.likes?.includes(authUser?.uid) : false
+  const [isPostLiked, setIsPostLiked] = useState(postLiked)
+  const [likesCount, setLikesCount] = useState(post.likesCount ?? 0)
+  const [showModal, setShowModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const normalizeDate = post.createdAt ? post.normalizedDate ?? +post.createdAt?.toDate() : 0
   const timeAgo = useTimeAgo(post.normalizedDate ?? normalizeDate)
   const router = useRouter()
   const { id, postId } = router.query
-  const [showModal, setShowModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const handleClick = (e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
     if (post.groupId && post.id) router.push(`/group/${post.groupId}/post/${post.id}`)
@@ -53,6 +55,9 @@ export const PostCard = ({ post }:PostCardProps) => {
         groupId: post.groupId,
         currentUserId: authUser?.uid
       })
+
+      setLikesCount(prev => prev + 1)
+      setIsPostLiked(true)
     }
 
     if (isPostLiked) {
@@ -67,6 +72,9 @@ export const PostCard = ({ post }:PostCardProps) => {
         groupId: post.groupId,
         currentUserId: authUser?.uid
       })
+
+      setLikesCount(prev => prev - 1)
+      setIsPostLiked(false)
     }
   }
 
@@ -100,7 +108,7 @@ export const PostCard = ({ post }:PostCardProps) => {
         <div className='flex justify-end gap-3'>
           <div className='flex gap-1' onClick={handleLikes}>
             <Like fill={isPostLiked ? '#8D4B3F' : 'none'} stroke='#8D4B3F' width={24} height={24}/>
-            <p className='font-concert-one text-text-dark-green'>{post.likesCount}</p>
+            <p className='font-concert-one text-text-dark-green'>{likesCount}</p>
           </div>
           <div className='flex gap-1'>
             <CommentIcon fill='none' stroke='#8D4B3F' width={24} height={24}/>
