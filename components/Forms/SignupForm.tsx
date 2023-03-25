@@ -1,12 +1,14 @@
-import { auth, db } from '@firebase/client'
+import { auth, db, uploadImage } from '@firebase/client'
 import { updateProfile } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
-import { Label, TextInput, Spinner } from 'flowbite-react'
+import { Label, TextInput, Spinner, Dropdown, Avatar } from 'flowbite-react'
 import { useRouter } from 'next/router'
-import { SyntheticEvent, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { UserCollection } from 'types/databaseTypes'
 import { ProgressBar } from './ProgressBar'
+import { programs } from 'helpers/listOfPrograms'
+import { UploadTask, getDownloadURL } from 'firebase/storage'
 
 export const SignupForm = () => {
   const [email, setEmail] = useState('')
@@ -15,6 +17,10 @@ export const SignupForm = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [username, setUsername] = useState('')
+  const [program, setProgram] = useState('Pick a program')
+  const [imgUrl, setImgUrl] = useState('')
+  const [imgLoading, setImgLoading] = useState(false)
+  const [task, setTask] = useState<UploadTask>()
   const [errorPassword, setErrorPassword] = useState('')
   const [errorEmail, setErrorEmail] = useState('')
 
@@ -43,7 +49,8 @@ export const SignupForm = () => {
           firstName,
           lastName,
           username,
-          avatar: user?.photoURL ?? ''
+          avatar: imgUrl,
+          program
         }
 
         setDoc(userDocRef, userData)
@@ -56,7 +63,7 @@ export const SignupForm = () => {
   }
 
   if (user?.user) {
-    updateProfile(user.user, { displayName: `${firstName} ${lastName}|${username}` })
+    updateProfile(user.user, { displayName: `${firstName} ${lastName}|${username}`, photoURL: imgUrl })
     router.replace('/')
   }
 
@@ -74,9 +81,50 @@ export const SignupForm = () => {
     setErrorEmail('Please enter the correct email pattern. Must be @contestogac.on.ca')
   }
 
+  const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : undefined
+    if (file) {
+      const task = uploadImage(file, 'profilePic')
+      setTask(task)
+    }
+  }
+
+  useEffect(() => {
+    if (task) {
+      const onProgress = () => {
+        setImgLoading(true)
+      }
+      const onError = () => {}
+      const onComplete = () => {
+        setImgLoading(false)
+        getDownloadURL(task.snapshot.ref).then(setImgUrl)
+      }
+      task.on('state_changed',
+        onProgress,
+        onError,
+        onComplete
+      )
+    }
+  }, [task])
+
   return (
     <>
-      <form className='flex flex-col gap-4 items-center font-karla w-96' onSubmit={handleSubmit}>
+      <div className='pb-5 flex-col'>
+        <h1 className='text-center text-2xl font-concert-one text-text-dark-green pb-5'>Create new account</h1>
+      </div>
+      <form className='flex flex-col gap-4 items-center font-karla w-96 overflow-y-scroll no-scrollbar' onSubmit={handleSubmit}>
+        <div className='w-full grid'>
+          {
+            imgLoading && <div className='justify-self-center h-20 w-20 bg-light-green animate-pulse rounded-full'></div>
+          }
+          {
+            !imgLoading && <Avatar size={'lg'} rounded={true} className='avatar-img' img={imgUrl}/>
+          }
+          <div className='mt-2'>
+            <label htmlFor='avatar-img' className='text-center text-sm block w-2/5 text-ligth-text-green mx-auto bg-dark-green py-1 font-concert-one rounded-lg'>Select picture</label>
+            <input className='hidden' onChange={handleChangeImg} type='file' accept="image/gif, image/jpeg, image/png, image/jpg" id='avatar-img'/>
+          </div>
+        </div>
         <div className='w-3/5'>
           <div className="mb-2 block">
             <Label className='font-concert-one' htmlFor="firstName" value="First Name"/>
@@ -96,6 +144,19 @@ export const SignupForm = () => {
             <Label className='font-concert-one' htmlFor="username" value="Username"/>
           </div>
           <TextInput id='username' value={username} onChange={e => setUsername(e.target.value)} type='text' placeholder='Jon' required={true}/>
+        </div>
+
+        <div className='w-3/5'>
+          <div className="mb-2 block">
+            <Label className='font-concert-one' htmlFor="username" value="Program"/>
+          </div>
+          <div className='bg-[#F9fAFB] border border-gray-300 rounded-lg p-3 flex justify-center '>
+            <Dropdown label={program} className='max-h-full overflow-y-scroll stroke-white w-full font-karla' color={''}>
+              {
+                programs.map((pro, i) => <Dropdown.Item onClick={() => setProgram(pro)} key={i}>{pro}</Dropdown.Item>)
+              }
+            </Dropdown>
+          </div>
         </div>
 
         <div className='w-3/5'>

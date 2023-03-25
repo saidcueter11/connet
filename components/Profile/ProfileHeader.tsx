@@ -18,9 +18,10 @@ interface ProfileHeaderProps {
     chatId: string
   }[]
   avatar?: string
+  program?: string
 }
 
-export const ProfileHeader = ({ displayName, userId, loading, chatingWith, avatar }: ProfileHeaderProps) => {
+export const ProfileHeader = ({ displayName, userId, loading, chatingWith, avatar, program }: ProfileHeaderProps) => {
   const { authUser } = useAuth()
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
@@ -45,10 +46,11 @@ export const ProfileHeader = ({ displayName, userId, loading, chatingWith, avata
           <Avatar size={'lg'} rounded={true} img={avatar} className='avatar-img'/>
           {
             loading
-              ? <h1 className='justify-self-center font-concert-one text-xl text-text-dark-green'></h1>
-              : <h1 className='justify-self-center font-concert-one text-xl text-text-dark-green'>{displayName}</h1>
+              ? <h1 className='justify-self-center font-concert-one text-xl text-text-dark-green text-center'></h1>
+              : <h1 className='justify-self-center font-concert-one text-xl text-text-dark-green text-center'>{displayName}</h1>
           }
         </Link>
+
         <div className='col-start-2 col-end-2 flex flex-col items-center justify-center'>
           <button className='rounded-full bg-dark-green h-12 w-12 col-start-2 col-end-2'>
             <FriendsIcon width={26} height={26} stroke='#FD8C77' fill='none' id={userId}/>
@@ -71,6 +73,10 @@ export const ProfileHeader = ({ displayName, userId, loading, chatingWith, avata
             }
           </p>
         </div>
+
+        {
+          program && <h2 className='font-karla text-center my-2 col-span-3 max-w-md text-dark-green'>{program}</h2>
+        }
       </div>
 
       <StartNewMessageModal showModal={showModal} setShowModal={setShowModal} receiverName={displayName} receiverId={userId}/>

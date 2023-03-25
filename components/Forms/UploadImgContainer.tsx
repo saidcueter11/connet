@@ -9,7 +9,7 @@ interface UploadImgContainerProps {
 
 export const UploadImgContainer = ({ handleImgChange, formId }:UploadImgContainerProps) => {
   return (
-    <div className=''>
+    <div>
       <label htmlFor={formId}>
         <UploadImgIcon width={30} height={30} fill='none' stroke='#EB6440'/>
       </label>

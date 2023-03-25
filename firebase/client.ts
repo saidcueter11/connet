@@ -645,9 +645,11 @@ interface updateUserType {
   avatar?: string
   firstName?: string
   lastName?: string
-  username?: string}
+  username?: string
+  program?: string
+}
 
-export const updateUser = async ({ userId, avatar, firstName, lastName, username }: updateUserType) => {
+export const updateUser = async ({ userId, avatar, firstName, lastName, username, program }: updateUserType) => {
   const batch = writeBatch(db)
   const newUserInfo = {
     avatar,
@@ -661,7 +663,8 @@ export const updateUser = async ({ userId, avatar, firstName, lastName, username
     avatar: avatar ?? '',
     firstName,
     lastName,
-    username
+    username,
+    program
   })
 
   // Update notifications user info

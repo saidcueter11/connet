@@ -41,6 +41,7 @@ export interface UserCollection {
   username?: string,
   avatar?: string,
   displayName?: string
+  program?: string
   id?: string
   friendId?: string
   friends?: string[]

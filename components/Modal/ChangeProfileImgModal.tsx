@@ -2,7 +2,7 @@ import { uploadImage } from '@firebase/client'
 import { CloseIcon } from 'components/Icons/CloseIcon'
 import { UploadTask, getDownloadURL } from 'firebase/storage'
 import { Modal, Spinner } from 'flowbite-react'
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 
 interface ChangeProfileImgModalProps {
   showModal: boolean
@@ -17,7 +17,8 @@ export const ChangeProfileImgModal = ({ showModal, setShowModal, prevImg, setImg
   const [task, setTask] = useState<UploadTask>()
   const [imgLoading, setImgLoading] = useState(false)
 
-  const handleSelectImg = () => {
+  const handleSelectImg = (e:FormEvent) => {
+    e.preventDefault()
     setImgUrl(prevImg)
     setShowModal(false)
   }

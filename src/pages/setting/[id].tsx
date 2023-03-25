@@ -4,6 +4,7 @@ import { EditIcon } from 'components/Icons/EditIcon'
 import { ChangeNameProfileModal } from 'components/Modal/ChangeNameProfile'
 import { ChangePasswordProfile } from 'components/Modal/ChangePasswordProfile'
 import { ChangeProfileImgModal } from 'components/Modal/ChangeProfileImgModal'
+import { ChangeProgramProfile } from 'components/Modal/ChangeProgramProfile'
 import { ChangeUsernameProfile } from 'components/Modal/ChangeUsernameProfile'
 import { ProfileCard } from 'components/Settings/ProfileCard'
 import { EventFeedback } from 'components/Utils/EventFeedback'
@@ -38,10 +39,12 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
   const [showModalName, setShowModalName] = useState(false)
   const [showModalUsername, setShowModalUsername] = useState(false)
   const [showModalPassword, setShowModalPassword] = useState(false)
+  const [showModalProgram, setShowModalProgram] = useState(false)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [program, setProgram] = useState('')
   const [isUpdated, setIsUpdated] = useState(false)
 
   useEffect(() => {
@@ -62,6 +65,7 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
   const handleOpenModalName = () => setShowModalName(true)
   const handleOpenModalUsername = () => setShowModalUsername(true)
   const handleOpenModalPassword = () => setShowModalPassword(true)
+  const handleOpenModalProgram = () => setShowModalProgram(true)
 
   const handleUpdateProfile = () => {
     updateProfile({ photoURL: imgUrl, displayName: `${firstName} ${lastName}|${username}` })
@@ -70,7 +74,8 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
       avatar: imgUrl,
       firstName,
       lastName,
-      username
+      username,
+      program
     })
     setIsUpdated(true)
     setTimeout(() => {
@@ -113,8 +118,8 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
             </div>
           </ProfileCard>
 
-          <ProfileCard text='Program' info='Computer Programming'>
-            <div onClick={handleOpenModalImg} className='absolute flex justify-center items-center -top-2 right-1 bg-dark-green rounded-full h-7 w-7'>
+          <ProfileCard text='Program' info={program}>
+            <div onClick={handleOpenModalProgram} className='absolute flex justify-center items-center -top-2 right-1 bg-dark-green rounded-full h-7 w-7'>
               <EditIcon width={18} height={18} stroke='#FD8C77' fill='none'/>
             </div>
           </ProfileCard>
@@ -152,6 +157,13 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
         setPassword={setPassword}
         setShowModal={setShowModalPassword}
         showModal={showModalPassword}
+        />
+
+      <ChangeProgramProfile
+        program={program}
+        setProgram={setProgram}
+        setShowModal={setShowModalProgram}
+        showModal={showModalProgram}
         />
 
     </>

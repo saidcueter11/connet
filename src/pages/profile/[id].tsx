@@ -49,7 +49,9 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
           loading={loadingUser ?? loading}
           userId={userId}
           avatar={currentUser.avatar}
-          chatingWith={currentUser.chatingWith}/>
+          chatingWith={currentUser.chatingWith}
+          program={currentUser.program}
+          />
 
         {
           loading || loadingUser
