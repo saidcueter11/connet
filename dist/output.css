@@ -1137,6 +1137,10 @@ input:checked + .toggle-bg{
   top: 50%;
 }
 
+.top-12{
+  top: 3rem;
+}
+
 .top-2{
   top: 0.5rem;
 }
@@ -1151,6 +1155,22 @@ input:checked + .toggle-bg{
 
 .top-8{
   top: 2rem;
+}
+
+.top-10{
+  top: 2.5rem;
+}
+
+.top-20{
+  top: 5rem;
+}
+
+.top-32{
+  top: 8rem;
+}
+
+.top-28{
+  top: 7rem;
 }
 
 .-z-10{
@@ -3100,6 +3120,22 @@ input:checked + .toggle-bg{
 
 .pt-8{
   padding-top: 2rem;
+}
+
+.pb-40{
+  padding-bottom: 10rem;
+}
+
+.pb-56{
+  padding-bottom: 14rem;
+}
+
+.pb-72{
+  padding-bottom: 18rem;
+}
+
+.pb-60{
+  padding-bottom: 15rem;
 }
 
 .text-left{

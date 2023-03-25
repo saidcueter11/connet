@@ -73,6 +73,7 @@ export const PostCard = ({ post }:PostCardProps) => {
   const handleDelete = () => {
     !post.groupId && deletePost(post.id as string)
     post.groupId && deleteGroupPost(post.id as string)
+    setShowDeleteModal(false)
   }
 
   return (

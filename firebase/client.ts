@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
-import { Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, increment, onSnapshot, orderBy, query, updateDoc, where, writeBatch } from 'firebase/firestore'
+import { DocumentData, QueryDocumentSnapshot, Timestamp, addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, increment, limit, onSnapshot, orderBy, query, startAfter, updateDoc, where, writeBatch } from 'firebase/firestore'
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { CommentCollection, GroupCollecion, GroupPostCollection, Message, MessageCollection, PostCollection, UserCollection } from 'types/databaseTypes'
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
@@ -142,11 +142,11 @@ export const removeFriend = async ({ id, friendId }:UserCollection) => {
   })
 }
 
-export const getLastestPosts = (cb: (post: PostCollection[]) => void) => {
+export const updatePosts = (cb: (post: PostCollection[]) => void) => {
   const collectionDb = collection(db, 'posts')
-  const sortedCollection = query(collectionDb, orderBy('createdAt', 'desc'))
+  const q = query(collectionDb, orderBy('createdAt', 'desc'), limit(10))
 
-  return onSnapshot(sortedCollection, ({ docs }) => {
+  return onSnapshot(q, ({ docs }) => {
     const newPost = docs.map(docu => {
       const data:PostCollection = docu.data()
       const { createdAt } = data
@@ -160,17 +160,45 @@ export const getLastestPosts = (cb: (post: PostCollection[]) => void) => {
   })
 }
 
-export const getPostsByUserId = (id: string) => {
-  const collectionDb = collection(db, 'posts')
-  const q = query(collectionDb, where('userId', '==', id))
-  const docRef = getDocs(q)
+export const getLatestPosts = async () => {
+  const collectionRef = collection(db, 'posts')
+  const q = query(collectionRef, orderBy('createdAt', 'desc'), limit(10))
+  const data = await getDocs(q)
 
-  return docRef.then(res => {
-    return res.docs.map(data => {
-      const res: PostCollection = data.data()
-      return res
-    })
+  const lastPost = data.docs[data.docs.length - 1]
+  const newPosts = data.docs.map((doc) => {
+    const post: PostCollection = doc.data()
+    const { createdAt } = post
+    const normalizedDate = createdAt ? +createdAt?.toDate() : 0
+    const { id } = doc
+
+    return { ...post, normalizedDate, id }
   })
+
+  return { newPosts, lastPost }
+}
+
+export const loadMore = async (lastPostRef: QueryDocumentSnapshot<DocumentData>) => {
+  const collectionRef = collection(db, 'posts')
+  const q = query(
+    collectionRef,
+    orderBy('createdAt', 'desc'),
+    startAfter(lastPostRef),
+    limit(10)
+  )
+  const data = await getDocs(q)
+
+  const lastPost = data.docs[data.docs.length - 1]
+  const newPosts = data.docs.map((doc) => {
+    const post = doc.data()
+    const { createdAt } = post
+    const normalizedDate = createdAt ? +createdAt?.toDate() : 0
+    const { id } = doc
+
+    return { ...post, normalizedDate, id }
+  })
+
+  return { newPosts, lastPost }
 }
 
 export const uploadImage = (file: File, folder?:string) => {
