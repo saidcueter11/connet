@@ -1032,6 +1032,10 @@ input:checked + .toggle-bg{
   position: relative;
 }
 
+.sticky{
+  position: sticky;
+}
+
 .inset-y-0{
   top: 0px;
   bottom: 0px;
@@ -1696,6 +1700,10 @@ input:checked + .toggle-bg{
 
 .w-1\/4{
   width: 25%;
+}
+
+.w-screen{
+  width: 100vw;
 }
 
 .min-w-\[320px\]{
@@ -3171,6 +3179,10 @@ input:checked + .toggle-bg{
 
 .pb-60{
   padding-bottom: 15rem;
+}
+
+.pb-10{
+  padding-bottom: 2.5rem;
 }
 
 .text-left{

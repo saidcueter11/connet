@@ -42,13 +42,12 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
   const chatUser = loggedUser?.id === messages?.receiverUser.id ? messages?.senderUser : messages?.receiverUser
 
   return (
-    <main className='h-screen w-full'>
+    <>
       <ChatHeader
         userName={`${chatUser?.firstName} ${chatUser?.lastName}`}
         userId={chatUser?.id as string}
         avatar={chatUser?.avatar}
         />
-
       <MessagesContainerMobile>
         {
           messages?.messages.map((message, index) => (
@@ -62,10 +61,9 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
           ))
         }
       </MessagesContainerMobile>
-
       <SendMessageFormContainer senderName={`${loggedUser?.firstName} ${loggedUser?.lastName}`} receiverId={chatUser?.id as string}/>
 
-    </main>
+    </>
   )
 }
 

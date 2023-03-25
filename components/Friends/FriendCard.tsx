@@ -21,7 +21,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
   const [friendEvent, setFriendEvent] = useState(false)
 
   const handleAddFriend = () => {
-    setLoading(false)
+    setLoading(true)
     if (!areWeFriends) {
       addFriend({
         id: authUser?.uid,

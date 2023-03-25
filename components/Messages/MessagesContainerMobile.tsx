@@ -8,14 +8,15 @@ export const MessagesContainerMobile = ({ children }: MessagesContainerMobilePro
   const chatContainerRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
+    chatContainerRef.current?.focus()
     if (chatContainerRef.current !== null) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+      chatContainerRef.current.scrollTo(0, chatContainerRef.current.scrollHeight + 80)
     }
   }, [children])
 
   return (
     <>
-      <section className='flex flex-col gap-3 h-[92vh] overflow-y-scroll no-scrollbar relative pt-14 pb-5 px-1' ref={chatContainerRef}>
+      <section className='flex flex-col gap-3 h-screen overflow-y-scroll no-scrollbar pb-10 relative px-1' ref={chatContainerRef}>
         {children}
       </section>
     </>

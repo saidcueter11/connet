@@ -4,7 +4,7 @@ import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { PostCard } from 'components/Posts/PostCard'
 import { useAuth } from 'context/authUserContext'
 import Head from 'next/head'
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { PostCollection } from 'types/databaseTypes'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore'
@@ -17,6 +17,7 @@ export default function Home () {
   const [lastPost, setLastPost] = useState<QueryDocumentSnapshot<DocumentData>>()
   const [isSincronized, setIsSincronized] = useState(true)
   const [loading, setLoading] = useState(false)
+  const listRef = useRef<HTMLElement>(null)
   const auth = useAuth()
 
   useEffect(() => {
@@ -39,30 +40,23 @@ export default function Home () {
   }, [upcomingPosts])
 
   const handleScroll = (e: SyntheticEvent) => {
-    // const { scrollTop, clientHeight, scrollHeight } = e.currentTarget
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget
+    listRef.current?.focus()
 
-    // if (scrollTop + clientHeight >= scrollHeight && !loading) {
-    //   setLoading(true)
-    //   lastPost && loadMore(lastPost).then(({ lastPost, newPosts }) => {
-    //     setLastPost(lastPost)
-    //     setPosts(prev => [...prev, ...newPosts])
-    //     setLoading(false)
-    //   })
-    // }
+    if (scrollTop + clientHeight >= scrollHeight && !loading) {
+      setLoading(true)
+      lastPost && loadMore(lastPost).then(({ lastPost, newPosts }) => {
+        setLastPost(lastPost)
+        setPosts(prev => [...prev, ...newPosts])
+        setLoading(false)
+      })
+    }
   }
 
   const handleUpdatePosts = () => {
     setPosts(upcomingPosts)
     setIsSincronized(true)
-  }
-
-  const handleLoadMore = () => {
-    setLoading(true)
-    lastPost && loadMore(lastPost).then(({ lastPost, newPosts }) => {
-      setLastPost(lastPost)
-      setPosts(prev => [...prev, ...newPosts])
-      setLoading(false)
-    })
+    listRef.current?.scrollTo(0, 0)
   }
 
   return (
@@ -79,7 +73,7 @@ export default function Home () {
         {
           !isSincronized && <button className='fixed z-20 bg-dark-green rounded-lg text-ligth-text-green font-concert-one px-2 py-1 w-2/4 left-1/2 transform -translate-x-1/2 top-28' onClick={handleUpdatePosts}>Update</button>
         }
-        <section className='flex flex-col gap-4 h-screen overflow-scroll no-scrollbar pb-60 items-center' onScroll={handleScroll}>
+        <section className='flex flex-col gap-4 h-screen overflow-scroll no-scrollbar pb-60 items-center' onScroll={handleScroll} ref={listRef}>
 
           {
             posts && posts.map(post => {
@@ -97,9 +91,9 @@ export default function Home () {
             loading && <Spinner color={'gray'}/>
           }
 
-          {
+          {/* {
             (!loading && posts.length > 0) && <button onClick={handleLoadMore} className='bg-dark-green rounded-lg text-ligth-text-green font-concert-one px-2 py-1 w-2/4'>Load More</button>
-          }
+          } */}
 
         </section>
 
