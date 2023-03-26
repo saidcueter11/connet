@@ -9,6 +9,9 @@ import { PostCollection } from 'types/databaseTypes'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore'
 import { Spinner } from 'flowbite-react'
+import { NavBarDesktop } from 'components/Utils/NavBarDesktop'
+import { CreatePostModal } from 'components/Modal/CreatePostModal'
+import { SideMenuDesktop } from 'components/SideBars/SideMenuDesktop'
 
 export default function Home () {
   const [search, setSearch] = useState('')
@@ -17,6 +20,7 @@ export default function Home () {
   const [lastPost, setLastPost] = useState<QueryDocumentSnapshot<DocumentData>>()
   const [isSincronized, setIsSincronized] = useState(true)
   const [loading, setLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const listRef = useRef<HTMLElement>(null)
   const auth = useAuth()
 
@@ -27,6 +31,7 @@ export default function Home () {
         setPosts(newPosts)
         setLastPost(lastPost)
         setLoading(false)
+        setIsSincronized(true)
       })
       const unsub = updatePosts(setUpcomingPosts)
       return () => unsub && unsub()
@@ -68,12 +73,16 @@ export default function Home () {
         <link rel="icon" href="logo_ico.ico" />
       </Head>
       <SideBarContainer />
-      <main className='relative w-full h-screen'>
-        <HeaderMobile search={search} setSearch={setSearch}/>
-        {
-          !isSincronized && <button className='fixed z-20 bg-dark-green rounded-lg text-ligth-text-green font-concert-one px-2 py-1 w-2/4 left-1/2 transform -translate-x-1/2 top-28' onClick={handleUpdatePosts}>Update</button>
-        }
-        <section className='flex flex-col gap-4 h-screen overflow-scroll no-scrollbar pb-60 items-center' onScroll={handleScroll} ref={listRef}>
+      <NavBarDesktop setSearch={setSearch} search={search}/>
+      <HeaderMobile search={search} setSearch={setSearch}/>
+      <main className='relative w-full h-screen md:grid grid-cols-8 gap-4 justify-center max-w-5xl mx-auto'>
+        <SideMenuDesktop/>
+        <section className='flex flex-col md:col-span-5 gap-4 h-screen overflow-scroll no-scrollbar pb-60 items-center md:mt-16 relative' onScroll={handleScroll} ref={listRef}>
+          <button onClick={() => setShowModal(true)} className='w-3/5 bg-dark-green text-ligth-text-green rounded-full hidden md:block font-concert-one pb-2 hover:opacity-80 transition-opacity'>Create post</button>
+
+          {
+            !isSincronized && <button className='fixed md:sticky z-20 bg-dark-green rounded-lg text-ligth-text-green font-concert-one px-2 py-1 w-2/4 left-1/2 transform -translate-x-1/2 top-28 sm:w-1/4 md:top-0 md:pb-3 hover:opacity-80 transition-opacity' onClick={handleUpdatePosts}>Update</button>
+          }
 
           {
             posts && posts.map(post => {
@@ -91,14 +100,11 @@ export default function Home () {
             loading && <Spinner color={'gray'}/>
           }
 
-          {/* {
-            (!loading && posts.length > 0) && <button onClick={handleLoadMore} className='bg-dark-green rounded-lg text-ligth-text-green font-concert-one px-2 py-1 w-2/4'>Load More</button>
-          } */}
-
         </section>
 
       </main>
 
+      <CreatePostModal setShowModal={setShowModal} showModal={showModal}/>
       <NavBarMobile />
     </>
   )

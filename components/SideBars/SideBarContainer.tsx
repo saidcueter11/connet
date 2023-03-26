@@ -6,7 +6,7 @@ export const SideBarContainer = () => {
   const [toggleProfile, setToggleProfile] = useState(false)
   const [toggleNotifications, setToggleNotifications] = useState(false)
   return (
-    <div className='z-10'>
+    <div className='z-10 md:hidden'>
       <SideBarProfile isNotificationOpen={toggleNotifications} toggle={toggleProfile} setToggle={setToggleProfile}/>
       <SideBarNotifications isProfileOpen={toggleProfile} toggle={toggleNotifications} setToggle={setToggleNotifications} />
     </div>

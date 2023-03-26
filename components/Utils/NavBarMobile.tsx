@@ -47,7 +47,7 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
 
   return (
    <>
-    <nav className="fixed py-8 bottom-5 bg-dark-green z-10 w-4/5 h-14 rounded-xl left-1/2 transform -translate-x-1/2 flex items-center justify-evenly">
+    <nav className="md:hidden fixed py-8 bottom-2 bg-dark-green z-10 w-4/5 h-14 rounded-xl left-1/2 transform -translate-x-1/2 flex items-center justify-evenly">
       <div className={`relative ${atHome ? 'scale-110' : ''}`}>
         <HomeIcon width={30} height={30} fill='none' stroke='#FD8C77'/>
         {

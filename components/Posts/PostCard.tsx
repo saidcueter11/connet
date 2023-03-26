@@ -11,6 +11,7 @@ import { useAuth } from 'context/authUserContext'
 import { ModifyPostsModal } from '../Modal/ModifyPostsModal'
 import { DeleteModal } from 'components/Modal/DeleteModal'
 import { DropdownPostCard } from './DropdownPostCard'
+import Link from 'next/link'
 
 interface PostCardProps {
   post: PostCollection | GroupPostCollection
@@ -86,18 +87,18 @@ export const PostCard = ({ post }:PostCardProps) => {
 
   return (
     <>
-      <div className='flex rounded-2xl shadow flex-col p-6 gap-4 bg-light-green shadow-black/25 min-w-[327px] relative'>
-        <div className='flex gap-2' onClick={handleClick}>
+      <div className='flex rounded-2xl shadow flex-col p-6 gap-4 bg-light-green shadow-black/25 min-w-[327px] relative w-full max-w-lg md:max-w-2xl'>
+        <div className='flex gap-2'>
           <Avatar rounded={true} img={post.user?.avatar ?? ''} className='avatar-img'>
             <div className='flex items-end'>
-              <p className='font-concert-one text-text-dark-green'>{post.user?.displayName}</p>
+              <Link href={`/profile/${post.userId}`} className='font-concert-one text-text-dark-green hover:underline'>{post.user?.displayName}</Link>
               <Dot width={20} height={14} fill='#8D4B3F'/>
               <time className='text-xs text-action-red font-karla'>{timeAgo}</time>
             </div>
             <small className='font-karla text-action-red'>@{post.user?.username ?? 'saidcueter11'}</small>
           </Avatar>
         </div>
-        <div className='flex flex-col gap-2' onClick={handleClick}>
+        <div className='flex flex-col gap-2 cursor-pointer' onClick={handleClick}>
           <p className='font-karla px-5 text-text-dark-green'>{post.content}</p>
 
           {
@@ -106,11 +107,11 @@ export const PostCard = ({ post }:PostCardProps) => {
         </div>
 
         <div className='flex justify-end gap-3'>
-          <div className='flex gap-1' onClick={handleLikes}>
+          <div className='flex gap-1 cursor-pointer transition-colors' onClick={handleLikes}>
             <Like fill={isPostLiked ? '#8D4B3F' : 'none'} stroke='#8D4B3F' width={24} height={24}/>
             <p className='font-concert-one text-text-dark-green'>{likesCount}</p>
           </div>
-          <div className='flex gap-1'>
+          <div className='flex gap-1 cursor-pointer' onClick={handleClick}>
             <CommentIcon fill='none' stroke='#8D4B3F' width={24} height={24}/>
             <p className='font-concert-one text-text-dark-green'>{post.commentsCount}</p>
           </div>

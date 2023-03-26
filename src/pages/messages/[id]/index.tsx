@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { MessageCollection } from 'types/databaseTypes'
 import { useAuth } from 'context/authUserContext'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
+import { NavBarDesktop } from 'components/Utils/NavBarDesktop'
 
 export default function ChatsPage () {
   const collectionMessages = collection(db, 'messages')
@@ -35,6 +36,7 @@ export default function ChatsPage () {
   return (
     <>
       <SideBarContainer/>
+      <NavBarDesktop/>
       <main className='h-full w-full'>
         <MessagesHeader/>
         <section className='h-3/4 pb-11 pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar px-1'>

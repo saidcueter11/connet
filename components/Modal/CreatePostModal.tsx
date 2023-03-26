@@ -76,11 +76,11 @@ export const CreatePostModal = ({ showModal, setShowModal, groupId, groupName }:
       <>
         <Modal show={showModal} className='h-screen' position='center' size='lg'>
           <Modal.Body className='relative grid justify-center gap-2 bg-dark-green rounded-lg'>
-            <div className='absolute top-2 left-2 h-3 w-3' onClick={handleCloseModal}>
+            <div className='absolute top-2 left-2 h-3 w-3 cursor-pointer' onClick={handleCloseModal}>
               <CloseIcon width={30} height={30} fill='none' stroke='#EB6440'/>
             </div>
 
-            <div className='grid gap-5 justify-items-center pt-8 relative'>
+            <div className='grid gap-5 justify-items-center pt-4 relative'>
               <div className='justify-self-start'>
                 <Avatar rounded={true} img={auth.authUser?.photoURL ?? ''} className='avatar-img'>
                   <p className='font-concert-one text-ligth-text-green text-xl'>{auth.authUser?.displayName?.split('|')[0]}</p>

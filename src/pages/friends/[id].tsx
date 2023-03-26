@@ -12,6 +12,7 @@ import { useCollection } from 'react-firebase-hooks/firestore'
 import { UserCollection } from 'types/databaseTypes'
 import { FriendsHeader } from 'components/Friends/FriendsHeader'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
+import { NavBarDesktop } from 'components/Utils/NavBarDesktop'
 
 interface FriendsPageProp {
   userList?: UserCollection[]
@@ -30,6 +31,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
     return (
     <>
       <SideBarContainer/>
+      <NavBarDesktop/>
       <FriendsHeader/>
 
       <Spinner/>
@@ -62,6 +64,8 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
           ? <SideBarContainer/>
           : <ArrowLeft width={24} height={24} stroke={'black'}/>
       }
+
+      <NavBarDesktop/>
       <main className='h-screen'>
         <FriendsHeader/>
 

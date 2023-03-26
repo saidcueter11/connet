@@ -10,7 +10,7 @@ interface UploadImgContainerProps {
 export const UploadImgContainer = ({ handleImgChange, formId }:UploadImgContainerProps) => {
   return (
     <div>
-      <label htmlFor={formId}>
+      <label htmlFor={formId} className='cursor-pointer'>
         <UploadImgIcon width={30} height={30} fill='none' stroke='#EB6440'/>
       </label>
       <input type='file' className='hidden' onChange={handleImgChange} accept="image/gif, image/jpeg, image/png, image/jpg" id={formId}/>

@@ -29,6 +29,10 @@
   .list-continer button{
     color:#243C3E;
   }
+
+  .dropdown-container ~ div > button > span{
+    padding: 0;
+  }
   
 
 }
