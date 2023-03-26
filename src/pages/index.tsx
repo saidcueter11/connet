@@ -48,7 +48,7 @@ export default function Home () {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget
     listRef.current?.focus()
 
-    if (scrollTop + clientHeight >= scrollHeight && !loading) {
+    if (scrollTop + clientHeight > scrollHeight - 20 && !loading) {
       setLoading(true)
       lastPost && loadMore(lastPost).then(({ lastPost, newPosts }) => {
         setLastPost(lastPost)

@@ -30,7 +30,7 @@
     color:#243C3E;
   }
 
-  .dropdown-container ~ div > button > span{
+  .dropdown-container + div > button > span{
     padding: 0;
   }
   

@@ -1766,10 +1766,6 @@ input:checked + .toggle-bg{
   max-width: 20rem;
 }
 
-.max-w-\[50px\]{
-  max-width: 50px;
-}
-
 .flex-1{
   flex: 1 1 0%;
 }
@@ -2371,16 +2367,6 @@ input:checked + .toggle-bg{
 .border-yellow-600{
   --tw-border-opacity: 1;
   border-color: rgb(159 88 10 / var(--tw-border-opacity));
-}
-
-.border-action-red{
-  --tw-border-opacity: 1;
-  border-color: rgb(141 75 63 / var(--tw-border-opacity));
-}
-
-.border-\[\#FD8C77\]{
-  --tw-border-opacity: 1;
-  border-color: rgb(253 140 119 / var(--tw-border-opacity));
 }
 
 .\!bg-transparent{
@@ -3722,10 +3708,6 @@ input:checked + .toggle-bg{
 
 .list-continer button{
   color:#243C3E;
-}
-
-.dropdown-container ~ div > button > span{
-  padding: 0;
 }
 
 .after\:translate-x-full::after{
