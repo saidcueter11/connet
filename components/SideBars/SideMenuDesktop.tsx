@@ -33,89 +33,89 @@ export const SideMenuDesktop = () => {
   const listofFriends = users?.filter(user => currentUser?.friends?.includes(user.id)).slice(0, 3)
   const listofGroups = groups?.filter(group => group.groupMembers?.includes(auth.authUser?.uid as string))
 
-  if (loading || !users || error || groupsLoading || groupsError) {
-    return (
-    <>
-      <aside className='hidden md:block col-span-3 mt-16 h-fit max-w-[280px] min-w-[280px] justify-self-end'>
-      <div className='bg-dark-green rounded-lg px-2'>
-        <div className='p-2 flex flex-col items-center gap-1'>
-          <Avatar size={'lg'} rounded={true}/>
-        </div>
+  // if (loading || !users || error || groupsLoading || groupsError) {
+  //   return (
+  //   <>
+  //     <aside className='hidden md:block col-span-3 mt-16 h-fit max-w-[280px] min-w-[280px] justify-self-end'>
+  //     <div className='bg-dark-green rounded-lg px-2'>
+  //       <div className='p-2 flex flex-col items-center gap-1'>
+  //         <Avatar size={'lg'} rounded={true}/>
+  //       </div>
 
-        <div>
-          <div className='flex justify-between px-4'>
-            <p className='font-karla text-ligth-text-green'>Friends</p>
-          </div>
+  //       <div>
+  //         <div className='flex justify-between px-4'>
+  //           <p className='font-karla text-ligth-text-green'>Friends</p>
+  //         </div>
 
-          <div className='flex justify-between px-4'>
-            <p className='font-karla text-ligth-text-green'>Likes</p>
-          </div>
+  //         <div className='flex justify-between px-4'>
+  //           <p className='font-karla text-ligth-text-green'>Likes</p>
+  //         </div>
 
-          <div className='px-2 py-4 font-karla text-ligth-text-green flex flex-col items-start gap-1'>
-            <Link href={`/setting/${auth.authUser?.uid}`} className='flex items-end gap-2 w-fit'>
-              <SettingsIcon width={20} height={20} fill='none' stroke='#FD8C77'/>
-              <p className='text-ligth-text-green font-karla text-sm'>Settings</p>
-            </Link>
+  //         <div className='px-2 py-4 font-karla text-ligth-text-green flex flex-col items-start gap-1'>
+  //           <Link href={`/setting/${auth.authUser?.uid}`} className='flex items-end gap-2 w-fit'>
+  //             <SettingsIcon width={20} height={20} fill='none' stroke='#FD8C77'/>
+  //             <p className='text-ligth-text-green font-karla text-sm'>Settings</p>
+  //           </Link>
 
-            <div className='flex items-end gap-2 w-fit pl-0.5'>
-              <LogoutIcon width={20} height={20} fill='none' stroke='#FD8C77'/>
-              <p className='text-ligth-text-green font-karla text-sm'>Logout</p>
-            </div>
-          </div>
+  //           <div className='flex items-end gap-2 w-fit pl-0.5'>
+  //             <LogoutIcon width={20} height={20} fill='none' stroke='#FD8C77'/>
+  //             <p className='text-ligth-text-green font-karla text-sm'>Logout</p>
+  //           </div>
+  //         </div>
 
-        </div>
-      </div>
+  //       </div>
+  //     </div>
 
-      <div className='bg-dark-green rounded-lg mt-3 flex flex-col items-start p-4 gap-2'>
-        <Avatar rounded={true}>
-        </Avatar>
+  //     <div className='bg-dark-green rounded-lg mt-3 flex flex-col items-start p-4 gap-2'>
+  //       <Avatar rounded={true}>
+  //       </Avatar>
 
-        <Avatar rounded={true}>
-        </Avatar>
+  //       <Avatar rounded={true}>
+  //       </Avatar>
 
-        <Avatar rounded={true}>
-        </Avatar>
+  //       <Avatar rounded={true}>
+  //       </Avatar>
 
-        <button className='text-xs font-karla font-bold bg-light-green rounded-full px-3 py-0.5 w-3/4 self-center mt-2'>Go to friends</button>
-      </div>
+  //       <button className='text-xs font-karla font-bold bg-light-green rounded-full px-3 py-0.5 w-3/4 self-center mt-2'>Go to friends</button>
+  //     </div>
 
-      <div className='bg-dark-green rounded-lg mt-3 flex flex-col items-start p-4 gap-2'>
-        <Avatar rounded={true}>
-        </Avatar>
+  //     <div className='bg-dark-green rounded-lg mt-3 flex flex-col items-start p-4 gap-2'>
+  //       <Avatar rounded={true}>
+  //       </Avatar>
 
-        <Avatar rounded={true}>
-        </Avatar>
+  //       <Avatar rounded={true}>
+  //       </Avatar>
 
-        <Avatar rounded={true}>
-        </Avatar>
+  //       <Avatar rounded={true}>
+  //       </Avatar>
 
-        <button className='text-xs bg-light-green rounded-full px-3 py-0.5 w-3/4 self-center mt-2'>Go to groups</button>
-      </div>
-    </aside>
-    </>
-    )
-  }
+  //       <button className='text-xs bg-light-green rounded-full px-3 py-0.5 w-3/4 self-center mt-2'>Go to groups</button>
+  //     </div>
+  //   </aside>
+  //   </>
+  //   )
+  // }
 
   return (
     <aside className='hidden md:block col-span-3 mt-16 h-fit max-w-[280px] min-w-[280px] justify-self-end'>
-      <div className='bg-dark-green rounded-lg px-2'>
+      <div className='bg-dark-green rounded-lg px-2 min-h-[280px]'>
         <div className='p-2 flex flex-col items-center gap-1'>
           <Link href={`/profile/${auth.authUser?.uid}`}>
             <Avatar size={'lg'} rounded={true} img={auth.authUser?.photoURL ?? ''} className='avatar-img'/>
           </Link>
           <Link href={`/profile/${auth.authUser?.uid}`} className='font-concert-one text-ligth-text-green text-lg block hover:underline'>{auth.authUser?.displayName?.split('|')[0]}</Link>
-          <p className='font-karla text-ligth-text-green text-sm'>{currentUser?.program}</p>
+          <p className='font-karla text-ligth-text-green text-sm'>{currentUser && currentUser?.program}</p>
         </div>
 
         <div>
           <div className='flex justify-between px-4'>
             <p className='font-karla text-ligth-text-green'>Friends</p>
-            <p className='font-karla text-ligth-text-green'>{currentUser?.friendsCount}</p>
+            <p className='font-karla text-ligth-text-green'>{currentUser && currentUser?.friendsCount}</p>
           </div>
 
           <div className='flex justify-between px-4'>
             <p className='font-karla text-ligth-text-green'>Likes</p>
-            <p className='font-karla text-ligth-text-green'>{currentUser?.likesCount}</p>
+            <p className='font-karla text-ligth-text-green'>{currentUser && currentUser?.likesCount}</p>
           </div>
 
           <div className='px-2 py-4 font-karla text-ligth-text-green flex flex-col items-start gap-1'>
@@ -133,7 +133,7 @@ export const SideMenuDesktop = () => {
         </div>
       </div>
 
-      <div className='bg-dark-green rounded-lg mt-3 flex flex-col items-start p-4 gap-2'>
+      <div className='bg-dark-green rounded-lg mt-3 flex flex-col items-start p-4 gap-2 min-h-[228px]'>
         {
           listofFriends && listofFriends.map(user => (
             <Avatar rounded={true} key={user.id} img={user.avatar} className='avatar-img'>
@@ -146,7 +146,7 @@ export const SideMenuDesktop = () => {
         <Link href={`/friends/${auth.authUser?.uid}`} className='text-xs font-karla font-bold bg-light-green rounded-full px-3 py-0.5 w-3/4 self-center mt-2 text-center hover:opacity-75 transition-opacity'>Go to friends</Link>
       </div>
 
-      <div className='bg-dark-green rounded-lg mt-3 flex flex-col items-start p-4 gap-2'>
+      <div className='bg-dark-green rounded-lg mt-3 flex flex-col items-start p-4 gap-2 min-h-[228px]'>
 
         {
           listofGroups && listofGroups.map(group => (

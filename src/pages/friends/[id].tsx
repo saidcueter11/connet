@@ -13,6 +13,7 @@ import { UserCollection } from 'types/databaseTypes'
 import { FriendsHeader } from 'components/Friends/FriendsHeader'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 import { NavBarDesktop } from 'components/Utils/NavBarDesktop'
+import { SideMenuDesktop } from 'components/SideBars/SideMenuDesktop'
 
 export default function FriendsPage ({ userId }: {userId: string}) {
   const { authUser } = useAuth()
@@ -23,18 +24,19 @@ export default function FriendsPage ({ userId }: {userId: string}) {
 
   if (error) return <p>There was an error...</p>
 
-  if (loading) {
-    return (
-    <>
-      <SideBarContainer/>
-      <NavBarDesktop/>
-      <FriendsHeader/>
+  // if (loading) {
+  //   return (
+  //   <>
+  //     <SideBarContainer/>
+  //     <NavBarDesktop/>
+  //     <FriendsHeader/>
+  //     <SideMenuDesktop/>
 
-      <Spinner/>
-      <NavBarMobile/>
-    </>
-    )
-  }
+  //     <Spinner/>
+  //     <NavBarMobile/>
+  //   </>
+  //   )
+  // }
 
   const snap = value?.docs.map(post => {
     const data = post.data()
@@ -62,10 +64,11 @@ export default function FriendsPage ({ userId }: {userId: string}) {
       }
 
       <NavBarDesktop/>
-      <main className='h-screen'>
+      <main className='h-screen md:grid grid-cols-8 justify-center mx-auto max-w-5xl gap-4'>
         <FriendsHeader/>
+        <SideMenuDesktop/>
 
-        <section className='h-screen font-concert-one w-full grid justify-center items-start'>
+        <section className='h-screen font-concert-one w-full grid justify-center items-start md:mt-16 col-span-5'>
           <Tabs.Group style='underline' className='justify-center list-continer'>
             <Tabs.Item active={true} title={firstTabTitle}>
             {
