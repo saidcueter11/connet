@@ -14,14 +14,10 @@ import { FriendsHeader } from 'components/Friends/FriendsHeader'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 import { NavBarDesktop } from 'components/Utils/NavBarDesktop'
 
-interface FriendsPageProp {
-  userList?: UserCollection[]
-}
-
-export default function FriendsPage ({ userList }: FriendsPageProp) {
+export default function FriendsPage ({ userId }: {userId: string}) {
   const { authUser } = useAuth()
   const router = useRouter()
-  const { id } = router.query
+  const id = router.query.id ?? userId
   const collectionUser = collection(db, 'users')
   const [value, loading, error] = useCollection<UserCollection>(collectionUser)
 
@@ -46,7 +42,7 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
     return { ...data, id }
   })
 
-  const users = snap ?? userList ?? []
+  const users = snap ?? []
   const currentUser = users.find(user => user.id === id)
   const loggedUser = users.find(user => user.id === authUser?.uid)
   const currentUserFriendsList = currentUser?.friends
@@ -123,15 +119,6 @@ export default function FriendsPage ({ userList }: FriendsPageProp) {
 }
 
 export async function getServerSideProps (context: GetServerSidePropsContext) {
-  const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`)
-  if (apiRes.ok) {
-    const props = await apiRes.json()
-    const { users } = props
-    const [usersList] = await Promise.all([users])
-    return {
-      props: {
-        usersList
-      }
-    }
-  }
+  const { id } = context.query
+  return { props: { userdId: id } }
 }

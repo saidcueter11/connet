@@ -3869,6 +3869,28 @@ input:checked + .toggle-bg{
   background-color: rgb(194 120 3 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-dark-green\/50:hover{
+  background-color: rgb(35 62 64 / 0.5);
+}
+
+.hover\:bg-dark-green\/30:hover{
+  background-color: rgb(35 62 64 / 0.3);
+}
+
+.hover\:bg-action-red\/30:hover{
+  background-color: rgb(141 75 63 / 0.3);
+}
+
+.hover\:bg-action-red:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(141 75 63 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-action-red-ligth:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 140 119 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gradient-to-bl:hover{
   background-image: linear-gradient(to bottom left, var(--tw-gradient-stops));
 }
@@ -3924,12 +3946,21 @@ input:checked + .toggle-bg{
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
+.hover\:text-ligth-text-green:hover{
+  --tw-text-opacity: 1;
+  color: rgb(243 244 237 / var(--tw-text-opacity));
+}
+
 .hover\:underline:hover{
   text-decoration-line: underline;
 }
 
 .hover\:opacity-80:hover{
   opacity: 0.8;
+}
+
+.hover\:opacity-75:hover{
+  opacity: 0.75;
 }
 
 .focus\:z-10:focus{
