@@ -57,7 +57,7 @@ export const AddCommentForm = ({ postId, loading, postGroupId, postUserId }:AddC
 
   return (
     <>
-      <form className='relative bg-light-green min-h-[80px] w-11/12 mx-auto rounded-xl shadow shadow-black/25 pt-2 pr-2' onSubmit={handleSubmit}>
+      <form className='relative bg-light-green min-h-[80px] w-11/12 mx-auto rounded-xl shadow shadow-black/25 pt-2 pr-2 md:w-3/5' onSubmit={handleSubmit}>
         <div className='absolute top-2 left-2'>
           <Avatar size={'sm'} rounded={true} img={authUser?.photoURL ?? ''} className='avatar-img'/>
         </div>

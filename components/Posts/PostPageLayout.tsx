@@ -4,6 +4,7 @@ import { CommentCard } from './CommentCard'
 import { NavBarMobile } from '../Utils/NavBarMobile'
 import { PostCard } from './PostCard'
 import { PostPageHeader } from './PostPageHeader'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 
 interface PostPageLayoutProps {
   toggleSideBarNotifications: boolean,
@@ -24,14 +25,14 @@ export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNot
         groupId={props.groupId}
         avatar={props.user?.avatar}
         />
-      <div className='h-full overflow-y-scroll no-scrollbar pb-20'>
-        <div className='w-full m-auto pt-16'>
+      <PageContenLayout>
+        <div className='w-full m-auto pt-16 md:m-0 md:p-0'>
           <PostCard post={props}/>
         </div>
 
-        <div className='grid gap-4 pt-4'>
+        <div className='grid gap-4 pt-4 md:w-full'>
 
-          <h3 className='font-concert-one text-lg text-text-dark-green'>Comments</h3>
+          <h3 className='font-concert-one text-lg text-text-dark-green md:pl-2'>Comments</h3>
           <AddCommentForm postId={postId as string} loading={loading} postGroupId={postGroupId} postUserId={props.userId as string} />
           {
             props.comments && props.comments.map(comment => <CommentCard comment={comment} key={comment.normalizedDate}/>)
@@ -39,7 +40,7 @@ export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNot
 
         </div>
 
-      </div>
+      </PageContenLayout>
 
       <NavBarMobile onNotificationClick={setToggleSideBarNotifications}/>
     </>

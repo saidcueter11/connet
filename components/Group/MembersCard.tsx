@@ -34,11 +34,11 @@ export const MembersCard = ({ userId, displayName, likesCount, friendsCount, isM
 
   return (
     <>
-      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[320px]'>
-        <div onClick={goToProfile} className='self-center'>
-          <Avatar rounded={true} img={avatar} className='avatar-img'>
-            <p className='text-ligth-text-green mb-1'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>
-            <div className='flex gap-2'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[330px] md:min-h-[168px] md:max-w-[280px] md:min-w-[200px] lg:min-w-[280px] w-full md:col-span-1 md:flex-col gap-3'>
+        <div onClick={goToProfile} className='pr-3 md:p-0 cursor-pointer'>
+          <Avatar rounded={true} img={avatar} className='avatar-img md:flex-col'>
+            <p className='text-ligth-text-green mb-1 md:text-center md:mr-2 hover:underline'>{displayName} {userId === auth.authUser?.uid && '(You)'}</p>
+            <div className='flex gap-2 md:justify-center'>
               <SlideCardIcons friendsCount={friendsCount} likesCount={likesCount}/>
             </div>
           </Avatar>

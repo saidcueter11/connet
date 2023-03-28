@@ -1,13 +1,14 @@
 import { getLastestGroupPosts } from '@firebase/client'
 import { GroupHeader } from 'components/Group/GroupHeader'
 import ArrowLeft from 'components/Icons/ArrowLeft'
-import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { PostCard } from 'components/Posts/PostCard'
 import { useAuth } from 'context/authUserContext'
 import { Spinner } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useEffect, useState } from 'react'
 import { GroupCollecion, GroupPostCollection } from 'types/databaseTypes'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 
 interface GroupPageProps {
   groupPosts: GroupPostCollection[],
@@ -34,9 +35,9 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
   })
 
   return (
-    <>
+    <MainPageLayout>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
-      <section className='h-screen overflow-y-scroll no-scrollbar pb-36 relative'>
+      <PageContenLayout>
         {
           !loading
             ? <>
@@ -59,9 +60,8 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
             : <Spinner/>
 
         }
-      </section>
-      <NavBarMobile/>
-    </>
+      </PageContenLayout>
+    </MainPageLayout>
   )
 }
 

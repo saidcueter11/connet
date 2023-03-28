@@ -9,6 +9,8 @@ import { MessageCollection } from 'types/databaseTypes'
 import { useAuth } from 'context/authUserContext'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 import { NavBarDesktop } from 'components/Utils/NavBarDesktop'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 
 export default function ChatsPage () {
   const collectionMessages = collection(db, 'messages')
@@ -37,9 +39,9 @@ export default function ChatsPage () {
     <>
       <SideBarContainer/>
       <NavBarDesktop/>
-      <main className='h-full w-full'>
+      <MainPageLayout>
+        <PageContenLayout>
         <MessagesHeader/>
-        <section className='h-3/4 pb-11 pt-2 overflow-y-scroll flex flex-col gap-3 no-scrollbar px-1'>
           {
             sortedChats?.map(message => {
               const lastMessage = message.messages.slice(-1)[0]
@@ -60,8 +62,9 @@ export default function ChatsPage () {
             })
           }
 
-        </section>
-      </main>
+        </PageContenLayout>
+
+      </MainPageLayout>
 
       <NavBarMobile/>
     </>

@@ -2,41 +2,24 @@ import { db } from '../../../firebase/client'
 import { ListCardsContainer } from 'components/Utils/ListCardsContainer'
 import { FriendCard } from 'components/Friends/FriendCard'
 import ArrowLeft from 'components/Icons/ArrowLeft'
-import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { useAuth } from 'context/authUserContext'
 import { collection } from 'firebase/firestore'
-import { Spinner, Tabs } from 'flowbite-react'
+import { Tabs } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { UserCollection } from 'types/databaseTypes'
 import { FriendsHeader } from 'components/Friends/FriendsHeader'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
-import { NavBarDesktop } from 'components/Utils/NavBarDesktop'
-import { SideMenuDesktop } from 'components/SideBars/SideMenuDesktop'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 
 export default function FriendsPage ({ userId }: {userId: string}) {
   const { authUser } = useAuth()
   const router = useRouter()
   const id = router.query.id ?? userId
   const collectionUser = collection(db, 'users')
-  const [value, loading, error] = useCollection<UserCollection>(collectionUser)
-
-  if (error) return <p>There was an error...</p>
-
-  // if (loading) {
-  //   return (
-  //   <>
-  //     <SideBarContainer/>
-  //     <NavBarDesktop/>
-  //     <FriendsHeader/>
-  //     <SideMenuDesktop/>
-
-  //     <Spinner/>
-  //     <NavBarMobile/>
-  //   </>
-  //   )
-  // }
+  const [value] = useCollection<UserCollection>(collectionUser)
 
   const snap = value?.docs.map(post => {
     const data = post.data()
@@ -63,13 +46,10 @@ export default function FriendsPage ({ userId }: {userId: string}) {
           : <ArrowLeft width={24} height={24} stroke={'black'}/>
       }
 
-      <NavBarDesktop/>
-      <main className='h-screen md:grid grid-cols-8 justify-center mx-auto max-w-5xl gap-4'>
+      <MainPageLayout>
         <FriendsHeader/>
-        <SideMenuDesktop/>
-
-        <section className='h-screen font-concert-one w-full grid justify-center items-start md:mt-16 col-span-5'>
-          <Tabs.Group style='underline' className='justify-center list-continer'>
+        <PageContenLayout>
+          <Tabs.Group style='underline' className='justify-center list-continer font-concert-one'>
             <Tabs.Item active={true} title={firstTabTitle}>
             {
               currentUser?.friends?.length === 0
@@ -112,11 +92,10 @@ export default function FriendsPage ({ userId }: {userId: string}) {
               }
             </Tabs.Item>
           </Tabs.Group>
-        </section>
+        </PageContenLayout>
 
-      </main>
+      </MainPageLayout>
 
-      <NavBarMobile/>
     </>
   )
 }

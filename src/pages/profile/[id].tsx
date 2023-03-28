@@ -1,6 +1,5 @@
 import { db } from '../../../firebase/client'
 import ArrowLeft from 'components/Icons/ArrowLeft'
-import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { PostCard } from 'components/Posts/PostCard'
 import { ProfileHeader } from 'components/Profile/ProfileHeader'
 import { collection, doc, query, where } from 'firebase/firestore'
@@ -9,6 +8,8 @@ import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore'
 import { PostCollection, UserCollection } from 'types/databaseTypes'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 
 interface ProfileProps {
   posts: PostCollection[]
@@ -27,7 +28,7 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
 
   if (error || errorUser) return <p>There was an error...</p>
 
-  if (loading || loadingUser) return <Spinner/>
+  if (loading || loadingUser) return <MainPageLayout/>
 
   const snap = value?.docs.map(post => {
     const data = post.data()
@@ -41,30 +42,31 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
 
   return (
     <>
-      <ArrowLeft width={24} height={24} stroke={'black'}/>
-      <div className='flex flex-col gap-3 overflow-y-scroll h-full pb-28 no-scrollbar'>
+      <MainPageLayout>
+        <ArrowLeft width={24} height={24} stroke={'black'}/>
+        <PageContenLayout>
 
-        <ProfileHeader
-          displayName={fullName}
-          loading={loadingUser ?? loading}
-          userId={userId}
-          avatar={currentUser.avatar}
-          chatingWith={currentUser.chatingWith}
-          program={currentUser.program}
-          />
+          <ProfileHeader
+            displayName={fullName}
+            loading={loadingUser ?? loading}
+            userId={userId}
+            avatar={currentUser.avatar}
+            chatingWith={currentUser.chatingWith}
+            program={currentUser.program}
+            />
 
-        {
-          loading || loadingUser
-            ? <div className='h-full grid place-content-center'><Spinner/></div>
-            : <div className='flex flex-col gap-4'>
-                {
-                  props && props.map(post => <PostCard post={post} key={post.id} />)
-                }
-              </div>
-        }
-      </div>
+          {
+            loading || loadingUser
+              ? <div className='h-full grid place-content-center'><Spinner/></div>
+              : <div className='flex flex-col gap-4'>
+                  {
+                    props && props.map(post => <PostCard post={post} key={post.id} />)
+                  }
+                </div>
+          }
+        </PageContenLayout>
+      </MainPageLayout>
 
-      <NavBarMobile/>
     </>
   )
 }

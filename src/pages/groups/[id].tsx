@@ -4,7 +4,7 @@ import { GroupCard } from 'components/Group/GroupCard'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { useAuth } from 'context/authUserContext'
 import { collection, doc } from 'firebase/firestore'
-import { Spinner, Tabs } from 'flowbite-react'
+import { Tabs } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -13,6 +13,8 @@ import { GroupCollecion, UserCollection } from 'types/databaseTypes'
 import { GroupsHeader } from 'components/Group/GroupsHeader'
 import ArrowLeft from 'components/Icons/ArrowLeft'
 import { SideBarContainer } from 'components/SideBars/SideBarContainer'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 
 interface GroupsPageProps {
   groupsList: GroupCollecion[]
@@ -33,10 +35,7 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
   if (loading || loadingCurrentUser) {
     return (
     <>
-      <SideBarContainer/>
-      <GroupsHeader setShowModal={setShowModal} showModal={showModal}/>
-      <Spinner/>
-      <NavBarMobile/>
+      <MainPageLayout/>
     </>
     )
   }
@@ -62,11 +61,11 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
           ? <SideBarContainer/>
           : <ArrowLeft width={24} height={24} stroke={'black'}/>
       }
-      <main className='h-screen'>
+      <MainPageLayout>
         <GroupsHeader setShowModal={setShowModal} showModal={showModal}/>
 
-        <section className='h-screen font-concert-one w-full grid justify-center items-start'>
-          <Tabs.Group style='underline' className='justify-center list-continer'>
+        <PageContenLayout>
+          <Tabs.Group style='underline' className='justify-center list-continer font-concert-one'>
             <Tabs.Item active={true} title={firstTabTitle}>
               <ListCardsContainer>
                 {
@@ -106,9 +105,9 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
               </ListCardsContainer>
             </Tabs.Item>
           </Tabs.Group>
-        </section>
+        </PageContenLayout>
 
-      </main>
+      </MainPageLayout>
 
       <NavBarMobile/>
     </>

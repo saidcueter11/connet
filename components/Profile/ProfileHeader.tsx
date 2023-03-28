@@ -35,7 +35,7 @@ export const ProfileHeader = ({ displayName, userId, loading, chatingWith, avata
   }
   return (
     <>
-      <div className='grid justify-items-center grid-rows-2 grid-cols-3 items-center'>
+      <div className='grid justify-items-center grid-rows-2 grid-cols-3 items-center w-full'>
         <div className='self-end justify-self-end'>
           <button className='rounded-full bg-dark-green h-12 w-12 row-start-1 row-end-1 self-end justify-self-end'>
             <GroupIcon width={28} height={28} stroke='#FD8C77' fill='none' id={userId}/>

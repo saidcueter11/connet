@@ -20,9 +20,9 @@ export const MessagesPreviewCard = ({ chatId, lastMessageUser, content, createdA
   const id = chatId
   return (
     <>
-      <Link href={`/messages/${authUser?.uid}/chat/${id}`} className='grid grid-cols-2 p-4 bg-light-green shadow shadow-black/25 rounded-2xl relative '>
+      <Link href={`/messages/${authUser?.uid}/chat/${id}`} className='grid grid-cols-2 p-4 bg-light-green shadow shadow-black/25 rounded-2xl relative w-full max-w-lg md:max-w-none'>
           <Avatar rounded={true} className='col-span-2 self-start justify-self-start avatar-img' img={userAvatar}>
-            <p className='font-concert-one text-lg text-text-dark-green'>{directMessageUser}</p>
+            <p className='font-concert-one text-lg text-text-dark-green md:pb-2'>{directMessageUser}</p>
           </Avatar>
           <p className='col-span-2 pl-14 font-karla text-text-dark-green'><strong>{authUser?.displayName?.includes(lastMessageUser) ? '(You)' : lastMessageUser}:</strong> {content}</p>
           {

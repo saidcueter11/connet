@@ -1,5 +1,6 @@
 import { db } from '@firebase/client'
 import { PostPageLayout } from 'components/Posts/PostPageLayout'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
 import { doc } from 'firebase/firestore'
 import { Spinner } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
@@ -33,16 +34,16 @@ export default function PostsGroup ({ post, id, postId }: PostsGroupProps) {
 
   if (props !== undefined) {
     return (
-    <>
-      <PostPageLayout
-        loading={loading}
-        props={props}
-        setToggleSideBarNotifications={setToggleSideBarNotifications}
-        toggleSideBarNotifications={toggleSideBarNotifications}
-        postId={id}
-        postGroupId={postId}
-      />
-    </>
+      <MainPageLayout>
+        <PostPageLayout
+          loading={loading}
+          props={props}
+          setToggleSideBarNotifications={setToggleSideBarNotifications}
+          toggleSideBarNotifications={toggleSideBarNotifications}
+          postId={id}
+          postGroupId={postId}
+        />
+      </MainPageLayout>
     )
   }
 }

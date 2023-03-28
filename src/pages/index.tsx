@@ -1,17 +1,15 @@
 import { updatePosts, loadMore, getLatestPosts } from '@firebase/client'
 import { HeaderMobile } from 'components/Utils/HeaderMobile'
-import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { PostCard } from 'components/Posts/PostCard'
 import { useAuth } from 'context/authUserContext'
 import Head from 'next/head'
 import { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { PostCollection } from 'types/databaseTypes'
-import { SideBarContainer } from 'components/SideBars/SideBarContainer'
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore'
 import { Spinner } from 'flowbite-react'
-import { NavBarDesktop } from 'components/Utils/NavBarDesktop'
 import { CreatePostModal } from 'components/Modal/CreatePostModal'
-import { SideMenuDesktop } from 'components/SideBars/SideMenuDesktop'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 
 export default function Home () {
   const [search, setSearch] = useState('')
@@ -72,12 +70,9 @@ export default function Home () {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="logo_ico.ico" />
       </Head>
-      <SideBarContainer />
-      <NavBarDesktop setSearch={setSearch} search={search}/>
-      <HeaderMobile search={search} setSearch={setSearch}/>
-      <main className='relative w-full h-screen md:grid grid-cols-8 gap-4 justify-center max-w-5xl mx-auto'>
-        <SideMenuDesktop/>
-        <section className='flex flex-col md:col-span-5 gap-4 h-screen overflow-scroll no-scrollbar pb-60 items-center md:mt-16 relative' onScroll={handleScroll} ref={listRef}>
+      <MainPageLayout>
+        <HeaderMobile search={search} setSearch={setSearch}/>
+        <PageContenLayout handleRef={listRef} handleScroll={handleScroll}>
           <button onClick={() => setShowModal(true)} className='w-3/5 bg-dark-green text-ligth-text-green rounded-full hidden md:block font-concert-one pb-2 hover:opacity-80 transition-opacity'>Create post</button>
 
           {
@@ -100,12 +95,10 @@ export default function Home () {
             loading && <Spinner color={'gray'}/>
           }
 
-        </section>
-
-      </main>
+        </PageContenLayout>
+      </MainPageLayout>
 
       <CreatePostModal setShowModal={setShowModal} showModal={showModal}/>
-      <NavBarMobile />
     </>
   )
 }

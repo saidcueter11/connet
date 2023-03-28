@@ -5,12 +5,14 @@ import { MembersCard } from 'components/Group/MembersCard'
 import { NavBarMobile } from 'components/Utils/NavBarMobile'
 import { useAuth } from 'context/authUserContext'
 import { collection, doc } from 'firebase/firestore'
-import { Spinner, Tabs } from 'flowbite-react'
+import { Tabs } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore'
 import { GroupCollecion, UserCollection } from 'types/databaseTypes'
 import { MembersHeader } from 'components/Group/MembersHeader'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 
 interface FriendsPageProp {
   usersList?: UserCollection[]
@@ -30,12 +32,7 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
 
   if (loading || loadingGroup) {
     return (
-    <>
-      <ArrowLeft width={24} height={24} stroke={'black'}/>
-      <MembersHeader/>
-      <Spinner/>
-      <NavBarMobile/>
-    </>
+    <MainPageLayout></MainPageLayout>
     )
   }
 
@@ -57,11 +54,11 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
 
       <ArrowLeft width={24} height={24} stroke={'black'}/>
 
-      <main className='h-screen'>
+      <MainPageLayout>
         <MembersHeader/>
 
-        <section className='h-screen font-concert-one w-full grid justify-center items-start'>
-          <Tabs.Group style='underline' className='justify-center'>
+        <PageContenLayout>
+          <Tabs.Group style='underline' className='justify-center font-concert-one list-continer'>
             <Tabs.Item active={true} title='Current Members'>
               <ListCardsContainer>
               {
@@ -108,9 +105,9 @@ export default function MembersPage ({ usersList, group }: FriendsPageProp) {
             }
 
           </Tabs.Group>
-        </section>
+        </PageContenLayout>
 
-      </main>
+      </MainPageLayout>
 
       <NavBarMobile/>
     </>

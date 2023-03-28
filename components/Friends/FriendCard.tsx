@@ -52,11 +52,11 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
 
   return (
     <>
-      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[330px] md:min-h-[168px] md:max-w-[280px] md:min-w-[280px] w-full md:col-span-1 md:flex-col gap-3'>
-        <div onClick={goToProfile} className='pr-3 md:p-0'>
+      <div className='flex bg-dark-green rounded-lg p-3 justify-between min-w-[330px] md:min-h-[168px] md:max-w-[280px] md:min-w-[200px] lg:min-w-[280px] w-full md:col-span-1 md:flex-col gap-3'>
+        <div onClick={goToProfile} className='pr-3 md:p-0 cursor-pointer'>
           <Avatar rounded={true} img={avatar} className='avatar-img md:flex-col'>
-            <p className='text-ligth-text-green mb-1'>{displayName} {userId === authUser?.uid && '(You)'}</p>
-            <div className='flex gap-2'>
+            <p className='text-ligth-text-green mb-1 md:text-center md:mr-2 hover:underline cursor-pointer'>{displayName} {userId === authUser?.uid && '(You)'}</p>
+            <div className='flex gap-2 md:justify-center'>
               <SlideCardIcons friendsCount={friendsCount} likesCount={likesCount}/>
             </div>
           </Avatar>
@@ -67,7 +67,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
             authUser?.uid !== userId &&
               <>
                 {
-                  !loading && <button onClick={handleAddFriend} className='w-28 bg-light-green rounded-full pb-2 px-2 h-fit text-sm font-concert-one'>{areWeFriends ? 'Remove friend' : 'Add friend'}</button>
+                  !loading && <button onClick={handleAddFriend} className='w-28 bg-light-green rounded-full pb-2 px-2 h-fit text-sm font-concert-one hover:opacity-80'>{areWeFriends ? 'Remove friend' : 'Add friend'}</button>
                 }
 
                 {

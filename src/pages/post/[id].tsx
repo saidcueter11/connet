@@ -3,9 +3,9 @@ import { useDocument } from 'react-firebase-hooks/firestore'
 import { db } from '@firebase/client'
 import { doc } from 'firebase/firestore'
 import { GetServerSidePropsContext } from 'next'
-import { Spinner } from 'flowbite-react'
 import { useState } from 'react'
 import { PostPageLayout } from 'components/Posts/PostPageLayout'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
 
 interface PostProps {
   id: string
@@ -18,9 +18,7 @@ export default function Post ({ id, post }: PostProps) {
 
   if (loading) {
     return (
-    <div className='h-screen grid place-content-center'>
-      <Spinner/>
-    </div>
+    <MainPageLayout></MainPageLayout>
     )
   }
 
@@ -32,7 +30,7 @@ export default function Post ({ id, post }: PostProps) {
 
   if (props !== undefined) {
     return (
-    <>
+    <MainPageLayout>
       <PostPageLayout
         loading={loading}
         props={props}
@@ -40,7 +38,7 @@ export default function Post ({ id, post }: PostProps) {
         toggleSideBarNotifications={toggleSideBarNotifications}
         postId={id}
       />
-    </>
+    </MainPageLayout>
     )
   }
 }

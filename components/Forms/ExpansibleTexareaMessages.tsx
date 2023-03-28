@@ -91,9 +91,9 @@ export const ExpansibleTexareaMessages = ({ content, setContent, imgUrl, setImgU
           <div className={`${imgUrl ? 'self-end pb-3' : ''}`}>
             <UploadImgContainer handleImgChange={handleImgChange} formId='sending-message'/>
           </div>
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 py-0.5'>
             <textarea
-              className={`rounded-xl min-w-[77vw] focus:outline-none focus:ring-0 focus:border-action-red-ligth bg-light-green font-karla text-text-dark-green text-lg outline-none resize-none border-2 transition-colors ${drag === DRAG_IMAGE_STATES.DRAG_OVER ? 'border-action-red-ligth' : 'border-transparent'}`}
+              className={`rounded-xl min-w-[77vw] md:min-w-[360px] lg:min-w-[500px] focus:outline-none focus:ring-0 focus:border-action-red-ligth bg-light-green font-karla text-text-dark-green text-lg outline-none resize-none border-2 transition-colors ${drag === DRAG_IMAGE_STATES.DRAG_OVER ? 'border-action-red-ligth' : 'border-transparent'}`}
               value={content}
               onInput={handleInput}
               onDragEnter={handleDragEnter}

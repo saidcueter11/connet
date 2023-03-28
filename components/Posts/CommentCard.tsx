@@ -2,6 +2,7 @@ import { Avatar } from 'flowbite-react'
 import { Dot } from '../Icons/Dot'
 import { CommentCollection } from 'types/databaseTypes'
 import { useTimeAgo } from 'hooks/useTimeAgo'
+import Link from 'next/link'
 
 interface CommentCardProps {
   comment: CommentCollection
@@ -13,7 +14,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
   return (
     <>
        <div className='flex rounded-2xl shadow flex-col p-2 pb-5 gap-2 bg-light-green shadow-black/25 w-5/6 m-auto'>
-            <div className='flex gap-2 '>
+            <Link href={`/profile/${comment.userId}`} className='flex gap-2'>
               <Avatar size={'sm'} rounded={true} img={comment.user?.avatar} className='avatar-img'>
                 <div className='flex items-end'>
                   <p className='text-sm font-concert-one text-text-dark-green'>{comment.user?.displayName}</p>
@@ -22,7 +23,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                 </div>
                 <small className='font-karla text-action-red text-xs'>@{comment.user?.username ?? 'saidcueter11'}</small>
               </Avatar>
-            </div>
+            </Link>
             <p className='font-karla px-5 text-text-dark-green'>{comment.content}</p>
         </div>
     </>

@@ -7,7 +7,7 @@ export const MessagesHeader = () => {
   return (
     <>
       <header className='mb-2 flex flex-col items-center gap-3'>
-        <div className='flex gap-5 flex-col w-4/5 items-center m-auto pb-5'>
+        <div className='flex gap-5 flex-col w-4/5 items-center m-auto pb-5 md:hidden'>
           <h1 className='font-concert-one text-3xl text-center text-text-dark-green'>Messages</h1>
         </div>
 
