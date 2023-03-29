@@ -19,6 +19,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [friendEvent, setFriendEvent] = useState(false)
+  const [eventDescription, setEventDescription] = useState('')
 
   const handleAddFriend = () => {
     setLoading(true)
@@ -33,8 +34,10 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
           fullname: authUser?.displayName?.split('|')[0] as string,
           userId: userId as string
         })
+        setLoading(false)
       })
       setFriendEvent(true)
+      setEventDescription(`${displayName} was added to your friends`)
       setTimeout(() => {
         setFriendEvent(false)
       }, 1500)
@@ -44,7 +47,13 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
       removeFriend({
         id: authUser?.uid,
         friendId: userId
-      })
+      }).then(() => setLoading(false))
+
+      setFriendEvent(true)
+      setEventDescription(`${displayName} was removed from your friends`)
+      setTimeout(() => {
+        setFriendEvent(false)
+      }, 1500)
     }
   }
 
@@ -80,7 +89,7 @@ export const FriendCard = ({ userId, displayName, likesCount, friendsCount, areW
 
       </div>
 
-      <EventFeedback event={friendEvent} eventDescription='hola'/>
+      <EventFeedback event={friendEvent} eventDescription={eventDescription}/>
     </>
   )
 }
