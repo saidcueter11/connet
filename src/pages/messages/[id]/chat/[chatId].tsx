@@ -44,7 +44,7 @@ export default function ChatPage ({ userId, currentChatId }: ChatPageProps) {
 
   return (
     <MainPageLayout>
-      <section className='flex flex-col md:col-span-5 overflow-hidden md:h-[80vh] h-full items-center md:mt-20 relative'>
+      <section className='flex flex-col md:col-span-5 overflow-hidden md:h-[80vh] h-screen items-center md:mt-20 relative'>
         <ChatHeader
           userName={`${chatUser?.firstName} ${chatUser?.lastName}`}
           userId={chatUser?.id as string}
