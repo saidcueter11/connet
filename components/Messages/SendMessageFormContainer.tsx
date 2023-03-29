@@ -38,7 +38,7 @@ export const SendMessageFormContainer = ({ senderName, receiverId }: SendMessage
 
   return (
     <>
-      <form className='flex gap-2 items-center justify-center w-full bg-dark-green p-2 px-3 rounded-b-lg fixed bottom-0 md:absolute' onSubmit={handleSubmit}>
+      <form className='flex gap-2 items-center justify-center w-full bg-dark-green p-2 px-3 rounded-b-lg sticky bottom-0 md:absolute' onSubmit={handleSubmit}>
         <ExpansibleTexareaMessages content={content} setContent={setContent} imgUrl={imgUrl} setImgUrl={setImgUrl}/>
       </form>
     </>
