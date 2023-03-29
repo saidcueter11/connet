@@ -16,8 +16,10 @@ export const MessagesContainerMobile = ({ children }: MessagesContainerMobilePro
 
   return (
     <>
-      <section className='flex flex-col gap-3 h-screen md:h-full overflow-y-scroll no-scrollbar py-2 relative px-3 w-full md:border md:border-gray-300 md:py-2 md:pb-20' ref={chatContainerRef}>
-        {children}
+      <section className='flex flex-col gap-3 h-full overflow-y-hidden relative px-3 w-full md:border md:border-gray-300 ' ref={chatContainerRef}>
+        <div className='overflow-y-scroll no-scrollbar h-full flex flex-col gap-3 py-2'>
+          {children}
+        </div>
       </section>
     </>
   )
