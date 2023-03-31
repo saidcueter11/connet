@@ -75,7 +75,6 @@ export const ExpansibleTexareaMessages = ({ content, setContent, imgUrl, setImgU
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    console.log(e)
     const file = e.target.files ? e.target.files[0] : undefined
 
     if (file) {
@@ -115,7 +114,7 @@ export const ExpansibleTexareaMessages = ({ content, setContent, imgUrl, setImgU
         </div>
 
       </div>
-      <SendMessageButton />
+      <SendMessageButton input={content || imgUrl}/>
     </>
   )
 }

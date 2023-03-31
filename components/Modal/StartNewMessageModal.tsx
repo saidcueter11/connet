@@ -23,6 +23,7 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
   const [content, setContent] = useState('')
   const [imgUrl, setImgUrl] = useState('')
   const [search, setSearch] = useState('')
+  const [errorMessage, setError] = useState('')
   const [users, setUsers] = useState<UserCollection[]>([])
   const collectionUsers = collection(db, 'users')
   const [value, loading, error] = useCollection<UserCollection>(collectionUsers)
@@ -49,7 +50,12 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
   const userFriends = users.filter(user => loggedUser?.friends?.includes(user.id as string))
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    setError('')
     e.preventDefault()
+    if (!selectedUser) {
+      setError('Please select a valid user')
+      return
+    }
     sendMessage({
       content,
       receiverUser: selectedUser as UserCollection,
@@ -74,9 +80,9 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
 
   const handleSelectUser = (firstName?: string, lastName?: string, userId?: string) => {
     setSearch(`${firstName} ${lastName}`)
+    setError('')
     const isChatStarted = loggedUser?.chatingWith?.find(user => user.userId === userId)
     if (isChatStarted) {
-      console.log('here')
       router.push(`/messages/${authUser?.uid}/chat/${isChatStarted.chatId}`)
     }
   }
@@ -96,9 +102,14 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
               <form className='grid gap-5 justify-items-center pt-3 relative' onSubmit={handleSubmit}>
                 <div className='self-start flex gap-2'>
                   <Dropdown label={
-                    <div className='flex gap-3 items-center'>
-                      <input className='rounded bg-light-green px-2 py-1 w-3/4 font-karla' value={search} placeholder='Find friends...' disabled/>
-                      <SearchIcon width={24} height={24} fill='none' stroke='#EB6440'/>
+                    <div className='flex flex-col gap-2'>
+                      <div className='flex gap-3 items-center'>
+                        <input className='rounded bg-light-green px-2 py-1 w-3/4 font-karla' value={search} placeholder='Find friends...' disabled/>
+                        <SearchIcon width={24} height={24} fill='none' stroke='#EB6440'/>
+                      </div>
+                      {
+                        errorMessage && <p className='text-ligth-text-green'>{errorMessage}</p>
+                      }
                     </div>
                   } size={'sm'} outline={false} arrowIcon={false} color={''}>
                     <Dropdown.Header>

@@ -28,8 +28,6 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
 
   if (error || errorUser) return <p>There was an error...</p>
 
-  if (loading || loadingUser) return <MainPageLayout/>
-
   const snap = value?.docs.map(post => {
     const data = post.data()
     const { id } = post
@@ -50,7 +48,6 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
       <MainPageLayout>
         <ArrowLeft width={24} height={24} stroke={'black'}/>
         <PageContenLayout>
-
           <ProfileHeader
             displayName={fullName}
             loading={loadingUser ?? loading}
@@ -62,7 +59,7 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
 
           {
             loading || loadingUser
-              ? <div className='h-full grid place-content-center'><Spinner/></div>
+              ? <div className='grid place-content-center'><Spinner/></div>
               : <div className='flex flex-col gap-4'>
                   {
                     sortedPosts && sortedPosts.map(post => <PostCard post={post} key={post.id} />)

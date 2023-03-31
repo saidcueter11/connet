@@ -3,7 +3,6 @@ import { GroupHeader } from 'components/Group/GroupHeader'
 import ArrowLeft from 'components/Icons/ArrowLeft'
 import { PostCard } from 'components/Posts/PostCard'
 import { useAuth } from 'context/authUserContext'
-import { Spinner } from 'flowbite-react'
 import { GetServerSidePropsContext } from 'next'
 import { useEffect, useState } from 'react'
 import { GroupCollecion, GroupPostCollection } from 'types/databaseTypes'
@@ -19,17 +18,15 @@ interface GroupPageProps {
 export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
   const auth = useAuth()
   const [posts, setPosts] = useState<GroupPostCollection[]>([])
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (auth.authUser) {
       const unsub = getLastestGroupPosts(setPosts, id)
-      setLoading(false)
       return () => unsub && unsub()
     }
   }, [auth.authUser])
 
-  const props = groupPosts ?? posts ?? []
+  const props = posts ?? groupPosts ?? []
 
   const sortedPosts = props.sort((a, b) => {
     if (a.createdAt && b.createdAt) { if (a.createdAt < b.createdAt) return 1 }
@@ -40,28 +37,21 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
     <MainPageLayout>
       <ArrowLeft width={24} height={24} stroke={'black'}/>
       <PageContenLayout>
-        {
-          !loading
-            ? <>
-                <GroupHeader
-                  groupName={group.groupName}
-                  groupId={id}
-                  groupDescription={group.description}
-                  groupMembers={group.groupMembers}
-                  joinRequest={group.joinRequests}
-                  adminId={group.adminId}
-                  privacy={group.privacy}
-                />
+        <GroupHeader
+          groupName={group.groupName}
+          groupId={id}
+          groupDescription={group.description}
+          groupMembers={group.groupMembers}
+          joinRequest={group.joinRequests}
+          adminId={group.adminId}
+          privacy={group.privacy}
+        />
 
-                <div className='flex flex-col gap-4'>
-                  {
-                    sortedPosts.map(post => <PostCard post={post} key={post.id}/>)
-                  }
-                </div>
-              </>
-            : <Spinner/>
-
-        }
+        <div className='flex flex-col gap-4'>
+          {
+            sortedPosts.map(post => <PostCard post={post} key={post.id}/>)
+          }
+        </div>
       </PageContenLayout>
     </MainPageLayout>
   )

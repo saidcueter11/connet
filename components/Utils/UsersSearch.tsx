@@ -27,7 +27,7 @@ export const UserSearch = () => {
 
       {
         (users.length > 0 && search.length > 0) &&
-          <ul className='bg-dark-green h-fit absolute w-full flex flex-col gap-2 px-3 py-2 rounded-lg top-14 z-20'>
+          <ul className='bg-dark-green h-fit absolute w-full flex flex-col gap-2 px-3 py-2 rounded-lg top-10 md:top-14 z-20'>
             {
               users.map(user => <Link href={`/profile/${user.id}`} key={user.id} className='hover:opacity-80'><li className='text-ligth-text-green font-karla  hover:underline' >{user.firstName} {user.lastName}</li></Link>)
             }

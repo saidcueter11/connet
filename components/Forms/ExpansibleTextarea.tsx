@@ -49,7 +49,6 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl, for
       const onError = () => {}
       const onComplete = () => {
         getDownloadURL(task.snapshot.ref).then(setImgUrl).then(() => setIsImageLoading(false))
-        console.log({ imgUrl })
       }
       task.on('state_changed',
         onProgress,
@@ -103,6 +102,7 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl, for
             onDrop={handleDrop}
             rows={1}
             placeholder="What's popping?"
+            required
           />
 
           {
@@ -122,7 +122,7 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl, for
 
           <div className='flex justify-between'>
             <UploadImgContainer handleImgChange={handleImgChange} formId={formId}/>
-            <SendMessageButton />
+            <SendMessageButton input={content || imgUrl}/>
           </div>
 
         </div>

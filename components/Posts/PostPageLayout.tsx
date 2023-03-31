@@ -24,7 +24,7 @@ export const PostPageLayout = ({ toggleSideBarNotifications, setToggleSideBarNot
         groupId={props.groupId}
         avatar={props.user?.avatar}
         />
-      <section className='md:col-span-5 md:mt-16 mt-12'>
+      <section className='md:col-span-5 md:mt-16  overflow-y-scroll h-screen no-scrollbar pb-36 pt-14'>
         <div className='w-full m-auto md:m-0 md:p-0'>
           <PostCard post={props}/>
         </div>

@@ -23,6 +23,7 @@ export const SignupForm = () => {
   const [task, setTask] = useState<UploadTask>()
   const [errorPassword, setErrorPassword] = useState('')
   const [errorEmail, setErrorEmail] = useState('')
+  const [erroProgram, setErrorProgram] = useState('')
 
   let errorMessage = ''
 
@@ -36,9 +37,11 @@ export const SignupForm = () => {
   ] = useCreateUserWithEmailAndPassword(auth)
 
   const handleSubmit = (e:SyntheticEvent<HTMLFormElement>) => {
+    setErrorPassword('')
+    setErrorEmail('')
+    setErrorProgram('')
     e.preventDefault()
-    if (password === confirmPassword) {
-      setErrorPassword('')
+    if (password === confirmPassword && program.length > 0) {
       createUserWithEmailAndPassword(email, password).then(userCredential => {
         const user = userCredential?.user
         const uid = user?.uid ?? ''
@@ -57,8 +60,10 @@ export const SignupForm = () => {
       }).catch(e => {
         errorMessage = e
       })
-    } else {
+    } else if (password !== confirmPassword) {
       setErrorPassword('Password confirmation does not match')
+    } else if (program.length > 0) {
+      setErrorProgram('Please select one program')
     }
   }
 
@@ -148,12 +153,12 @@ export const SignupForm = () => {
 
         <div className='w-3/5'>
           <div className="mb-2 block">
-            <Label className='font-concert-one' htmlFor="username" value="Program"/>
+            <Label className='font-concert-one' htmlFor="program" value="Program"/>
           </div>
           <div className='bg-[#F9fAFB] border border-gray-300 rounded-lg p-3 flex justify-center '>
             <Dropdown label={program} className='max-h-full overflow-y-scroll stroke-white w-full font-karla' color={''}>
               {
-                programs.map((pro, i) => <Dropdown.Item onClick={() => setProgram(pro)} key={i}>{pro}</Dropdown.Item>)
+                programs.map((pro, i) => <Dropdown.Item id={pro} onClick={() => setProgram(pro)} key={i}>{pro}</Dropdown.Item>)
               }
             </Dropdown>
           </div>
@@ -192,11 +197,14 @@ export const SignupForm = () => {
         {
           errorEmail && <p className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorEmail}</p>
         }
+        {
+          erroProgram && <p className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{erroProgram}</p>
+        }
 
         <button className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center p-2 text-center font-semibold font-karla rounded-lg w-3/5'>
         {
             loading
-              ? <Spinner aria-label="Default status example" />
+              ? <Spinner />
               : 'Register'
           }
         </button>
