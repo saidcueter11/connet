@@ -54,7 +54,7 @@ export const ChangePasswordProfile = ({ showModal, setShowModal, password, setPa
   if (isHydratated) {
     return (
       <>
-        <Modal show={showModal}>
+        <Modal show={showModal} size={'sm'}>
           <Modal.Body className='rounded-lg bg-dark-green'>
             <div onClick={handleCloseModal}>
               <CloseIcon width={24} height={24} stroke='#FD8C77' fill='none'/>

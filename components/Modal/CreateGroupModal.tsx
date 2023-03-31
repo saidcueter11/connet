@@ -15,9 +15,9 @@ export const CreateGroupModal = ({ showModal, setShowModal }: CreateGroupModalPr
 
   if (isHydratated) {
     return (
-    <Modal show={showModal} className='h-screen' position='center' size='lg'>
+    <Modal show={showModal} className='h-screen' position='center' size='md'>
 
-      <Modal.Body className='bg-dark-green rounded p-3'>
+      <Modal.Body className='bg-dark-green rounded-lg p-3'>
         <div className='w-full relative grid '>
           <div className='absolute w-full' onClick={() => setShowModal(false)}>
             <CloseIcon width={30} height={30} fill='none' stroke='#EB6440'/>

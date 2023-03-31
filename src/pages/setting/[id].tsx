@@ -8,6 +8,8 @@ import { ChangeProgramProfile } from 'components/Modal/ChangeProgramProfile'
 import { ChangeUsernameProfile } from 'components/Modal/ChangeUsernameProfile'
 import { ProfileCard } from 'components/Settings/ProfileCard'
 import { EventFeedback } from 'components/Utils/EventFeedback'
+import { MainPageLayout } from 'components/Utils/MainPageLayout'
+import { PageContenLayout } from 'components/Utils/PageContenLayout'
 import { useAuth } from 'context/authUserContext'
 import { getAuth } from 'firebase/auth'
 import { doc } from 'firebase/firestore'
@@ -88,10 +90,10 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
     <>
       <ArrowLeft/>
       <EventFeedback event={isUpdated} eventDescription='Your profile has been updated'/>
-      <main>
-        <h1 className='text-3xl font-concert-one text-center text-text-dark-green backdrop-blur-[2px]'>Settings</h1>
+      <MainPageLayout>
 
-        <section className='h-screen pt-10 pb-20 flex flex-col gap-4 items-center overflow-y-scroll no-scrollbar'>
+        <PageContenLayout>
+          <h1 className='text-3xl font-concert-one text-center text-text-dark-green backdrop-blur-[2px]'>Settings</h1>
           <div className='relative'>
             <Avatar size={'xl'} rounded={true} img={imgUrl} className='avatar-img' />
             <div onClick={handleOpenModalImg} className='absolute flex justify-center items-center -top-2 -right-1 transform -translate-x-1/2 bg-dark-green rounded-full h-7 w-7'>
@@ -127,9 +129,9 @@ export default function SettingsPage ({ id }: SettingsPageProps) {
 
           <button className='w-2/4 bg-dark-green text-ligth-text-green font-concert-one rounded-lg py-1' onClick={handleUpdateProfile}>Update profile</button>
 
-        </section>
+        </PageContenLayout>
 
-      </main>
+      </MainPageLayout>
 
       <ChangeNameProfileModal
         firstName={firstName}

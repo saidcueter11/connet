@@ -87,7 +87,7 @@ export const NavBarMobile = ({ onNotificationClick, isProfileOpen }: NavBarMobil
       </div>
     </nav>
 
-    <CreatePostModal showModal={showModal} setShowModal={setShowModal}/>
+    <CreatePostModal showModal={showModal} setShowModal={setShowModal} formId='create-post-mobile'/>
 
    </>
   )

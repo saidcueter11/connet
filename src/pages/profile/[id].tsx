@@ -37,6 +37,11 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
   })
 
   const props = snap ?? posts ?? []
+  const sortedPosts = props && props.sort((a, b) => {
+    if (a.createdAt && b.createdAt) { if (a.createdAt < b.createdAt) return 1 }
+    return -1
+  })
+
   const currentUser: UserCollection = valueUser?.data() ?? user
   const fullName = `${currentUser.firstName} ${currentUser.lastName}` ?? ''
 
@@ -60,7 +65,7 @@ export default function Profile ({ posts, id, user }: ProfileProps) {
               ? <div className='h-full grid place-content-center'><Spinner/></div>
               : <div className='flex flex-col gap-4'>
                   {
-                    props && props.map(post => <PostCard post={post} key={post.id} />)
+                    sortedPosts && sortedPosts.map(post => <PostCard post={post} key={post.id} />)
                   }
                 </div>
           }

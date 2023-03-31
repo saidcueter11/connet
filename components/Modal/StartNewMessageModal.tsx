@@ -85,8 +85,8 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
     <>
       {
         isHydratated &&
-          <Modal show={showModal} className='h-screen'>
-            <Modal.Body className='relative grid justify-center gap-2 bg-dark-green'>
+          <Modal show={showModal} className='h-screen' size={'lg'}>
+            <Modal.Body className='relative grid justify-center gap-2 bg-dark-green rounded-lg'>
               <div className='absolute top-2 left-2' onClick={() => setShowModal(false)}>
                 <CloseIcon width={30} height={30} fill='none' stroke='#EB6440'/>
               </div>

@@ -87,7 +87,7 @@ export const PostCard = ({ post }:PostCardProps) => {
 
   return (
     <>
-      <div className='flex rounded-2xl shadow flex-col p-6 gap-4 bg-light-green shadow-black/25 min-w-[327px] sm:min-w-[454px] md:min-w-[454px] lg:min-w-[624px] relative w-full max-w-lg md:max-w-2xl'>
+      <div className='flex rounded-2xl shadow flex-col p-6 gap-4 bg-light-green shadow-black/25 min-w-[327px] sm:min-w-[454px] md:min-w-[454px] lg:min-w-[624px] relative w-full max-w-lg md:max-w-2xl mx-auto' id={post.id}>
         <div className='flex gap-2'>
           <Avatar rounded={true} img={post.user?.avatar ?? ''} className='avatar-img'>
             <div className='flex items-end'>

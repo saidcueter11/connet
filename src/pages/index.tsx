@@ -73,10 +73,10 @@ export default function Home () {
       <MainPageLayout>
         <HeaderMobile search={search} setSearch={setSearch}/>
         <PageContenLayout handleRef={listRef} handleScroll={handleScroll}>
-          <button onClick={() => setShowModal(true)} className='w-3/5 bg-dark-green text-ligth-text-green rounded-full hidden md:block font-concert-one pb-2 hover:opacity-80 transition-opacity'>Create post</button>
+          <button onClick={() => setShowModal(true)} className='w-3/5 bg-dark-green text-ligth-text-green rounded-full hidden md:block font-concert-one pb-2 hover:opacity-80 transition-opacity' id='btnCreatePostDesktop'>Create post</button>
 
           {
-            !isSincronized && <button className='fixed md:sticky z-20 bg-dark-green rounded-lg text-ligth-text-green font-concert-one px-2 py-1 w-2/4 left-1/2 transform -translate-x-1/2 top-28 sm:w-1/4 md:top-0 md:pb-3 hover:opacity-80 transition-opacity' onClick={handleUpdatePosts}>Update</button>
+            !isSincronized && <button className='fixed md:sticky z-20 bg-dark-green rounded-lg text-ligth-text-green font-concert-one px-2 py-1 w-2/4 left-1/2 transform -translate-x-1/2 top-28 sm:w-1/4 md:top-0 md:pb-3 hover:opacity-80 transition-opacity' id='btnUpdateFeed' onClick={handleUpdatePosts}>Update</button>
           }
 
           {
@@ -98,7 +98,7 @@ export default function Home () {
         </PageContenLayout>
       </MainPageLayout>
 
-      <CreatePostModal setShowModal={setShowModal} showModal={showModal}/>
+      <CreatePostModal setShowModal={setShowModal} showModal={showModal} formId='create-post-desktop'/>
     </>
   )
 }

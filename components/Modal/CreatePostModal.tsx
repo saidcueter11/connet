@@ -12,9 +12,10 @@ interface CreatePostModalProps {
   postId?: string
   groupId?: string
   groupName?: string
+  formId: string
 }
 
-export const CreatePostModal = ({ showModal, setShowModal, groupId, groupName }: CreatePostModalProps) => {
+export const CreatePostModal = ({ showModal, setShowModal, groupId, groupName, formId }: CreatePostModalProps) => {
   const auth = useAuth()
   const [imgUrl, setImgUrl] = useState('')
   const [content, setContent] = useState('')
@@ -91,7 +92,7 @@ export const CreatePostModal = ({ showModal, setShowModal, groupId, groupName }:
               </div>
 
               <form onSubmit={handleSubmit}>
-                <ExpansibleTextarea content={content} setContent={setContent} imgUrl={imgUrl} setImgUrl={setImgUrl} formId='create-post'/>
+                <ExpansibleTextarea content={content} setContent={setContent} imgUrl={imgUrl} setImgUrl={setImgUrl} formId={formId}/>
               </form>
             </div>
           </Modal.Body>

@@ -54,7 +54,7 @@ export const ChangeProfileImgModal = ({ showModal, setShowModal, prevImg, setImg
   if (isHydratated) {
     return (
     <>
-      <Modal show={showModal} className='h-screen'>
+      <Modal show={showModal} className='h-screen' size={'sm'}>
         <Modal.Body className='bg-dark-green rounded-lg'>
           <div onClick={() => setShowModal(false)}>
             <CloseIcon width={24} height={24} stroke='#FD8C77' fill='none' />

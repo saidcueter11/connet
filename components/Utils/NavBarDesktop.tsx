@@ -3,15 +3,15 @@ import { Dot } from 'components/Icons/Dot'
 import { FriendsIcon } from 'components/Icons/FriendsIcon'
 import { HomeIcon } from 'components/Icons/HomeIcon'
 import { MessagesIcon } from 'components/Icons/MessagesIcon'
-import { NotificationIcon } from 'components/Icons/NotificationIcon'
+import { NotificationDropdown } from 'components/Notifications/NotificationDropdown'
 import { useAuth } from 'context/authUserContext'
 import { collection } from 'firebase/firestore'
-import { Dropdown } from 'flowbite-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { MessageCollection } from 'types/databaseTypes'
+import { UserSearch } from './UsersSearch'
 
 interface NavBarDesktopProps {
   search?: string
@@ -42,7 +42,7 @@ export const NavBarDesktop = ({ search, setSearch }:NavBarDesktopProps) => {
   }, [value, loading])
 
   return (
-    <nav className='bg-dark-green shadow-md fixed top-0 w-full left-0 hidden md:flex justify-between p-2 z-20'>
+    <nav className='bg-dark-green shadow-md fixed top-0 w-full left-0 hidden md:flex justify-between p-2 pt-3 z-20'>
       <ul className="flex w-full gap-7 pl-7 items-center max-w-4xl mx-auto">
         <Link href={'/'}>
           <li className={`relative flex-col flex items-center cursor-pointer ${atHome ? 'border-b-2 border-action-red-ligth' : ''}`}>
@@ -71,17 +71,9 @@ export const NavBarDesktop = ({ search, setSearch }:NavBarDesktopProps) => {
           </li>
         </Link>
 
-        <Dropdown label={
-          <li className={'relative flex-col flex items-center cursor-pointer'}>
-            <NotificationIcon width={26} height={26} fill='none' stroke='#FD8C77'/>
-            <p className='text-sm text-ligth-text-green font-karla font-bold'>Notifications</p>
-          </li>
-        } color={''} arrowIcon={false} inline={true}>
+        <NotificationDropdown/>
 
-        </Dropdown>
-
-        <input className='rounded-3xl w-[380px] shadow px-3 py-1 font-karla outline-dark-green text-center ml-3 h-fit bg-light-green' placeholder="Search posts" value={search} onChange={(e) => setSearch && setSearch(e.target.value)}/>
-
+        <UserSearch/>
       </ul>
     </nav>
   )

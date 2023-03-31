@@ -29,7 +29,9 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
     }
   }, [auth.authUser])
 
-  const sortedPosts = posts.sort((a, b) => {
+  const props = groupPosts ?? posts ?? []
+
+  const sortedPosts = props.sort((a, b) => {
     if (a.createdAt && b.createdAt) { if (a.createdAt < b.createdAt) return 1 }
     return -1
   })
@@ -51,7 +53,7 @@ export default function GroupPage ({ groupPosts, id, group }: GroupPageProps) {
                   privacy={group.privacy}
                 />
 
-                <div className='flex flex-col gap-4 pt-10'>
+                <div className='flex flex-col gap-4'>
                   {
                     sortedPosts.map(post => <PostCard post={post} key={post.id}/>)
                   }

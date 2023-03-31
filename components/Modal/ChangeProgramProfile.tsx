@@ -22,7 +22,7 @@ export const ChangeProgramProfile = ({ showModal, setShowModal, setProgram, prog
   if (isHydratated) {
     return (
     <>
-      <Modal show={showModal} className='h-screen'>
+      <Modal show={showModal} className='h-screen' size={'sm'}>
         <Modal.Body className='rounded-lg bg-dark-green'>
           <div onClick={() => setShowModal(false)}>
             <CloseIcon width={24} height={24} stroke='#FD8C77' fill='none'/>

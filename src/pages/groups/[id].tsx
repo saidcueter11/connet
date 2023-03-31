@@ -62,9 +62,9 @@ export default function GroupsPage ({ groupsList }: GroupsPageProps) {
           : <ArrowLeft width={24} height={24} stroke={'black'}/>
       }
       <MainPageLayout>
-        <GroupsHeader setShowModal={setShowModal} showModal={showModal}/>
 
         <PageContenLayout>
+          <GroupsHeader setShowModal={setShowModal} showModal={showModal}/>
           <Tabs.Group style='underline' className='justify-center list-continer font-concert-one'>
             <Tabs.Item active={true} title={firstTabTitle}>
               <ListCardsContainer>

@@ -13,11 +13,11 @@ export const ChatHeader = ({ userName, userId, avatar }:ChatHeaderProps) => {
 
   const goToProfile = () => router.push(`/profile/${userId}`)
   return (
-    <header className='flex items-center relative top-0 w-full rounded-t-lg py-3 px-3 backdrop-blur-[2px] bg-dark-green z-20'>
+    <header className='flex items-center relative top-0 w-full rounded-t-lg py-3 px-3 backdrop-blur-[2px] bg-dark-green z-20 md:z-0'>
       <ArrowLeft width={24} height={24} stroke={'#EB6440'}/>
-      <div className={`pl-10 ${!userName.includes('undefined') ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
+      <div className={`pl-10 ${!userName.includes('undefined') ? 'opacity-100' : 'opacity-0'} transition-opacity cursor-pointer`}>
         <Avatar rounded={true} onClick={goToProfile} img={avatar} className='avatar-img'>
-          <h1 className='font-concert-one text-2xl text-center text-ligth-text-green pb-2'>{userName}</h1>
+          <h1 className='font-concert-one text-2xl text-center text-ligth-text-green pb-2 hover:underline'>{userName}</h1>
         </Avatar>
       </div>
     </header>

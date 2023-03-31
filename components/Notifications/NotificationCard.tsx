@@ -11,7 +11,7 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
   const { commentedPost, friendAdded, likedPost, messages } = notification
 
   return (
-    <div className='bg-light-green rounded-lg py-2 px-1 flex flex-col items-center gap-2 relative'>
+    <div className='bg-light-green rounded-lg py-2 px-1 flex flex-col items-center gap-2 relative w-full'>
       {
         messages &&
           <NotificationCardContent
