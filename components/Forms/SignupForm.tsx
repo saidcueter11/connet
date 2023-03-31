@@ -187,21 +187,21 @@ export const SignupForm = () => {
         </div>
 
         {
-          (error && errorPassword.length === 0) && <p className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorMessage}</p>
+          (error && errorPassword.length === 0) && <p id='databaseErrorMessage' className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorMessage}</p>
         }
 
         {
-          errorPassword.length > 0 && <p className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorPassword}</p>
+          errorPassword.length > 0 && <p id='passwordErrorMessage' className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorPassword}</p>
         }
 
         {
-          errorEmail && <p className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorEmail}</p>
+          errorEmail && <p id='emailErrorMessage' className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{errorEmail}</p>
         }
         {
-          erroProgram && <p className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{erroProgram}</p>
+          erroProgram && <p id='programErrorMessage' className='text-sm text-action-red font-semibold font-karla text-center w-4/5'>{erroProgram}</p>
         }
 
-        <button className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center p-2 text-center font-semibold font-karla rounded-lg w-3/5'>
+        <button id='btnRegister' className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center p-2 text-center font-semibold font-karla rounded-lg w-3/5'>
         {
             loading
               ? <Spinner />

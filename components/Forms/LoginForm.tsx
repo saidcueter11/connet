@@ -37,7 +37,7 @@ export const LoginForm = () => {
       {
         error &&
         <div className='text-center'>
-          <p className='text-sm text-action-red font-semibold font-karla'>Your email/password are incorrect. Try again</p>
+          <p id="incorrectInfoMessage" className='text-sm text-action-red font-semibold font-karla'>Your email/password are incorrect. Try again</p>
         </div>
       }
 
