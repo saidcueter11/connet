@@ -32,7 +32,7 @@ export const LoginForm = () => {
         <TextInput id='password' value={password} onChange={e => setPassword(e.target.value)} type='password' required={true}/>
       </div>
 
-      <button className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center p-2 text-center font-semibold font-karla rounded-lg w-full'>Sign In</button>
+      <button id='btnSignIn' className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center p-2 text-center font-semibold font-karla rounded-lg w-full'>Sign In</button>
 
       {
         error &&
@@ -43,7 +43,7 @@ export const LoginForm = () => {
 
       <p className='text-sm font-karla text-center'>You do not have an account?</p>
       <Link href='/signup' >
-        <button className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center px-4 font-karla py-2 text-center font-semibold rounded-lg w-full'>Register</button>
+        <button id='btnGoToRegister' className='text-[#F3F4ED] bg-dark-green border border-transparent hover:bg-dark-green/80 flex items-center justify-center px-4 font-karla py-2 text-center font-semibold rounded-lg w-full'>Register</button>
       </Link>
     </form>
   )
