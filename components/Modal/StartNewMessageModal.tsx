@@ -108,7 +108,7 @@ export const StartNewMessageModal = ({ showModal, setShowModal, receiverName, re
                         <SearchIcon width={24} height={24} fill='none' stroke='#EB6440'/>
                       </div>
                       {
-                        errorMessage && <p className='text-ligth-text-green'>{errorMessage}</p>
+                        errorMessage && <p id='noUserErrorMessage' className='text-ligth-text-green'>{errorMessage}</p>
                       }
                     </div>
                   } size={'sm'} outline={false} arrowIcon={false} color={''}>
