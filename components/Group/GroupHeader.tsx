@@ -160,7 +160,7 @@ export const GroupHeader = ({ groupName, groupId, groupDescription, groupMembers
 
       <p className='text-center mt-2 font-karla'>{groupDescription}</p>
 
-      <CreatePostModal groupName={groupName} groupId={groupId} showModal={showModal} setShowModal={setShowModal}/>
+      <CreatePostModal groupName={groupName} groupId={groupId} showModal={showModal} setShowModal={setShowModal} formId='create-post-group'/>
     </>
   )
 }
