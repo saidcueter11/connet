@@ -103,6 +103,7 @@ export const ExpansibleTextarea = ({ content, setContent, imgUrl, setImgUrl, for
             rows={1}
             placeholder="What's popping?"
             required
+            id='txtContent'
           />
 
           {
